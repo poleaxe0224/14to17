@@ -66,4 +66,4 @@ tests/            # Vitest unit tests
 2. **Core Math** ✓ — NPV, IRR, breakeven, lifetime ROI engine, SOC-CIP mappings, 52 tests
 3. **UI Views** ✓ — career search (25 careers, live filter), detail (BLS wages + Scorecard tuition), calculator (9-field form + Chart.js bar/line charts), query-param pre-fill from detail→calculator
 4. **Comparison + Report** ✓ — 2-3 career side-by-side comparison table (★ best values), grouped bar chart, PDF export (html2pdf.js lazy-loaded from CDN) on both calculator and compare views
-5. **Polish + Deploy** — a11y, perf, tests, production launch
+5. **Polish + Deploy** ✓ — a11y (skip-link, focus-visible, aria-labels, landmarks), preconnect hints, 75 tests, CI runs tests before deploy, README

@@ -1,6 +1,29 @@
 @import "@picocss/pico/css/pico.min.css";
 @import "./tokens.css";
 
+/* ---- Skip link (a11y) ---- */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 0;
+  padding: var(--space-sm) var(--space-md);
+  background: var(--brand-primary);
+  color: #fff;
+  z-index: 1000;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* ---- Focus styles (a11y) ---- */
+:focus-visible {
+  outline: 3px solid var(--brand-primary);
+  outline-offset: 2px;
+}
+
 /* ---- Layout ---- */
 body {
   min-height: 100vh;

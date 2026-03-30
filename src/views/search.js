@@ -14,7 +14,7 @@ function renderCards(careers) {
   return `
     <div class="career-grid">
       ${careers.map((c) => `
-        <a href="#/detail/${c.soc}" class="career-card">
+        <a href="#/detail/${c.soc}" class="career-card" aria-label="${c.career} - ${c.careerZh}">
           <h3>${isZh ? c.careerZh : c.career}</h3>
           <p class="career-card-sub">${isZh ? c.career : c.careerZh}</p>
           <div class="career-card-meta">
@@ -34,9 +34,10 @@ export function render() {
       <input type="search" id="career-search"
              placeholder="${t('search.placeholder')}"
              data-i18n-placeholder="search.placeholder"
+             aria-label="${t('search.title')}"
              autofocus />
-      <p id="search-count" class="search-count"></p>
-      <div id="search-results">
+      <p id="search-count" class="search-count" role="status" aria-live="polite"></p>
+      <div id="search-results" role="list" aria-label="${t('search.title')}">
         ${renderCards([...CAREER_MAPPINGS])}
       </div>
     </section>
