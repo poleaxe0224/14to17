@@ -36,11 +36,11 @@ function setupLangToggle() {
 }
 
 export async function initApp() {
-  // Register routes
+  // Register routes (views with afterRender pass the module; others pass render fn)
   addRoute('/', homeView.render);
-  addRoute('/search', searchView.render);
-  addRoute('/detail/:soc', detailView.render);
-  addRoute('/calculator', calculatorView.render);
+  addRoute('/search', searchView);
+  addRoute('/detail/:soc', detailView);
+  addRoute('/calculator', calculatorView);
   addRoute('/compare', compareView.render);
   setNotFound(notFound);
 

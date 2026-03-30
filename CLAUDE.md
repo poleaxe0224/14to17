@@ -30,13 +30,20 @@ src/
 ├── api/          # BLS + College Scorecard service layer
 ├── engine/       # Pure math: ROI, NPV, IRR, breakeven, mappings
 ├── i18n/         # Translation JSON + runtime
-├── router/       # Hash-based SPA router
-├── views/        # Page components (return HTML strings)
+├── router/       # Hash-based SPA router (supports afterRender + query params)
+├── utils/        # Formatting helpers (currency, percent, number)
+├── views/        # Page components (render + optional afterRender)
 ├── styles/       # Design tokens + overrides
 ├── app.js        # App init (router + i18n wiring)
 └── main.js       # Vite entry point
 tests/            # Vitest unit tests
 ```
+
+## Notes
+
+- Chart.js loaded via CDN script tag (esbuild can't parse npm dist on Windows NTFS)
+- Views can export `{ render, afterRender }` — router calls afterRender after DOM insertion
+- Detail→Calculator pre-fill uses query params in hash: `#/calculator?soc=...&tuition=...`
 
 ## API Keys
 
@@ -57,6 +64,6 @@ tests/            # Vitest unit tests
 
 1. **Foundation** ✓ — skeleton, router, API services, i18n
 2. **Core Math** ✓ — NPV, IRR, breakeven, lifetime ROI engine, SOC-CIP mappings, 52 tests
-3. **UI Views** — career search, detail page, calculator, charts
+3. **UI Views** ✓ — career search (25 careers, live filter), detail (BLS wages + Scorecard tuition), calculator (9-field form + Chart.js bar/line charts), query-param pre-fill from detail→calculator
 4. **Comparison + Report** — 2-3 career comparison, PDF export
 5. **Polish + Deploy** — a11y, perf, tests, production launch

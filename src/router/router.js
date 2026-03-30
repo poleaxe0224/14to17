@@ -34,7 +34,9 @@ export function setNotFound(handler) {
 
 function parsePath() {
   const hash = window.location.hash.replace('#', '') || '/';
-  return hash;
+  // Strip query params — views parse them independently via window.location.hash
+  const qIdx = hash.indexOf('?');
+  return qIdx === -1 ? hash : hash.slice(0, qIdx);
 }
 
 function matchRoute(path) {
@@ -57,7 +59,9 @@ async function render() {
 
   if (!handler || !outlet) return;
 
-  const content = await handler(params);
+  // Support both plain functions and view modules { render, afterRender }
+  const renderFn = typeof handler === 'function' ? handler : handler.render;
+  const content = await renderFn(params);
 
   if (typeof content === 'string') {
     outlet.innerHTML = content;
@@ -73,6 +77,11 @@ async function render() {
     const linkPath = link.getAttribute('href').replace('#', '') || '/';
     link.classList.toggle('active', linkPath === path);
   });
+
+  // Call afterRender if the handler is a view module with that method
+  if (typeof handler !== 'function' && typeof handler.afterRender === 'function') {
+    handler.afterRender(params);
+  }
 }
 
 /**
