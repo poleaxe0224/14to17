@@ -94,11 +94,15 @@ async function main() {
     try {
       const results = await fetchBatch(ids, year);
 
-      for (let j = 0; j < batch.length; j++) {
-        const { soc, field } = batch[j];
-        const series = results[j];
-        const latest = series?.data?.[0];
+      // Map results by series ID (don't rely on positional order)
+      const idToMeta = new Map(batch.map((b) => [b.seriesId, b]));
+      for (const series of results) {
+        const sid = series.seriesID;
+        const meta = idToMeta.get(sid);
+        if (!meta) continue;
 
+        const { soc, field } = meta;
+        const latest = series.data?.[0];
         if (!wages[soc]) wages[soc] = { year };
         if (latest) {
           const val = parseFloat(latest.value);

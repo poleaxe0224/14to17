@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "fetchedAt": "2026-03-30T17:03:40.140Z",
+    "fetchedAt": "2026-03-30T17:12:23.479Z",
     "year": 2024,
     "source": "BLS OES National, All Industries"
   },
@@ -59,9 +59,7 @@
       "annual25": 122820,
       "annualMean": 187130,
       "employment": 115960,
-      "annualMedian": 170910,
-      "annual75": 237080,
-      "annual90": 237080
+      "annualMedian": 170910
     },
     "29-1051": {
       "year": 2024,
@@ -93,9 +91,7 @@
       "annual25": 113050,
       "annualMean": 184150,
       "employment": 391520,
-      "annualMedian": 166050,
-      "annual75": 220440,
-      "annual90": 237080
+      "annualMedian": 166050
     },
     "11-3031": {
       "year": 2024,
@@ -103,9 +99,7 @@
       "annual25": 115230,
       "annualMean": 183900,
       "employment": 773270,
-      "annualMedian": 166050,
-      "annual75": 220170,
-      "annual90": 237080
+      "annualMedian": 166050
     },
     "17-2051": {
       "year": 2024,
@@ -185,9 +179,7 @@
       "annual25": 86500,
       "annualMean": 163770,
       "employment": 813900,
-      "annualMedian": 145760,
-      "annual75": 208980,
-      "annual90": 237080
+      "annualMedian": 145760
     },
     "23-2011": {
       "year": 2024,

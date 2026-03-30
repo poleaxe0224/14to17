@@ -12,6 +12,7 @@ const currencyFmt = new Intl.NumberFormat('en-US', {
 const numberFmt = new Intl.NumberFormat('en-US');
 
 export function formatCurrency(n) {
+  if (n == null || Number.isNaN(n)) return 'N/A';
   return currencyFmt.format(n);
 }
 

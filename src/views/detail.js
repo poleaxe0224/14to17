@@ -81,28 +81,21 @@ export async function afterRender({ soc } = {}) {
   if (wageResult.status === 'fulfilled' && wageResult.value) {
     const w = wageResult.value;
     medianSalary = w.annualMedian || medianSalary;
+    const wageRows = [
+      [t('detail.annual_median'), formatCurrency(w.annualMedian), 'wage-highlight'],
+      [t('detail.annual_mean'), formatCurrency(w.annualMean)],
+      [t('detail.percentile_10'), formatCurrency(w.annual10)],
+      [t('detail.percentile_25'), formatCurrency(w.annual25)],
+      [t('detail.percentile_75'), formatCurrency(w.annual75)],
+      [t('detail.percentile_90'), formatCurrency(w.annual90)],
+    ].filter(([, val]) => val !== 'N/A');
+
+    if (w.employment) wageRows.push([t('detail.employment'), formatNumber(w.employment)]);
+    if (w.year) wageRows.push([t('detail.data_year'), String(Number(w.year))]);
+
     wageEl.innerHTML = `
       <dl class="detail-dl">
-        <dt>${t('detail.annual_median')}</dt>
-        <dd class="wage-highlight">${formatCurrency(w.annualMedian)}</dd>
-        <dt>${t('detail.annual_mean')}</dt>
-        <dd>${formatCurrency(w.annualMean)}</dd>
-        <dt>${t('detail.percentile_10')}</dt>
-        <dd>${formatCurrency(w.annual10)}</dd>
-        <dt>${t('detail.percentile_25')}</dt>
-        <dd>${formatCurrency(w.annual25)}</dd>
-        <dt>${t('detail.percentile_75')}</dt>
-        <dd>${formatCurrency(w.annual75)}</dd>
-        <dt>${t('detail.percentile_90')}</dt>
-        <dd>${formatCurrency(w.annual90)}</dd>
-        ${w.employment ? `
-          <dt>${t('detail.employment')}</dt>
-          <dd>${formatNumber(w.employment)}</dd>
-        ` : ''}
-        ${w.year ? `
-          <dt>${t('detail.data_year')}</dt>
-          <dd>${w.year}</dd>
-        ` : ''}
+        ${wageRows.map(([dt, dd, cls]) => `<dt>${dt}</dt><dd${cls ? ` class="${cls}"` : ''}>${dd}</dd>`).join('')}
       </dl>
     `;
   } else {
