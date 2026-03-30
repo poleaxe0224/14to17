@@ -1,0 +1,71 @@
+{
+  "nav": {
+    "brand": "EduROI",
+    "home": "Home",
+    "search": "Search Careers",
+    "calculator": "Calculator",
+    "compare": "Compare"
+  },
+  "home": {
+    "title": "Is Your Degree Worth It?",
+    "subtitle": "Calculate the real return on investment for any education path — powered by federal data.",
+    "cta_search": "Search Careers",
+    "cta_calculator": "Open Calculator",
+    "feature_wage_title": "Real Wage Data",
+    "feature_wage_desc": "Salary percentiles from the Bureau of Labor Statistics — not self-reported estimates.",
+    "feature_cost_title": "True Cost of Education",
+    "feature_cost_desc": "Tuition, net price, and program-level data from the College Scorecard.",
+    "feature_roi_title": "ROI Analysis",
+    "feature_roi_desc": "Net present value, breakeven year, internal rate of return, and lifetime earnings comparison."
+  },
+  "search": {
+    "title": "Search Careers",
+    "placeholder": "Enter a job title or SOC code…",
+    "coming_soon": "Career search coming in Phase 3."
+  },
+  "detail": {
+    "title": "Career Detail",
+    "coming_soon": "Career detail page coming in Phase 3."
+  },
+  "calculator": {
+    "title": "ROI Calculator",
+    "coming_soon": "Calculator coming in Phase 2–3.",
+    "annual_tuition": "Annual Tuition",
+    "education_years": "Years of Education",
+    "post_degree_salary": "Starting Salary After Degree",
+    "baseline_salary": "Alternative Salary (No Degree)",
+    "salary_growth": "Annual Salary Growth Rate",
+    "discount_rate": "Discount Rate",
+    "career_years": "Career Duration (Years)",
+    "loan_rate": "Student Loan Interest Rate",
+    "loan_term": "Loan Repayment Term (Years)",
+    "npv": "Net Present Value",
+    "irr": "Internal Rate of Return",
+    "breakeven": "Breakeven Year",
+    "breakeven_discounted": "Breakeven Year (Discounted)",
+    "lifetime_roi": "Lifetime ROI",
+    "total_cost": "Total Cost (Tuition + Opportunity)",
+    "total_premium": "Total Earnings Premium",
+    "net_gain": "Net Gain",
+    "monthly_payment": "Monthly Loan Payment",
+    "total_repaid": "Total Loan Repayment",
+    "years": "years",
+    "never": "Never",
+    "calculate": "Calculate ROI",
+    "reset": "Reset"
+  },
+  "compare": {
+    "title": "Compare Careers",
+    "coming_soon": "Comparison mode coming in Phase 4."
+  },
+  "common": {
+    "loading": "Loading…",
+    "error": "Something went wrong. Please try again.",
+    "back": "Back",
+    "learn_more": "Learn more"
+  },
+  "footer": {
+    "data": "Data: BLS OES & College Scorecard",
+    "disclaimer": "For informational purposes only"
+  }
+}

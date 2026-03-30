@@ -1,0 +1,111 @@
+@import "@picocss/pico/css/pico.min.css";
+@import "./tokens.css";
+
+/* ---- Layout ---- */
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
+
+/* ---- Nav ---- */
+header nav .brand {
+  text-decoration: none;
+  font-size: 1.25rem;
+}
+
+.lang-btn {
+  padding: var(--space-xs) var(--space-sm);
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+/* ---- Hero ---- */
+.hero {
+  text-align: center;
+  padding: var(--space-2xl) 0;
+}
+
+.hero h1 {
+  font-size: 2.5rem;
+  margin-bottom: var(--space-sm);
+}
+
+.hero p {
+  font-size: 1.15rem;
+  color: var(--pico-muted-color);
+  max-width: 600px;
+  margin: 0 auto var(--space-xl);
+}
+
+.hero-actions {
+  display: flex;
+  gap: var(--space-md);
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* ---- Feature cards ---- */
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--space-lg);
+  margin: var(--space-2xl) 0;
+}
+
+.feature-card {
+  padding: var(--space-lg);
+  border-radius: 8px;
+  box-shadow: var(--shadow-card);
+  transition: box-shadow var(--transition-normal);
+}
+
+.feature-card:hover {
+  box-shadow: var(--shadow-card-hover);
+}
+
+.feature-card h3 {
+  margin-top: var(--space-sm);
+}
+
+/* ---- ROI colors ---- */
+.roi-positive {
+  color: var(--color-roi-positive);
+}
+
+.roi-negative {
+  color: var(--color-roi-negative);
+}
+
+/* ---- Placeholder page ---- */
+.placeholder-view {
+  text-align: center;
+  padding: var(--space-2xl) 0;
+}
+
+.placeholder-view p {
+  color: var(--pico-muted-color);
+}
+
+/* ---- Footer ---- */
+footer {
+  margin-top: auto;
+  padding-bottom: var(--space-lg);
+  text-align: center;
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 768px) {
+  .hero h1 {
+    font-size: 1.75rem;
+  }
+
+  header nav ul:last-child {
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "nav": {
+    "brand": "EduROI",
+    "home": "首頁",
+    "search": "搜尋職業",
+    "calculator": "計算器",
+    "compare": "比較"
+  },
+  "home": {
+    "title": "你的學位值得嗎？",
+    "subtitle": "用聯邦政府數據，計算任何教育路徑的真實投資報酬率。",
+    "cta_search": "搜尋職業",
+    "cta_calculator": "開啟計算器",
+    "feature_wage_title": "真實薪資數據",
+    "feature_wage_desc": "來自美國勞工統計局的薪資百分位數 — 非自行申報估計值。",
+    "feature_cost_title": "教育真實成本",
+    "feature_cost_desc": "來自 College Scorecard 的學費、淨價格及科系層級數據。",
+    "feature_roi_title": "ROI 分析",
+    "feature_roi_desc": "淨現值、回本年數、內部報酬率，以及終身收入比較。"
+  },
+  "search": {
+    "title": "搜尋職業",
+    "placeholder": "輸入職業名稱或 SOC 代碼…",
+    "coming_soon": "職業搜尋功能將於 Phase 3 推出。"
+  },
+  "detail": {
+    "title": "職業詳情",
+    "coming_soon": "職業詳情頁將於 Phase 3 推出。"
+  },
+  "calculator": {
+    "title": "ROI 計算器",
+    "coming_soon": "計算器將於 Phase 2–3 推出。",
+    "annual_tuition": "年學費",
+    "education_years": "就學年數",
+    "post_degree_salary": "畢業後起薪",
+    "baseline_salary": "替代薪資（無學位）",
+    "salary_growth": "年薪資成長率",
+    "discount_rate": "折現率",
+    "career_years": "職涯年數",
+    "loan_rate": "學貸利率",
+    "loan_term": "學貸還款期（年）",
+    "npv": "淨現值",
+    "irr": "內部報酬率",
+    "breakeven": "回本年數",
+    "breakeven_discounted": "回本年數（折現）",
+    "lifetime_roi": "終身 ROI",
+    "total_cost": "總成本（學費＋機會成本）",
+    "total_premium": "總收入溢價",
+    "net_gain": "淨收益",
+    "monthly_payment": "每月學貸還款",
+    "total_repaid": "學貸總還款金額",
+    "years": "年",
+    "never": "永不回本",
+    "calculate": "計算 ROI",
+    "reset": "重置"
+  },
+  "compare": {
+    "title": "比較職業",
+    "coming_soon": "比較模式將於 Phase 4 推出。"
+  },
+  "common": {
+    "loading": "載入中…",
+    "error": "發生錯誤，請稍後再試。",
+    "back": "返回",
+    "learn_more": "了解更多"
+  },
+  "footer": {
+    "data": "資料來源：BLS OES 及 College Scorecard",
+    "disclaimer": "僅供參考用途"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm -v)",
+      "Bash(/c/Users/polea/education-roi-calculator/.env.example:*)",
+      "Bash(npm install:*)",
+      "Bash(npx.cmd vite:*)",
+      "Bash(taskkill //F //IM node.exe)",
+      "Bash(mkdir -p \"/c/Users/polea/.claude/projects/C--Users-polea-education-roi-calculator/memory\")",
+      "Bash(\"/c/Users/polea/.claude/projects/C--Users-polea-education-roi-calculator/memory/project_overview.md\":*)",
+      "Bash(__NEW_LINE_d50e0af6675d3989__ cat:*)",
+      "Bash(\"/c/Users/polea/.claude/projects/C--Users-polea-education-roi-calculator/memory/MEMORY.md\":*)"
+    ]
+  },
+  "disabledMcpjsonServers": [
+    "playwright"
+  ]
+}

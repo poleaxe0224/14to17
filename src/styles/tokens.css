@@ -1,0 +1,36 @@
+:root {
+  /* Brand colors */
+  --brand-primary: #2563eb;
+  --brand-primary-hover: #1d4ed8;
+  --brand-secondary: #059669;
+  --brand-accent: #d97706;
+  --brand-danger: #dc2626;
+
+  /* Semantic tokens */
+  --color-roi-positive: #059669;
+  --color-roi-negative: #dc2626;
+  --color-roi-neutral: #6b7280;
+
+  /* Spacing scale */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+
+  /* Typography */
+  --font-mono: "Cascadia Code", "Fira Code", ui-monospace, monospace;
+
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-normal: 250ms ease;
+
+  /* Shadows */
+  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+  --shadow-card-hover: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
+
+  /* Override Pico primary */
+  --pico-primary: var(--brand-primary);
+  --pico-primary-hover: var(--brand-primary-hover);
+}
