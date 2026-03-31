@@ -11,6 +11,18 @@
 const BASE_URL = 'https://api.data.gov/ed/collegescorecard/v1/schools.json';
 const cache = new Map();
 
+/**
+ * Static tuition data bundled at build time (Scorecard API doesn't support browser CORS).
+ * Regenerate with: node scripts/fetch-scorecard-tuition.mjs
+ */
+let staticTuition = null;
+async function getStaticTuition() {
+  if (staticTuition) return staticTuition;
+  const mod = await import('../data/tuition.json');
+  staticTuition = mod.default;
+  return staticTuition;
+}
+
 function getApiKey() {
   return import.meta.env.VITE_SCORECARD_API_KEY || 'DEMO_KEY';
 }
@@ -133,12 +145,22 @@ export async function getSchoolById(schoolId) {
 
 /**
  * Get average tuition across schools for a CIP program.
- * Fetches multiple pages if needed for a more accurate average.
+ * Uses bundled static data (primary) with live API fallback.
  * @param {string} cipCode
  * @param {number} [sampleSize=50]
  * @returns {Promise<{inState: number, outOfState: number, netPrice: number, sampleCount: number}>}
  */
 export async function getAverageTuition(cipCode, sampleSize = 50) {
+  // Primary: static bundled data (no CORS issues)
+  try {
+    const data = await getStaticTuition();
+    const entry = data.programs?.[cipCode];
+    if (entry?.netPrice != null) {
+      return { ...entry };
+    }
+  } catch { /* fall through to live API */ }
+
+  // Fallback: live Scorecard API (works server-side or with CORS proxy)
   const perPage = Math.min(sampleSize, 100);
   const data = await searchByProgram(cipCode, { perPage });
   const schools = data.results || [];
