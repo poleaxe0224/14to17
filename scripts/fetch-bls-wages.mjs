@@ -29,11 +29,11 @@ const CAREERS = [
 ];
 
 const DATA_TYPES = {
-  annual10:     '13',
-  annual25:     '14',
-  annualMedian: '15',
-  annual75:     '16',
-  annual90:     '17',
+  annual10:     '11',
+  annual25:     '12',
+  annualMedian: '13',
+  annual75:     '14',
+  annual90:     '15',
   annualMean:   '04',
   employment:   '01',
 };
