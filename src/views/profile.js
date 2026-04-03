@@ -72,16 +72,16 @@ export function render({ soc } = {}) {
         </div>
       </div>
 
-      <!-- Section Nav (sticky) -->
+      <!-- Section Nav (sticky) — uses data-scroll instead of href to avoid hash-router conflict -->
       <nav class="profile-nav" aria-label="Section navigation">
-        <a href="#prof-what">${t('profile.what_they_do')}</a>
-        <a href="#prof-env">${t('profile.work_environment')}</a>
-        <a href="#prof-how">${t('profile.how_to_become')}</a>
-        <a href="#prof-pay">${t('profile.pay')}</a>
-        <a href="#prof-outlook">${t('profile.job_outlook')}</a>
-        <a href="#prof-state">${t('profile.state_area_data')}</a>
-        <a href="#prof-similar">${t('profile.similar_occupations')}</a>
-        <a href="#prof-more">${t('profile.more_info')}</a>
+        <a data-scroll="prof-what" href="javascript:void(0)">${t('profile.what_they_do')}</a>
+        <a data-scroll="prof-env" href="javascript:void(0)">${t('profile.work_environment')}</a>
+        <a data-scroll="prof-how" href="javascript:void(0)">${t('profile.how_to_become')}</a>
+        <a data-scroll="prof-pay" href="javascript:void(0)">${t('profile.pay')}</a>
+        <a data-scroll="prof-outlook" href="javascript:void(0)">${t('profile.job_outlook')}</a>
+        <a data-scroll="prof-state" href="javascript:void(0)">${t('profile.state_area_data')}</a>
+        <a data-scroll="prof-similar" href="javascript:void(0)">${t('profile.similar_occupations')}</a>
+        <a data-scroll="prof-more" href="javascript:void(0)">${t('profile.more_info')}</a>
       </nav>
 
       <!-- Content (populated by afterRender) -->
@@ -107,6 +107,15 @@ export async function afterRender({ soc } = {}) {
     afterRender({ soc });
   }
   document.addEventListener('locale-changed', onLocaleChanged, { once: true });
+
+  // Wire section nav scroll links (can't use href="#id" — conflicts with hash router)
+  document.querySelectorAll('.profile-nav [data-scroll]').forEach((link) => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const target = document.getElementById(link.dataset.scroll);
+      if (target) target.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
 
   const contentEl = document.getElementById('profile-content');
   if (!contentEl) return;
