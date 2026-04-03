@@ -1,10 +1,25 @@
+/**
+ * Detail view — ROI deep dive for a career.
+ *
+ * Displays wage percentiles, tuition, IPEDS data, and three-layer ROI
+ * with adjustable competition parameters.
+ *
+ * Route: #/detail/:soc (accessed from Profile page)
+ * Rendering logic extracted to detail-renderers.js.
+ */
+
 import { t, getLocale } from '../i18n/i18n.js';
 import { findBySoc, getBaselineSalary, getEducationDuration } from '../engine/mappings.js';
 import { calcThreeLayerROI, DEFAULTS } from '../engine/roi.js';
 import * as bls from '../api/bls.js';
 import * as scorecard from '../api/scorecard.js';
 import * as ipeds from '../api/ipeds.js';
-import { formatCurrency, formatNumber, formatPercent } from '../utils/format.js';
+import {
+  renderWagePanel,
+  renderTuitionPanel,
+  renderIpedsPanel,
+  renderRoiLayers,
+} from './detail-renderers.js';
 
 export function render({ soc } = {}) {
   const career = findBySoc(soc);
@@ -26,7 +41,7 @@ export function render({ soc } = {}) {
 
   return `
     <section class="detail-view">
-      <a href="#/search" class="back-link">&larr; ${t('common.back')}</a>
+      <a href="#/profile/${soc}" class="back-link">&larr; ${t('common.back')}</a>
       <h2>${name}</h2>
       <p class="detail-sub">${subName}</p>
 
@@ -88,40 +103,18 @@ export function render({ soc } = {}) {
 /** Shared state for slider re-computation */
 let _layerState = null;
 
-function renderRoiLayers(layers) {
-  const { basic, riskAdjusted, competitionAdjusted } = layers;
-
-  const fallbacks = [];
-  if (riskAdjusted.fallback) fallbacks.push(t('ipeds.fallback_no_grad'));
-  if (competitionAdjusted.fallback) fallbacks.push(t('ipeds.fallback_no_competition'));
-
-  return `
-    <h3 style="margin-top:var(--space-lg)">ROI</h3>
-    <div class="roi-layers-grid">
-      <div class="roi-layer-card">
-        <div class="roi-layer-label">${t('ipeds.basic_roi')}</div>
-        <div class="roi-layer-value">${basic.roi.toFixed(1)}%</div>
-        <div class="roi-layer-desc muted">${t('ipeds.basic_roi_desc')}</div>
-      </div>
-      <div class="roi-layer-card ${riskAdjusted.fallback ? 'roi-layer-fallback' : ''}">
-        <div class="roi-layer-label">${t('ipeds.risk_adjusted_roi')}</div>
-        <div class="roi-layer-value">${riskAdjusted.roi.toFixed(1)}%</div>
-        <div class="roi-layer-desc muted">${t('ipeds.risk_adjusted_desc')}</div>
-      </div>
-      <div class="roi-layer-card roi-layer-primary ${competitionAdjusted.fallback ? 'roi-layer-fallback' : ''}">
-        <div class="roi-layer-badge">${t('ipeds.recommended')}</div>
-        <div class="roi-layer-label">${t('ipeds.competition_adjusted_roi')}</div>
-        <div class="roi-layer-value" id="competition-roi-value">${competitionAdjusted.roi.toFixed(1)}%</div>
-        <div class="roi-layer-desc muted">${t('ipeds.competition_adjusted_desc')}</div>
-      </div>
-    </div>
-    ${fallbacks.length ? `<div class="roi-fallback-notes">${fallbacks.map((f) => `<p class="muted">${f}</p>`).join('')}</div>` : ''}
-  `;
-}
-
 export async function afterRender({ soc } = {}) {
   const career = findBySoc(soc);
   if (!career) return;
+
+  // Re-render on locale change (section headings use t())
+  function onLocaleChanged() {
+    const outlet = document.getElementById('app');
+    if (!outlet || !document.getElementById('wage-content')) return;
+    outlet.innerHTML = render({ soc });
+    afterRender({ soc });
+  }
+  document.addEventListener('locale-changed', onLocaleChanged, { once: true });
 
   const duration = getEducationDuration(career.typicalDegree);
   const baseline = getBaselineSalary(career.typicalDegree);
@@ -133,105 +126,29 @@ export async function afterRender({ soc } = {}) {
     ipeds.getIpedsData(career.cip),
   ]);
 
-  // Render wage data
+  // Render wage panel
   const wageEl = document.getElementById('wage-content');
-  if (!wageEl) return; // user navigated away
+  if (!wageEl) return;
 
-  let medianSalary = 50_000;
-  let totalEmployment = null;
+  const wageData = wageResult.status === 'fulfilled' ? wageResult.value : null;
+  const { html: wageHtml, medianSalary, totalEmployment } = renderWagePanel(wageData);
+  wageEl.innerHTML = wageHtml;
 
-  if (wageResult.status === 'fulfilled' && wageResult.value) {
-    const w = wageResult.value;
-    medianSalary = w.annualMedian || medianSalary;
-    totalEmployment = w.employment ?? w.tot_emp ?? null;
-    const wageRows = [
-      [t('detail.annual_median'), formatCurrency(w.annualMedian), 'wage-highlight'],
-      [t('detail.annual_mean'), formatCurrency(w.annualMean)],
-      [t('detail.percentile_10'), formatCurrency(w.annual10)],
-      [t('detail.percentile_25'), formatCurrency(w.annual25)],
-      [t('detail.percentile_75'), formatCurrency(w.annual75)],
-      [t('detail.percentile_90'), formatCurrency(w.annual90)],
-    ].filter(([, val]) => val !== 'N/A');
-
-    if (w.employment) wageRows.push([t('detail.employment'), formatNumber(w.employment)]);
-    if (w.year) wageRows.push([t('detail.data_year'), String(Number(w.year))]);
-
-    wageEl.innerHTML = `
-      <dl class="detail-dl">
-        ${wageRows.map(([dt, dd, cls]) => `<dt>${dt}</dt><dd${cls ? ` class="${cls}"` : ''}>${dd}</dd>`).join('')}
-      </dl>
-    `;
-  } else {
-    wageEl.innerHTML = `<p class="error-text">${t('detail.error_wages')}</p>`;
-  }
-
-  // Render tuition data
+  // Render tuition panel
   const tuitionEl = document.getElementById('tuition-content');
   if (!tuitionEl) return;
 
-  let avgTuition = 20_000;
+  const tuitionData = tuitionResult.status === 'fulfilled' ? tuitionResult.value : null;
+  const { html: tuitionHtml, avgTuition } = renderTuitionPanel(tuitionData);
+  tuitionEl.innerHTML = tuitionHtml;
 
-  if (tuitionResult.status === 'fulfilled' && tuitionResult.value) {
-    const tu = tuitionResult.value;
-    avgTuition = tu.netPrice || tu.inState || 20_000;
-    const parts = [];
-    if (tu.netPrice != null) {
-      parts.push(`<dt>${t('detail.avg_tuition')}</dt><dd>${formatCurrency(tu.netPrice)} ${t('detail.per_year')}</dd>`);
-    }
-    if (tu.inState != null) {
-      parts.push(`<dt>${t('detail.tuition_in_state')}</dt><dd>${formatCurrency(tu.inState)} ${t('detail.per_year')}</dd>`);
-    }
-    if (tu.outOfState != null) {
-      parts.push(`<dt>${t('detail.tuition_out_state')}</dt><dd>${formatCurrency(tu.outOfState)} ${t('detail.per_year')}</dd>`);
-    }
-    if (tu.sampleCount) {
-      parts.push(`<dt></dt><dd class="muted">${t('detail.sample_schools').replace('{count}', tu.sampleCount)}</dd>`);
-    }
-    tuitionEl.innerHTML = parts.length
-      ? `<dl class="detail-dl">${parts.join('')}</dl>`
-      : `<p class="muted">${t('detail.tuition_unavailable')}</p>`;
-  } else {
-    tuitionEl.innerHTML = `<p class="muted">${t('detail.tuition_unavailable')}</p>`;
-  }
-
-  // Render IPEDS data
+  // Render IPEDS panel
   const ipedsEl = document.getElementById('ipeds-content');
   if (!ipedsEl) return;
 
-  let graduationRate = null;
-  let completionsTotal = null;
-
-  if (ipedsResult.status === 'fulfilled' && ipedsResult.value) {
-    const ip = ipedsResult.value;
-    graduationRate = ip.graduationRate;
-    completionsTotal = ip.completionsTotal;
-
-    const ipedsRows = [];
-    if (ip.graduationRate != null) {
-      ipedsRows.push([t('ipeds.graduation_rate'), `${(ip.graduationRate * 100).toFixed(1)}%`]);
-    }
-    if (ip.completionsTotal != null) {
-      ipedsRows.push([t('ipeds.completions'), formatNumber(ip.completionsTotal)]);
-    }
-    if (totalEmployment != null) {
-      ipedsRows.push([t('ipeds.market_employment'), formatNumber(totalEmployment)]);
-    }
-    if (ip.completionsTotal != null && totalEmployment != null && totalEmployment > 0) {
-      const ratio = (ip.completionsTotal / totalEmployment * 100).toFixed(2);
-      ipedsRows.push([t('ipeds.saturation_ratio'), `${ratio}%`]);
-    }
-
-    if (ipedsRows.length) {
-      ipedsEl.innerHTML = `
-        <article class="detail-panel ipeds-panel">
-          <h3>IPEDS</h3>
-          <dl class="detail-dl">
-            ${ipedsRows.map(([dt, dd]) => `<dt>${dt}</dt><dd>${dd}</dd>`).join('')}
-          </dl>
-        </article>
-      `;
-    }
-  }
+  const ipedsData = ipedsResult.status === 'fulfilled' ? ipedsResult.value : null;
+  const { html: ipedsHtml, graduationRate, completionsTotal } = renderIpedsPanel(ipedsData, totalEmployment);
+  ipedsEl.innerHTML = ipedsHtml;
 
   // Compute and render three-layer ROI
   const roiLayersEl = document.getElementById('roi-layers');
@@ -252,34 +169,7 @@ export async function afterRender({ soc } = {}) {
   roiLayersEl.classList.remove('hidden');
 
   // Wire up sliders
-  const sliderK = document.getElementById('slider-k');
-  const sliderPenalty = document.getElementById('slider-max-penalty');
-  const kValueEl = document.getElementById('k-value');
-  const penaltyValueEl = document.getElementById('penalty-value');
-  const resetBtn = document.getElementById('reset-params');
-
-  function recalcFromSliders() {
-    if (!_layerState) return;
-    const k = parseFloat(sliderK.value);
-    const maxP = parseFloat(sliderPenalty.value);
-    kValueEl.textContent = k.toFixed(2);
-    penaltyValueEl.textContent = `${(maxP * 100).toFixed(0)}%`;
-
-    const updated = calcThreeLayerROI({ ..._layerState, competitionK: k, maxPenalty: maxP });
-    const compEl = document.getElementById('competition-roi-value');
-    if (compEl) {
-      compEl.textContent = `${updated.layers.competitionAdjusted.roi.toFixed(1)}%`;
-    }
-  }
-
-  sliderK.addEventListener('input', recalcFromSliders);
-  sliderPenalty.addEventListener('input', recalcFromSliders);
-
-  resetBtn.addEventListener('click', () => {
-    sliderK.value = DEFAULTS.competitionK;
-    sliderPenalty.value = DEFAULTS.maxPenalty;
-    recalcFromSliders();
-  });
+  wireSliders();
 
   // Show Calculate ROI button
   const ctaEl = document.getElementById('roi-cta');
@@ -298,4 +188,34 @@ export async function afterRender({ soc } = {}) {
     </a>
   `;
   ctaEl.classList.remove('hidden');
+}
+
+function wireSliders() {
+  const sliderK = document.getElementById('slider-k');
+  const sliderPenalty = document.getElementById('slider-max-penalty');
+  const kValueEl = document.getElementById('k-value');
+  const penaltyValueEl = document.getElementById('penalty-value');
+  const resetBtn = document.getElementById('reset-params');
+
+  function recalc() {
+    if (!_layerState) return;
+    const k = parseFloat(sliderK.value);
+    const maxP = parseFloat(sliderPenalty.value);
+    kValueEl.textContent = k.toFixed(2);
+    penaltyValueEl.textContent = `${(maxP * 100).toFixed(0)}%`;
+
+    const updated = calcThreeLayerROI({ ..._layerState, competitionK: k, maxPenalty: maxP });
+    const compEl = document.getElementById('competition-roi-value');
+    if (compEl) {
+      compEl.textContent = `${updated.layers.competitionAdjusted.roi.toFixed(1)}%`;
+    }
+  }
+
+  sliderK.addEventListener('input', recalc);
+  sliderPenalty.addEventListener('input', recalc);
+  resetBtn.addEventListener('click', () => {
+    sliderK.value = DEFAULTS.competitionK;
+    sliderPenalty.value = DEFAULTS.maxPenalty;
+    recalc();
+  });
 }

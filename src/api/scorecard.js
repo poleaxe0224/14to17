@@ -12,6 +12,19 @@ const BASE_URL = 'https://api.data.gov/ed/collegescorecard/v1/schools.json';
 const cache = new Map();
 
 /**
+ * National average net tuition by degree level (NCES 2023-24 estimates).
+ * Used as fallback when a CIP code has no Scorecard data.
+ */
+const TUITION_FALLBACK_BY_DEGREE = Object.freeze({
+  certificate:       10_200,
+  associates:        12_400,
+  bachelors:         22_700,
+  masters:           25_800,
+  doctoral:          30_500,
+  firstProfessional: 45_200,
+});
+
+/**
  * Static tuition data bundled at build time (Scorecard API doesn't support browser CORS).
  * Regenerate with: node scripts/fetch-scorecard-tuition.mjs
  */
@@ -186,4 +199,14 @@ export async function getAverageTuition(cipCode, sampleSize = 50) {
   };
 }
 
-export { SCHOOL_FIELDS, PROGRAM_FIELDS };
+/**
+ * Get fallback tuition by degree level when CIP-specific data is unavailable.
+ * @param {string} degreeLevel — key from DEGREE_LEVELS (e.g. 'bachelors')
+ * @returns {{ netPrice: number, inState: null, outOfState: null, sampleCount: 0, fallback: true }}
+ */
+export function getTuitionFallback(degreeLevel) {
+  const netPrice = TUITION_FALLBACK_BY_DEGREE[degreeLevel] ?? TUITION_FALLBACK_BY_DEGREE.bachelors;
+  return { netPrice, inState: null, outOfState: null, sampleCount: 0, fallback: true };
+}
+
+export { SCHOOL_FIELDS, PROGRAM_FIELDS, TUITION_FALLBACK_BY_DEGREE };

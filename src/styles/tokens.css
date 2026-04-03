@@ -33,4 +33,36 @@
   /* Override Pico primary */
   --pico-primary: var(--brand-primary);
   --pico-primary-hover: var(--brand-primary-hover);
+
+  /* ── Teen-friendly tokens ──────────────────────────── */
+
+  /* Category gradients (light top-border accents) */
+  --gradient-tech: linear-gradient(135deg, #667eea, #764ba2);
+  --gradient-healthcare: linear-gradient(135deg, #f093fb, #f5576c);
+  --gradient-business: linear-gradient(135deg, #4facfe, #00f2fe);
+  --gradient-engineering: linear-gradient(135deg, #f6d365, #fda085);
+  --gradient-education: linear-gradient(135deg, #a1c4fd, #c2e9fb);
+  --gradient-trades: linear-gradient(135deg, #fbc2eb, #a6c1ee);
+  --gradient-legal: linear-gradient(135deg, #cfd9df, #e2ebf0);
+  --gradient-creative: linear-gradient(135deg, #fa709a, #fee140);
+
+  /* Enhanced radius & shadows */
+  --radius-card: 16px;
+  --radius-badge: 20px;
+  --radius-btn: 10px;
+  --shadow-card-teen: 0 4px 15px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.04);
+  --shadow-card-teen-hover: 0 8px 25px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.06);
+
+  /* Touch targets */
+  --touch-target-min: 44px;
+
+  /* Growth badge colors */
+  --growth-fast: #059669;
+  --growth-avg: #d97706;
+  --growth-slow: #dc2626;
+
+  /* Salary meter */
+  --meter-track: #e5e7eb;
+  --meter-fill: linear-gradient(90deg, #4facfe, #00f2fe);
+  --meter-marker: var(--brand-primary);
 }

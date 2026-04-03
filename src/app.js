@@ -3,6 +3,7 @@ import { initI18n, toggleLocale, getLocale } from './i18n/i18n.js';
 
 import * as homeView from './views/home.js';
 import * as searchView from './views/search.js';
+import * as profileView from './views/profile.js';
 import * as detailView from './views/detail.js';
 import * as calculatorView from './views/calculator.js';
 import * as compareView from './views/compare.js';
@@ -39,6 +40,7 @@ export async function initApp() {
   // Register routes (views with afterRender pass the module; others pass render fn)
   addRoute('/', homeView.render);
   addRoute('/search', searchView);
+  addRoute('/profile/:soc', profileView);
   addRoute('/detail/:soc', detailView);
   addRoute('/calculator', calculatorView);
   addRoute('/compare', compareView);

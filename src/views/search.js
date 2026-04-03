@@ -14,7 +14,7 @@ function renderCards(careers) {
   return `
     <div class="career-grid">
       ${careers.map((c) => `
-        <a href="#/detail/${c.soc}" class="career-card" aria-label="${c.career} - ${c.careerZh}">
+        <a href="#/profile/${c.soc}" class="career-card" data-category="${c.category}" aria-label="${c.career} - ${c.careerZh}">
           <h3>${isZh ? c.careerZh : c.career}</h3>
           <p class="career-card-sub">${isZh ? c.career : c.careerZh}</p>
           <div class="career-card-meta">

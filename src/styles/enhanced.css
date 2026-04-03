@@ -1,0 +1,415 @@
+/* ══════════════════════════════════════════════════════════════════════
+   Teen-friendly UI layer — imported after main.css
+   Enhances existing styles with gradients, larger radius, visual meters.
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* ── Profile Hero ──────────────────────────────────────────────────── */
+
+.profile-hero {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+  margin-bottom: var(--space-lg);
+}
+
+.profile-icon {
+  font-size: 3.5rem;
+  line-height: 1;
+}
+
+.profile-title {
+  margin-bottom: 0;
+  font-size: 2rem;
+}
+
+.profile-sub {
+  color: var(--pico-muted-color);
+  margin-top: var(--space-xs);
+  margin-bottom: var(--space-sm);
+  font-size: 1.1rem;
+}
+
+/* ── Category Badges ───────────────────────────────────────────────── */
+
+.category-badge {
+  display: inline-block;
+  padding: 0.2em 0.8em;
+  border-radius: var(--radius-badge);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #fff;
+  background: var(--gradient-tech);
+}
+.category-badge--tech       { background: var(--gradient-tech); }
+.category-badge--healthcare { background: var(--gradient-healthcare); }
+.category-badge--business   { background: var(--gradient-business); color: #1a1a2e; }
+.category-badge--engineering{ background: var(--gradient-engineering); color: #1a1a2e; }
+.category-badge--education  { background: var(--gradient-education); color: #1a1a2e; }
+.category-badge--trades     { background: var(--gradient-trades); color: #1a1a2e; }
+.category-badge--legal      { background: var(--gradient-legal); color: #333; }
+.category-badge--creative   { background: var(--gradient-creative); color: #1a1a2e; }
+
+/* ── Profile Section Nav (sticky) ──────────────────────────────────── */
+
+.profile-nav {
+  display: flex;
+  gap: var(--space-sm);
+  overflow-x: auto;
+  padding: var(--space-sm) 0;
+  margin-bottom: var(--space-lg);
+  border-bottom: 2px solid var(--pico-muted-border-color);
+  position: sticky;
+  top: 0;
+  background: var(--pico-background-color);
+  z-index: 10;
+  scrollbar-width: thin;
+}
+
+.profile-nav a {
+  white-space: nowrap;
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-badge);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--pico-muted-color);
+  text-decoration: none;
+  min-height: var(--touch-target-min);
+  display: flex;
+  align-items: center;
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+.profile-nav a:hover,
+.profile-nav a:focus-visible {
+  background: var(--pico-primary-focus);
+  color: var(--pico-primary);
+}
+
+/* ── Section Cards ─────────────────────────────────────────────────── */
+
+.section-card {
+  background: var(--pico-card-background-color);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card-teen);
+  padding: var(--space-lg) var(--space-xl);
+  margin-bottom: var(--space-lg);
+  scroll-margin-top: 60px;
+  transition: box-shadow var(--transition-normal);
+}
+
+.section-card:hover {
+  box-shadow: var(--shadow-card-teen-hover);
+}
+
+.section-card__title {
+  font-size: 1.25rem;
+  margin-bottom: var(--space-md);
+  padding-bottom: var(--space-sm);
+  border-bottom: 3px solid transparent;
+  border-image: var(--gradient-tech) 1;
+}
+
+.section-card__body p {
+  line-height: 1.7;
+  font-size: 1.05rem;
+}
+
+/* ── How to Become Grid ────────────────────────────────────────────── */
+
+.how-to-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-md);
+}
+
+.how-to-card {
+  background: var(--pico-background-color);
+  border-radius: 12px;
+  padding: var(--space-md);
+  border-left: 4px solid var(--brand-primary);
+}
+
+.how-to-card h4 {
+  font-size: 0.95rem;
+  margin-bottom: var(--space-sm);
+  color: var(--brand-primary);
+}
+
+.how-to-card p {
+  font-size: 0.95rem;
+  margin-bottom: 0;
+}
+
+/* ── Pay Section ───────────────────────────────────────────────────── */
+
+.pay-highlight {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: var(--space-md);
+}
+
+.pay-value {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--brand-primary);
+  line-height: 1.2;
+}
+
+.pay-label {
+  font-size: 0.9rem;
+  color: var(--pico-muted-color);
+  margin-top: var(--space-xs);
+}
+
+/* ── Salary Meter ──────────────────────────────────────────────────── */
+
+.salary-meter {
+  max-width: 500px;
+  margin: var(--space-md) auto 0;
+}
+
+.salary-meter__bar {
+  position: relative;
+  height: 12px;
+  background: var(--meter-track);
+  border-radius: 6px;
+  overflow: visible;
+}
+
+.salary-meter__bar::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 6px;
+  background: var(--meter-fill);
+  opacity: 0.6;
+}
+
+.salary-meter__marker {
+  position: absolute;
+  top: -4px;
+  width: 20px;
+  height: 20px;
+  background: var(--meter-marker);
+  border: 3px solid #fff;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  transform: translateX(-50%);
+}
+
+.salary-meter__labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: var(--space-xs);
+  font-size: 0.8rem;
+  color: var(--pico-muted-color);
+}
+
+.salary-meter__median {
+  font-weight: 700;
+  color: var(--brand-primary);
+  font-size: 0.9rem;
+}
+
+/* ── Job Outlook ───────────────────────────────────────────────────── */
+
+.outlook-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: var(--space-md);
+  text-align: center;
+}
+
+.outlook-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.outlook-value {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--pico-color);
+}
+
+.outlook-label {
+  font-size: 0.85rem;
+  color: var(--pico-muted-color);
+  font-weight: 500;
+}
+
+.outlook-note {
+  font-size: 0.8rem;
+}
+
+/* Growth Badge */
+.growth-badge {
+  display: inline-block;
+  padding: 0.3em 0.8em;
+  border-radius: var(--radius-badge);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #fff;
+}
+.growth-badge--fast    { background: var(--growth-fast); }
+.growth-badge--avg     { background: var(--growth-avg); }
+.growth-badge--slow    { background: var(--growth-slow); }
+.growth-badge--decline { background: var(--growth-slow); }
+
+/* ── Similar Occupations ───────────────────────────────────────────── */
+
+.similar-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: var(--space-md);
+}
+
+.career-mini-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-md);
+  background: var(--pico-card-background-color);
+  border-radius: 12px;
+  box-shadow: var(--shadow-card);
+  text-decoration: none;
+  color: inherit;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  min-height: var(--touch-target-min);
+}
+
+.career-mini-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-card-teen-hover);
+}
+
+.career-mini-card__icon {
+  font-size: 2rem;
+}
+
+.career-mini-card__name {
+  font-weight: 600;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.career-mini-card__degree {
+  font-size: 0.75rem;
+}
+
+/* ── More Info Links ───────────────────────────────────────────────── */
+
+.more-info-links {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-md);
+}
+
+.info-link-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  padding: var(--space-md);
+  border-radius: 12px;
+  border: 2px solid var(--pico-muted-border-color);
+  text-decoration: none;
+  color: inherit;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  min-height: var(--touch-target-min);
+}
+
+.info-link-card:hover {
+  border-color: var(--brand-primary);
+  box-shadow: var(--shadow-card-teen);
+}
+
+/* ── Profile CTA ───────────────────────────────────────────────────── */
+
+.profile-cta {
+  text-align: center;
+  margin-top: var(--space-2xl);
+  padding: var(--space-xl);
+  background: var(--pico-card-background-color);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card-teen);
+}
+
+.profile-cta .cta-label {
+  font-size: 1.2rem;
+  margin-bottom: var(--space-md);
+  color: var(--pico-muted-color);
+}
+
+.profile-cta .cta-btn {
+  font-size: 1.1rem;
+  padding: var(--space-sm) var(--space-xl);
+  border-radius: var(--radius-btn);
+  min-height: var(--touch-target-min);
+}
+
+/* ── Enhanced Career Cards (Search) ────────────────────────────────── */
+
+.career-card {
+  border-radius: var(--radius-card) !important;
+  box-shadow: var(--shadow-card-teen) !important;
+  border-top: 4px solid transparent;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast) !important;
+}
+
+.career-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-card-teen-hover) !important;
+}
+
+[data-category="tech"] .career-card,
+.career-card[data-category="tech"]       { border-image: var(--gradient-tech) 1; }
+.career-card[data-category="healthcare"] { border-image: var(--gradient-healthcare) 1; }
+.career-card[data-category="business"]   { border-image: var(--gradient-business) 1; }
+.career-card[data-category="engineering"]{ border-image: var(--gradient-engineering) 1; }
+.career-card[data-category="education"]  { border-image: var(--gradient-education) 1; }
+.career-card[data-category="trades"]     { border-image: var(--gradient-trades) 1; }
+.career-card[data-category="legal"]      { border-image: var(--gradient-legal) 1; }
+.career-card[data-category="creative"]   { border-image: var(--gradient-creative) 1; }
+
+/* ── Enhanced Hero (Home) ──────────────────────────────────────────── */
+
+.hero {
+  border-radius: var(--radius-card);
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.05), rgba(5, 150, 105, 0.05));
+}
+
+/* ── Responsive ────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+  .profile-hero {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .profile-icon {
+    font-size: 3rem;
+  }
+
+  .profile-title {
+    font-size: 1.5rem;
+  }
+
+  .how-to-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .outlook-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .section-card {
+    padding: var(--space-md);
+  }
+
+  .pay-value {
+    font-size: 2rem;
+  }
+}
