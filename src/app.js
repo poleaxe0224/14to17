@@ -1,4 +1,4 @@
-import { addRoute, setNotFound, initRouter } from './router/router.js';
+import { addRoute, setNotFound, initRouter, refresh } from './router/router.js';
 import { initI18n, toggleLocale, getLocale } from './i18n/i18n.js';
 
 import * as homeView from './views/home.js';
@@ -54,4 +54,16 @@ export async function initApp() {
 
   // Wire up language toggle button
   setupLangToggle();
+
+  // Force re-render when clicking a nav link for the current route
+  document.querySelectorAll('header nav a[href^="#"]').forEach((link) => {
+    link.addEventListener('click', (e) => {
+      const target = link.getAttribute('href').replace('#', '') || '/';
+      const current = (window.location.hash.replace('#', '') || '/').split('?')[0];
+      if (target === current) {
+        e.preventDefault();
+        refresh();
+      }
+    });
+  });
 }

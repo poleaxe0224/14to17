@@ -1,8 +1,10 @@
 /**
- * Occupation Profile view — BLS OOH-style career exploration page.
+ * Occupation Profile view — progressive disclosure career exploration.
  *
- * Sections: What They Do, Work Environment, How to Become One,
- * Pay, Job Outlook, State & Area Data, Similar Occupations, More Info.
+ * Level 1 (Discover): What They Do, Work Environment, Similar Occupations — always open
+ * Level 2 (Plan): How to Become One — collapsed
+ * Level 3 (Evaluate): Pay, Job Outlook, State & Area Data — collapsed, lazy-loads wage data
+ * Level 4 (Decide): More Info + ROI deep dive link — collapsed
  *
  * Route: #/profile/:soc
  */
@@ -13,9 +15,6 @@ import * as profiles from '../api/profiles.js';
 import * as bls from '../api/bls.js';
 import { formatCurrency, formatNumber } from '../utils/format.js';
 
-/**
- * Map growth_label enum to i18n key.
- */
 function growthLabelKey(label) {
   const map = {
     much_faster: 'profile.growth_much_faster',
@@ -27,9 +26,6 @@ function growthLabelKey(label) {
   return map[label] ?? 'profile.growth_average';
 }
 
-/**
- * Map growth_label to a CSS modifier class for the badge.
- */
 function growthBadgeClass(label) {
   const map = {
     much_faster: 'growth-badge--fast',
@@ -72,25 +68,26 @@ export function render({ soc } = {}) {
         </div>
       </div>
 
-      <!-- Section Nav (sticky) — uses data-scroll instead of href to avoid hash-router conflict -->
+      <!-- Level Nav (sticky) -->
       <nav class="profile-nav" aria-label="Section navigation">
-        <a data-scroll="prof-what" href="javascript:void(0)">${t('profile.what_they_do')}</a>
-        <a data-scroll="prof-env" href="javascript:void(0)">${t('profile.work_environment')}</a>
-        <a data-scroll="prof-how" href="javascript:void(0)">${t('profile.how_to_become')}</a>
-        <a data-scroll="prof-pay" href="javascript:void(0)">${t('profile.pay')}</a>
-        <a data-scroll="prof-outlook" href="javascript:void(0)">${t('profile.job_outlook')}</a>
-        <a data-scroll="prof-state" href="javascript:void(0)">${t('profile.state_area_data')}</a>
-        <a data-scroll="prof-similar" href="javascript:void(0)">${t('profile.similar_occupations')}</a>
-        <a data-scroll="prof-more" href="javascript:void(0)">${t('profile.more_info')}</a>
+        <a data-scroll="level-1" href="javascript:void(0)" class="level-tab level-tab--active">
+          <span class="level-num">1</span> ${t('profile.level1_title')}
+        </a>
+        <a data-scroll="level-2" href="javascript:void(0)" class="level-tab">
+          <span class="level-num">2</span> ${t('profile.level2_title')}
+        </a>
+        <a data-scroll="level-3" href="javascript:void(0)" class="level-tab">
+          <span class="level-num">3</span> ${t('profile.level3_title')}
+        </a>
+        <a data-scroll="level-4" href="javascript:void(0)" class="level-tab">
+          <span class="level-num">4</span> ${t('profile.level4_title')}
+        </a>
       </nav>
 
       <!-- Content (populated by afterRender) -->
       <div id="profile-content" aria-live="polite">
         <p class="loading-text">${t('profile.loading_profile')}</p>
       </div>
-
-      <!-- CTA -->
-      <div id="profile-cta" class="profile-cta hidden"></div>
     </section>
   `;
 }
@@ -99,34 +96,35 @@ export async function afterRender({ soc } = {}) {
   const career = findBySoc(soc);
   if (!career) return;
 
-  // Re-render the full view on locale change (hero, nav, and body text are all locale-dependent)
-  function onLocaleChanged() {
+  // Re-render on locale change
+  document.addEventListener('locale-changed', () => {
     const outlet = document.getElementById('app');
     if (!outlet || !document.getElementById('profile-content')) return;
     outlet.innerHTML = render({ soc });
     afterRender({ soc });
-  }
-  document.addEventListener('locale-changed', onLocaleChanged, { once: true });
+  }, { once: true });
 
-  // Wire section nav scroll links (can't use href="#id" — conflicts with hash router)
+  // Wire level nav scroll
   document.querySelectorAll('.profile-nav [data-scroll]').forEach((link) => {
     link.addEventListener('click', (e) => {
       e.preventDefault();
       const target = document.getElementById(link.dataset.scroll);
-      if (target) target.scrollIntoView({ behavior: 'smooth' });
+      if (target) {
+        // If it's a collapsed details, open it first
+        if (target.tagName === 'DETAILS' && !target.open) {
+          target.open = true;
+        }
+        target.scrollIntoView({ behavior: 'smooth' });
+      }
     });
   });
 
   const contentEl = document.getElementById('profile-content');
   if (!contentEl) return;
 
-  // Fetch profile data and wage data in parallel
-  const [profileData, wageData] = await Promise.all([
-    profiles.getProfile(soc),
-    bls.getWageData(soc).catch(() => null),
-  ]);
+  // Fetch profile data (Level 1+2 content)
+  const profileData = await profiles.getProfile(soc);
 
-  // If user navigated away, bail
   if (!document.getElementById('profile-content')) return;
 
   if (!profileData) {
@@ -134,46 +132,115 @@ export async function afterRender({ soc } = {}) {
     return;
   }
 
-  const sections = [];
+  // Build all 4 levels
+  contentEl.innerHTML = [
+    renderLevel1(profileData, career),
+    renderLevel2(profileData),
+    renderLevel3Skeleton(),
+    renderLevel4(profileData, soc),
+  ].join('');
 
-  // 1. What They Do
-  sections.push(renderSection('prof-what', 'profile.what_they_do', `
-    <p>${profileData.what_they_do}</p>
-  `));
+  // Lazy-load Level 3 wage data when expanded
+  const level3 = document.getElementById('level-3');
+  if (level3) {
+    level3.addEventListener('toggle', async () => {
+      if (!level3.open) return;
+      const body = level3.querySelector('.level-body');
+      if (body.dataset.loaded) return;
+      body.dataset.loaded = '1';
+      body.innerHTML = `<p class="loading-text">${t('common.loading')}</p>`;
 
-  // 2. Work Environment
-  sections.push(renderSection('prof-env', 'profile.work_environment', `
-    <p>${profileData.work_environment}</p>
-  `));
+      const wageData = await bls.getWageData(soc).catch(() => null);
+      if (!document.getElementById('level-3')) return;
+      body.innerHTML = renderLevel3Content(wageData, profileData);
+    }, { once: true });
+  }
+}
 
-  // 3. How to Become One
-  const htb = profileData.how_to_become;
-  sections.push(renderSection('prof-how', 'profile.how_to_become', `
-    <div class="how-to-grid">
-      <div class="how-to-card">
-        <h4>${t('profile.education_required')}</h4>
-        <p>${htb?.education ?? ''}</p>
+/* ── Level 1: Discover (always open) ──────────────────────────── */
+
+function renderLevel1(profile, career) {
+  const similarCareers = getRelatedCareers(career.soc);
+  const isZh = getLocale() === 'zh-TW';
+
+  return `
+    <div class="disclosure-level" id="level-1">
+      <div class="level-header level-header--open">
+        <span class="level-badge">1</span>
+        <div>
+          <h3 class="level-title">${t('profile.level1_title')}</h3>
+          <p class="level-desc muted">${t('profile.level1_desc')}</p>
+        </div>
       </div>
-      <div class="how-to-card">
-        <h4>${t('profile.experience_needed')}</h4>
-        <p>${htb?.experience ?? ''}</p>
-      </div>
-      <div class="how-to-card">
-        <h4>${t('profile.on_the_job_training')}</h4>
-        <p>${htb?.training ?? ''}</p>
+      <div class="level-body">
+        ${renderSection('prof-what', 'profile.what_they_do', `<p>${profile.what_they_do}</p>`)}
+        ${renderSection('prof-env', 'profile.work_environment', `<p>${profile.work_environment}</p>`)}
+        ${renderSection('prof-similar', 'profile.similar_occupations', renderSimilarCareers(similarCareers, isZh))}
       </div>
     </div>
-  `));
+  `;
+}
 
-  // 4. Pay
-  sections.push(renderSection('prof-pay', 'profile.pay',
-    renderPaySection(wageData),
-  ));
+/* ── Level 2: Plan (collapsed) ────────────────────────────────── */
 
-  // 5. Job Outlook
-  const ol = profileData.outlook;
+function renderLevel2(profile) {
+  const htb = profile.how_to_become;
+  return `
+    <details class="disclosure-level" id="level-2">
+      <summary class="level-header">
+        <span class="level-badge">2</span>
+        <div>
+          <h3 class="level-title">${t('profile.level2_title')}</h3>
+          <p class="level-desc muted">${t('profile.level2_desc')}</p>
+        </div>
+      </summary>
+      <div class="level-body">
+        ${renderSection('prof-how', 'profile.how_to_become', `
+          <div class="how-to-grid">
+            <div class="how-to-card">
+              <h4>${t('profile.education_required')}</h4>
+              <p>${htb?.education ?? ''}</p>
+            </div>
+            <div class="how-to-card">
+              <h4>${t('profile.experience_needed')}</h4>
+              <p>${htb?.experience ?? ''}</p>
+            </div>
+            <div class="how-to-card">
+              <h4>${t('profile.on_the_job_training')}</h4>
+              <p>${htb?.training ?? ''}</p>
+            </div>
+          </div>
+        `)}
+      </div>
+    </details>
+  `;
+}
+
+/* ── Level 3: Evaluate (collapsed, lazy-loaded) ───────────────── */
+
+function renderLevel3Skeleton() {
+  return `
+    <details class="disclosure-level" id="level-3">
+      <summary class="level-header">
+        <span class="level-badge">3</span>
+        <div>
+          <h3 class="level-title">${t('profile.level3_title')}</h3>
+          <p class="level-desc muted">${t('profile.level3_desc')}</p>
+        </div>
+      </summary>
+      <div class="level-body">
+        <p class="loading-text">${t('common.loading')}</p>
+      </div>
+    </details>
+  `;
+}
+
+function renderLevel3Content(wageData, profile) {
+  const paySectionHtml = renderPaySection(wageData);
+
+  const ol = profile.outlook;
   const growthSign = ol.growth_rate > 0 ? '+' : '';
-  sections.push(renderSection('prof-outlook', 'profile.job_outlook', `
+  const outlookHtml = `
     <div class="outlook-grid">
       <div class="outlook-stat">
         <span class="outlook-value">${formatNumber(ol.employment_2024)}</span>
@@ -190,56 +257,58 @@ export async function afterRender({ soc } = {}) {
         <span class="outlook-note muted">${t('profile.new_jobs')}</span>
       </div>
     </div>
-  `));
+  `;
 
-  // 6. State & Area Data
-  sections.push(renderSection('prof-state', 'profile.state_area_data', `
-    <p>${t('profile.state_area_desc')}</p>
-    <a href="${profileData.state_url}" target="_blank" rel="noopener" role="button" class="outline">
-      ${t('profile.view_state_data')} &rarr;
-    </a>
-  `));
-
-  // 7. Similar Occupations
-  const similarCareers = (profileData.similar_soc || [])
-    .map((s) => findBySoc(s))
-    .filter(Boolean);
-  sections.push(renderSection('prof-similar', 'profile.similar_occupations',
-    renderSimilarCareers(similarCareers),
-  ));
-
-  // 8. More Info
-  sections.push(renderSection('prof-more', 'profile.more_info', `
-    <div class="more-info-links">
-      <a href="${profileData.onet_url}" target="_blank" rel="noopener" class="info-link-card">
-        <strong>${t('profile.view_on_onet')}</strong>
-        <span class="muted">O*NET OnLine</span>
+  return `
+    ${renderSection('prof-pay', 'profile.pay', paySectionHtml)}
+    ${renderSection('prof-outlook', 'profile.job_outlook', outlookHtml)}
+    ${renderSection('prof-state', 'profile.state_area_data', `
+      <p>${t('profile.state_area_desc')}</p>
+      <a href="${profile.state_url}" target="_blank" rel="noopener" role="button" class="outline">
+        ${t('profile.view_state_data')} &rarr;
       </a>
-      <a href="${profileData.ooh_url}" target="_blank" rel="noopener" class="info-link-card">
-        <strong>${t('profile.view_on_bls')}</strong>
-        <span class="muted">Bureau of Labor Statistics</span>
-      </a>
-    </div>
-  `));
-
-  contentEl.innerHTML = sections.join('');
-
-  // CTA — link to detail page for ROI deep dive
-  const ctaEl = document.getElementById('profile-cta');
-  if (ctaEl) {
-    ctaEl.innerHTML = `
-      <p class="cta-label">${t('profile.calculate_roi')}</p>
-      <a href="#/detail/${soc}" role="button" class="cta-btn">
-        ${t('profile.deep_dive_roi')} &rarr;
-      </a>
-    `;
-    ctaEl.classList.remove('hidden');
-  }
+    `)}
+  `;
 }
 
-/**
- * Render a single profile section card.
- */
+/* ── Level 4: Decide (collapsed) ──────────────────────────────── */
+
+function renderLevel4(profile, soc) {
+  return `
+    <details class="disclosure-level" id="level-4">
+      <summary class="level-header">
+        <span class="level-badge">4</span>
+        <div>
+          <h3 class="level-title">${t('profile.level4_title')}</h3>
+          <p class="level-desc muted">${t('profile.level4_desc')}</p>
+        </div>
+      </summary>
+      <div class="level-body">
+        ${renderSection('prof-more', 'profile.more_info', `
+          <div class="more-info-links">
+            <a href="${profile.onet_url}" target="_blank" rel="noopener" class="info-link-card">
+              <strong>${t('profile.view_on_onet')}</strong>
+              <span class="muted">O*NET OnLine</span>
+            </a>
+            <a href="${profile.ooh_url}" target="_blank" rel="noopener" class="info-link-card">
+              <strong>${t('profile.view_on_bls')}</strong>
+              <span class="muted">Bureau of Labor Statistics</span>
+            </a>
+          </div>
+        `)}
+        <div class="profile-cta">
+          <p class="cta-label">${t('profile.calculate_roi')}</p>
+          <a href="#/detail/${soc}" role="button" class="cta-btn">
+            ${t('profile.deep_dive_roi')} &rarr;
+          </a>
+        </div>
+      </div>
+    </details>
+  `;
+}
+
+/* ── Shared renderers ─────────────────────────────────────────── */
+
 function renderSection(id, titleKey, bodyHtml) {
   return `
     <article class="section-card" id="${id}">
@@ -251,9 +320,6 @@ function renderSection(id, titleKey, bodyHtml) {
   `;
 }
 
-/**
- * Render the Pay section with salary meter.
- */
 function renderPaySection(wageData) {
   if (!wageData) {
     return `<p class="muted">${t('detail.error_wages')}</p>`;
@@ -265,7 +331,6 @@ function renderPaySection(wageData) {
 
   let meterHtml = '';
   if (p10 != null && p90 != null && median != null) {
-    // Position the median marker as a percentage between p10 and p90
     const range = p90 - p10;
     const pct = range > 0 ? Math.round(((median - p10) / range) * 100) : 50;
     meterHtml = `
@@ -291,13 +356,9 @@ function renderPaySection(wageData) {
   `;
 }
 
-/**
- * Render similar occupation mini-cards.
- */
-function renderSimilarCareers(careers) {
+function renderSimilarCareers(careers, isZh) {
   if (!careers.length) return `<p class="muted">-</p>`;
 
-  const isZh = getLocale() === 'zh-TW';
   return `
     <div class="similar-grid">
       ${careers.map((c) => `

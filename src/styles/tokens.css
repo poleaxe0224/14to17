@@ -65,4 +65,10 @@
   --meter-track: #e5e7eb;
   --meter-fill: linear-gradient(90deg, #4facfe, #00f2fe);
   --meter-marker: var(--brand-primary);
+
+  /* Interest group gradients */
+  --gradient-build: linear-gradient(135deg, #667eea, #764ba2);
+  --gradient-help: linear-gradient(135deg, #f093fb, #f5576c);
+  --gradient-analyze: linear-gradient(135deg, #4facfe, #00f2fe);
+  --gradient-create: linear-gradient(135deg, #fa709a, #fee140);
 }

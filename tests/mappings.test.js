@@ -9,6 +9,7 @@ import {
   searchCareers,
   getBaselineSalary,
   getEducationDuration,
+  findByInterest,
 } from '../src/engine/mappings.js';
 
 describe('BASELINE_SALARIES', () => {
@@ -28,13 +29,19 @@ describe('CAREER_MAPPINGS', () => {
     expect(CAREER_MAPPINGS.length).toBeGreaterThanOrEqual(20);
   });
 
-  it('every entry has required fields', () => {
+  it('every entry has required fields including interests', () => {
+    const validInterests = ['build', 'help', 'analyze', 'create'];
     for (const m of CAREER_MAPPINGS) {
       expect(m.soc).toMatch(/^\d{2}-\d{4}$/);
       expect(m.cip).toMatch(/^\d{4}$/);
       expect(m.career).toBeTruthy();
       expect(m.careerZh).toBeTruthy();
       expect(m.typicalDegree).toBeTruthy();
+      expect(Array.isArray(m.interests)).toBe(true);
+      expect(m.interests.length).toBeGreaterThanOrEqual(1);
+      for (const i of m.interests) {
+        expect(validInterests).toContain(i);
+      }
     }
   });
 
@@ -104,6 +111,41 @@ describe('getBaselineSalary', () => {
 
   it('defaults to highSchool for unknown', () => {
     expect(getBaselineSalary('unknown')).toBe(BASELINE_SALARIES.highSchool);
+  });
+});
+
+describe('findByInterest', () => {
+  it('finds careers tagged with build', () => {
+    const results = findByInterest('build');
+    expect(results.length).toBeGreaterThanOrEqual(5);
+    expect(results.every((c) => c.interests.includes('build'))).toBe(true);
+  });
+
+  it('finds careers tagged with help', () => {
+    const results = findByInterest('help');
+    expect(results.length).toBeGreaterThanOrEqual(5);
+  });
+
+  it('finds careers tagged with analyze', () => {
+    const results = findByInterest('analyze');
+    expect(results.length).toBeGreaterThanOrEqual(5);
+  });
+
+  it('finds careers tagged with create', () => {
+    const results = findByInterest('create');
+    expect(results.length).toBeGreaterThanOrEqual(3);
+  });
+
+  it('returns empty for unknown interest', () => {
+    expect(findByInterest('unknown')).toHaveLength(0);
+  });
+
+  it('includes multi-tagged careers in both groups', () => {
+    const swDev = findBySoc('15-1252');
+    expect(swDev.interests).toContain('build');
+    expect(swDev.interests).toContain('create');
+    expect(findByInterest('build')).toContain(swDev);
+    expect(findByInterest('create')).toContain(swDev);
   });
 });
 

@@ -3,7 +3,285 @@
    Enhances existing styles with gradients, larger radius, visual meters.
    ══════════════════════════════════════════════════════════════════════ */
 
-/* ── Profile Hero ──────────────────────────────────────────────────── */
+/* ── Home: Interest Cards ─────────────────────────────────────────── */
+
+.home-interests,
+.home-popular,
+.home-tools {
+  margin-bottom: var(--space-2xl);
+}
+
+.home-interests h2,
+.home-popular h2,
+.home-tools h2 {
+  margin-bottom: var(--space-lg);
+}
+
+.interest-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--space-lg);
+}
+
+.interest-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  padding: var(--space-xl);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card-teen);
+  text-decoration: none;
+  color: inherit;
+  border-top: 5px solid transparent;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  min-height: var(--touch-target-min);
+}
+
+.interest-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-card-teen-hover);
+}
+
+.interest-card--build  { border-image: var(--gradient-build) 1; }
+.interest-card--help   { border-image: var(--gradient-help) 1; }
+.interest-card--analyze{ border-image: var(--gradient-analyze) 1; }
+.interest-card--create { border-image: var(--gradient-create) 1; }
+
+.interest-card__icon {
+  font-size: 2.5rem;
+  line-height: 1;
+}
+
+.interest-card__title {
+  font-size: 1.15rem;
+  margin: 0;
+}
+
+.interest-card__desc {
+  font-size: 0.9rem;
+  color: var(--pico-muted-color);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.interest-card__count {
+  font-size: 0.8rem;
+  color: var(--pico-muted-color);
+  font-weight: 600;
+}
+
+/* ── Home: Popular Careers ────────────────────────────────────────── */
+
+.popular-grid {
+  display: flex;
+  gap: var(--space-md);
+  overflow-x: auto;
+  padding-bottom: var(--space-sm);
+  scrollbar-width: thin;
+}
+
+.popular-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-md) var(--space-lg);
+  background: var(--pico-card-background-color);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  text-decoration: none;
+  color: inherit;
+  white-space: nowrap;
+  min-width: 120px;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  min-height: var(--touch-target-min);
+}
+
+.popular-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-card-teen-hover);
+}
+
+.popular-card__icon {
+  font-size: 2rem;
+}
+
+.popular-card__name {
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+/* ── Home: Tools Section ──────────────────────────────────────────── */
+
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--space-md);
+}
+
+.tool-card {
+  padding: var(--space-lg);
+  border-radius: var(--radius-card);
+  border: 2px solid var(--pico-muted-border-color);
+  text-decoration: none;
+  color: inherit;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  min-height: var(--touch-target-min);
+}
+
+.tool-card:hover {
+  border-color: var(--brand-primary);
+  box-shadow: var(--shadow-card-teen);
+}
+
+.tool-card h3 {
+  margin-top: 0;
+  font-size: 1.1rem;
+}
+
+.tool-card p {
+  margin-bottom: 0;
+}
+
+/* ── Search: Filter Chips ─────────────────────────────────────────── */
+
+.filter-chips {
+  display: flex;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-md);
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-xs) var(--space-md);
+  border-radius: var(--radius-badge);
+  border: 2px solid var(--pico-muted-border-color);
+  background: transparent;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  min-height: var(--touch-target-min);
+  color: var(--pico-color);
+}
+
+.chip:hover {
+  border-color: var(--brand-primary);
+  color: var(--brand-primary);
+}
+
+.chip--active {
+  background: var(--brand-primary);
+  border-color: var(--brand-primary);
+  color: #fff;
+}
+
+.chip--active:hover {
+  background: var(--brand-primary-hover);
+  border-color: var(--brand-primary-hover);
+  color: #fff;
+}
+
+/* ── Search: Career Card Icon ─────────────────────────────────────── */
+
+.career-card__icon {
+  font-size: 1.5rem;
+  margin-bottom: var(--space-xs);
+}
+
+/* ── Progressive Disclosure Levels ─────��──────────────────────────── */
+
+.disclosure-level {
+  margin-bottom: var(--space-lg);
+  border-radius: var(--radius-card);
+  overflow: hidden;
+}
+
+.disclosure-level[open] > .level-header,
+.level-header--open {
+  border-bottom: 2px solid var(--pico-muted-border-color);
+}
+
+.level-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-lg);
+  cursor: pointer;
+  list-style: none;
+  background: var(--pico-card-background-color);
+  border-radius: var(--radius-card) var(--radius-card) 0 0;
+  min-height: var(--touch-target-min);
+}
+
+.level-header::-webkit-details-marker {
+  display: none;
+}
+
+.level-header--open {
+  cursor: default;
+}
+
+.level-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--brand-primary);
+  color: #fff;
+  font-weight: 700;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.level-title {
+  margin: 0;
+  font-size: 1.15rem;
+}
+
+.level-desc {
+  margin: 0;
+  font-size: 0.85rem;
+}
+
+.level-body {
+  padding: var(--space-md) var(--space-lg) var(--space-lg);
+  background: var(--pico-card-background-color);
+}
+
+/* Level nav tabs */
+.level-tab {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.level-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--pico-muted-border-color);
+  color: var(--pico-muted-color);
+  font-size: 0.75rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.level-tab--active .level-num,
+.level-tab:hover .level-num {
+  background: var(--brand-primary);
+  color: #fff;
+}
+
+/* ── Profile Hero ──���───────────────────────────────────────────────── */
 
 .profile-hero {
   display: flex;
@@ -384,6 +662,19 @@
 /* ── Responsive ────────────────────────────────────────────────────── */
 
 @media (max-width: 768px) {
+  .interest-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .popular-grid {
+    gap: var(--space-sm);
+  }
+
+  .popular-card {
+    min-width: 100px;
+    padding: var(--space-sm) var(--space-md);
+  }
+
   .profile-hero {
     flex-direction: column;
     text-align: center;
@@ -411,5 +702,13 @@
 
   .pay-value {
     font-size: 2rem;
+  }
+
+  .level-header {
+    padding: var(--space-md);
+  }
+
+  .level-body {
+    padding: var(--space-sm) var(--space-md) var(--space-md);
   }
 }

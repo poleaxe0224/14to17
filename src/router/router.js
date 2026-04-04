@@ -92,6 +92,13 @@ export function navigate(path) {
 }
 
 /**
+ * Force re-render the current route (useful when hash hasn't changed).
+ */
+export function refresh() {
+  render();
+}
+
+/**
  * Initialize the router.
  * @param {string} outletId — id of the element to render views into
  */

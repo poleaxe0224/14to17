@@ -1,8 +1,8 @@
-# Education ROI Calculator
+# FuturePath — Career Explorer
 
 ## Overview
 
-Static SPA deployed to GitHub Pages. Calculates education return-on-investment using a three-layer model: basic ROI, risk-adjusted (graduation rate), and competition-adjusted (job market saturation). Data from BLS wages, College Scorecard tuition, and IPEDS.
+Static SPA deployed to GitHub Pages. Progressive career exploration tool for teens (14-17) with 4-level disclosure: Discover → Plan → Evaluate → Decide. Three-layer ROI model surfaces at Level 3 as the culminating analytical tool. Data from BLS wages, College Scorecard tuition, and IPEDS.
 
 ## Tech Stack
 
@@ -34,30 +34,48 @@ src/
 ├── router/       # Hash-based SPA router (supports afterRender + query params)
 ├── utils/        # Formatting helpers (currency, percent, number)
 ├── views/        # Page components (render + optional afterRender)
-│   ├── home.js, search.js, calculator.js, compare.js
-│   ├── profile.js    # Occupation profile (OOH-style, 8 sections)
-│   └── detail.js     # ROI deep dive (wages, tuition, 3-layer ROI)
-├── styles/       # Design tokens + main.css + teen.css
+│   ├── home.js           # Interest-based exploration entry (4 category cards)
+│   ├── search.js         # Career search with interest filter chips
+│   ├── profile.js        # 4-level progressive disclosure (Discover/Plan/Evaluate/Decide)
+│   ├── detail.js         # ROI deep dive (wages, tuition, 3-layer ROI)
+│   ├── detail-renderers.js  # Pure HTML renderers for detail panels
+│   ├── detail-sliders.js    # Competition parameter slider wiring
+│   ├── calculator.js     # 9-field ROI calculator + Chart.js
+│   └── compare.js        # 2-3 career side-by-side comparison
+├── styles/       # Design tokens + main.css + enhanced.css
 ├── app.js        # App init (router + i18n wiring)
 └── main.js       # Vite entry point
-tests/            # Vitest unit tests (108+)
+tests/            # Vitest unit tests (118+)
 ```
 
 ## User Flow
 
 ```
-Home → Search → Profile (#/profile/:soc) → Detail (#/detail/:soc) → Calculator
-                                                                   → Compare
+Home (interest cards) → Search (filter chips + keyword) → Profile (#/profile/:soc)
+  Level 1 (Discover): What They Do, Work Environment, Similar Occupations
+  Level 2 (Plan): How to Become One [collapsed]
+  Level 3 (Evaluate): Pay, Job Outlook, State Data [collapsed, lazy-loads wage data]
+  Level 4 (Decide): More Info + ROI deep dive link [collapsed]
+    → Detail (#/detail/:soc) → Calculator
+                              → Compare (via nav Tools dropdown)
 ```
+
+## Interest Groups (Home Page)
+
+4 groups, multi-tagged (careers can appear in multiple):
+- **build**: engineers, developers, trades (8 careers)
+- **help**: healthcare, education, legal support (7 careers)
+- **analyze**: data, finance, security, law (7 careers)
+- **create**: design, media, marketing (5 careers)
 
 ## Notes
 
 - Chart.js loaded via CDN script tag (esbuild can't parse npm dist on Windows NTFS)
 - Views can export `{ render, afterRender }` — router calls afterRender after DOM insertion
 - Detail→Calculator pre-fill uses query params in hash: `#/calculator?soc=...&tuition=...`
-- Profile page loads static JSON (instant) + wage data (async) in parallel
+- Profile Level 3 lazy-loads wage data on `<details>` toggle (saves API calls for casual browsers)
 - Tuition fallback by degree level when CIP-specific data unavailable (scorecard.js `getTuitionFallback`)
-- Category gradients and growth badges styled via CSS custom properties (tokens.css + teen.css)
+- Category gradients and growth badges styled via CSS custom properties (tokens.css + enhanced.css)
 
 ## API Keys
 
@@ -74,21 +92,26 @@ Home → Search → Profile (#/profile/:soc) → Detail (#/detail/:soc) → Calc
 - Immutable data patterns — never mutate API responses
 - All fetch calls go through service layer with in-memory caching
 
-## Five-Phase Plan
+## Phase Plan
 
-1. **Foundation** ✓ — skeleton, router, API services, i18n
-2. **Core Math** ✓ — NPV, IRR, breakeven, lifetime ROI engine, SOC-CIP mappings, 52 tests
-3. **UI Views** ✓ — career search (25 careers, live filter), detail (BLS wages + Scorecard tuition), calculator (9-field form + Chart.js bar/line charts), query-param pre-fill from detail→calculator
-4. **Comparison + Report** ✓ — 2-3 career side-by-side comparison table (★ best values), grouped bar chart, PDF export (html2pdf.js lazy-loaded from CDN) on both calculator and compare views
-5. **Polish + Deploy** ✓ — a11y (skip-link, focus-visible, aria-labels, landmarks), preconnect hints, 75 tests, CI runs tests before deploy, README
-6. **IPEDS + Three-Layer ROI** ✓ — graduation rates (Scorecard/IPEDS), curated completions (NCES), CIP-SOC crosswalk, saturation penalty with adjustable k/maxPenalty sliders, 94 tests
-7. **Occupation Profile + Teen UI** ✓ — BLS OOH-style profile page (8 sections: what they do, work environment, how to become, pay, outlook, state data, similar occupations, O*NET links), teen-friendly CSS (gradients, salary meters, growth badges, category cards), 108 tests
+1. **Foundation** ✓
+2. **Core Math** ✓
+3. **UI Views** ✓
+4. **Comparison + Report** ✓
+5. **Polish + Deploy** ✓
+6. **IPEDS + Three-Layer ROI** ✓
+7. **Occupation Profile + Teen UI** ✓
+8. **Career Explorer UX Pivot (Phase 1)** ✓ — rebrand to FuturePath/未來路徑, interest-based home page (build/help/analyze/create), search filter chips, 4-level progressive disclosure in profile, lazy-load Level 3 data, 118 tests
+9. **O*NET API Integration** — knowledge, skills, education, certifications for Level 2
+10. **ROI Quick View in Level 3** — inline ROI badges + shared career-data.js fetcher
+11. **Assessment Report Export** — localStorage exploration tracker, report compiler (Markdown + PDF)
+12. **Polish** — a11y, responsive, CI pipeline, docs
 
 ## Three-Layer ROI Model
 
-- **Layer 1 (Basic)**: `(totalPremium - totalCost) / totalCost` — existing NPV-based ROI
-- **Layer 2 (Risk-Adjusted)**: `graduationRate × basicROI` — expected value weighted by graduation probability
-- **Layer 3 (Competition-Adjusted)**: `riskAdjustedROI × (1 - saturationPenalty)` — penalizes oversaturated fields
+- **Layer 1 (Basic)**: `(totalPremium - totalCost) / totalCost`
+- **Layer 2 (Risk-Adjusted)**: `graduationRate × basicROI`
+- **Layer 3 (Competition-Adjusted)**: `riskAdjustedROI × (1 - saturationPenalty)`
 - Saturation: `penalty = min(completions/employment × k, maxPenalty)`, defaults k=0.3, maxPenalty=0.25
 - Graceful fallback: missing data → skip that layer, UI shows warning
 

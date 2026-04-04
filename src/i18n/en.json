@@ -1,28 +1,40 @@
 {
   "nav": {
-    "brand": "EduROI",
+    "brand": "FuturePath",
     "home": "Home",
-    "search": "Search Careers",
+    "search": "Explore",
     "calculator": "Calculator",
-    "compare": "Compare"
+    "compare": "Compare",
+    "tools": "Tools"
   },
   "home": {
-    "title": "Is Your Degree Worth It?",
-    "subtitle": "Calculate the real return on investment for any education path \u2014 powered by federal data.",
-    "cta_search": "Search Careers",
-    "cta_calculator": "Open Calculator",
-    "feature_wage_title": "Real Wage Data",
-    "feature_wage_desc": "Salary percentiles from the Bureau of Labor Statistics \u2014 not self-reported estimates.",
-    "feature_cost_title": "True Cost of Education",
-    "feature_cost_desc": "Tuition, net price, and program-level data from the College Scorecard.",
-    "feature_roi_title": "ROI Analysis",
-    "feature_roi_desc": "Net present value, breakeven year, internal rate of return, and lifetime earnings comparison."
+    "title": "What Kind of Work Interests You?",
+    "subtitle": "Explore careers, discover what they\u2019re really like, and find the path that fits you.",
+    "explore_by_interest": "Explore by Interest",
+    "popular_careers": "Popular Careers",
+    "tools_section": "Advanced Tools",
+    "tools_calculator": "ROI Calculator",
+    "tools_calculator_desc": "Calculate the financial return on any education path.",
+    "tools_compare": "Compare Careers",
+    "tools_compare_desc": "Side-by-side comparison of salary, cost, and ROI."
   },
   "search": {
-    "title": "Search Careers",
+    "title": "Explore Careers",
     "placeholder": "Enter a job title or keyword\u2026",
     "no_results": "No careers found. Try a different search term.",
-    "results_count": "{count} careers found"
+    "results_count": "{count} careers found",
+    "filter_all": "All",
+    "showing_interest": "Showing: {interest}"
+  },
+  "interests": {
+    "build": "I Like Building Things",
+    "help": "I Like Helping People",
+    "analyze": "I Like Numbers & Data",
+    "create": "I Like Creating & Designing",
+    "build_desc": "Engineers, developers, and skilled trades \u2014 people who make things work.",
+    "help_desc": "Healthcare, education, and social services \u2014 people who care for others.",
+    "analyze_desc": "Data, finance, law, and security \u2014 people who love logic and patterns.",
+    "create_desc": "Design, media, and marketing \u2014 people who bring ideas to life."
   },
   "detail": {
     "title": "Career Detail",
@@ -121,7 +133,7 @@
   "pdf": {
     "export": "Export PDF",
     "exporting": "Generating PDF\u2026",
-    "report_title": "Education ROI Report",
+    "report_title": "Career Assessment Report",
     "generated": "Generated {date}",
     "disclaimer": "For informational purposes only. Actual costs and earnings may vary."
   },
@@ -191,7 +203,15 @@
     "profile_unavailable": "Profile data is not yet available for this career.",
     "new_jobs": "new jobs",
     "per_year": "/ year",
-    "view_state_data": "View State & Area Data"
+    "view_state_data": "View State & Area Data",
+    "level1_title": "Discover",
+    "level1_desc": "What does this career look like?",
+    "level2_title": "Plan",
+    "level2_desc": "How do I get there?",
+    "level3_title": "Evaluate",
+    "level3_desc": "What\u2019s the economic reality?",
+    "level4_title": "Decide",
+    "level4_desc": "Take the next step"
   },
   "categories": {
     "tech": "Computer & IT",
