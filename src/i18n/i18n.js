@@ -76,7 +76,7 @@ export async function setLocale(locale) {
   if (!SUPPORTED.includes(locale)) return;
   await load(locale);
   current = locale;
-  localStorage.setItem('eduroi-locale', locale);
+  localStorage.setItem('career-compass-locale', locale);
   applyToDOM();
   document.dispatchEvent(new CustomEvent('locale-changed', { detail: { locale } }));
 }
@@ -94,7 +94,7 @@ export function toggleLocale() {
  * Detects saved preference or browser language.
  */
 export async function initI18n() {
-  const saved = localStorage.getItem('eduroi-locale');
+  const saved = localStorage.getItem('career-compass-locale');
   const browserLang = navigator.language || 'en';
   const initial = saved || (browserLang.startsWith('zh') ? 'zh-TW' : 'en');
 

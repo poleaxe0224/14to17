@@ -197,7 +197,7 @@ export function afterRender() {
   if (mdBtn) {
     mdBtn.addEventListener('click', () => {
       const md = buildMarkdown();
-      downloadFile(md, `futurepath-report-${Date.now()}.md`, 'text/markdown;charset=utf-8');
+      downloadFile(md, `career-compass-report-${Date.now()}.md`, 'text/markdown;charset=utf-8');
     });
   }
 
@@ -212,7 +212,7 @@ export function afterRender() {
       if (msgEl) msgEl.classList.add('hidden');
 
       exportPdf(content, {
-        filename: 'futurepath-exploration-report',
+        filename: 'career-compass-report',
         orientation: 'portrait',
         statusBtn: pdfBtn,
       }).finally(() => {
@@ -227,7 +227,7 @@ export function afterRender() {
   if (jsonBtn) {
     jsonBtn.addEventListener('click', () => {
       const json = exportJSON();
-      downloadFile(json, `futurepath-data-${Date.now()}.json`, 'application/json');
+      downloadFile(json, `career-compass-data-${Date.now()}.json`, 'application/json');
     });
   }
 

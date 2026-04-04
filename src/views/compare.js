@@ -268,7 +268,7 @@ export function afterRender() {
   const exportBtn = document.getElementById('compare-export-pdf');
   exportBtn.addEventListener('click', () => {
     exportPdf(resultsEl, {
-      filename: 'education-roi-comparison',
+      filename: 'career-compass-comparison',
       orientation: 'landscape',
       statusBtn: exportBtn,
     });

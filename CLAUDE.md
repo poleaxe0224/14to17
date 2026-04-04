@@ -1,4 +1,4 @@
-# FuturePath — Career Explorer
+# Career Compass — 職涯羅盤
 
 ## Overview
 
@@ -103,7 +103,7 @@ Home (interest cards) → Search (filter chips + keyword) → Profile (#/profile
 5. **Polish + Deploy** ✓
 6. **IPEDS + Three-Layer ROI** ✓
 7. **Occupation Profile + Teen UI** ✓
-8. **Career Explorer UX Pivot (Phase 1)** ✓ — rebrand to FuturePath/未來路徑, interest-based home page (build/help/analyze/create), search filter chips, 4-level progressive disclosure in profile, lazy-load Level 3 data, 118 tests
+8. **Career Explorer UX Pivot (Phase 1)** ✓ — rebrand to Career Compass/職涯羅盤, interest-based home page (build/help/analyze/create), search filter chips, 4-level progressive disclosure in profile, lazy-load Level 3 data
 9. **O*NET API Integration** ✓ — knowledge, skills, education, certifications for Level 2
 10. **ROI Quick View in Level 3** ✓ — inline ROI badges + shared career-data.js fetcher
 11. **Assessment Report Export** ✓ — localStorage tracker, report view (#/report), Markdown + PDF + JSON export/import, shared export-pdf.js utility
