@@ -12,8 +12,9 @@
 import { t, getLocale } from '../i18n/i18n.js';
 import { findBySoc, getRelatedCareers } from '../engine/mappings.js';
 import * as profiles from '../api/profiles.js';
-import * as bls from '../api/bls.js';
 import * as onet from '../api/onet.js';
+import { fetchCareerEconomics } from '../api/career-data.js';
+import { renderRoiLayers } from './detail-renderers.js';
 import { formatCurrency, formatNumber } from '../utils/format.js';
 
 function growthLabelKey(label) {
@@ -156,7 +157,7 @@ export async function afterRender({ soc } = {}) {
     }, { once: true });
   }
 
-  // Lazy-load Level 3 wage data when expanded
+  // Lazy-load Level 3 economic data when expanded
   const level3 = document.getElementById('level-3');
   if (level3) {
     level3.addEventListener('toggle', async () => {
@@ -166,9 +167,9 @@ export async function afterRender({ soc } = {}) {
       body.dataset.loaded = '1';
       body.innerHTML = `<p class="loading-text">${t('common.loading')}</p>`;
 
-      const wageData = await bls.getWageData(soc).catch(() => null);
+      const econ = await fetchCareerEconomics(career);
       if (!document.getElementById('level-3')) return;
-      body.innerHTML = renderLevel3Content(wageData, profileData);
+      body.innerHTML = renderLevel3Content(econ, profileData, soc);
     }, { once: true });
   }
 }
@@ -334,8 +335,8 @@ function renderLevel3Skeleton() {
   `;
 }
 
-function renderLevel3Content(wageData, profile) {
-  const paySectionHtml = renderPaySection(wageData);
+function renderLevel3Content(econ, profile, soc) {
+  const paySectionHtml = renderPaySection(econ.wageData);
 
   const ol = profile.outlook;
   const growthSign = ol.growth_rate > 0 ? '+' : '';
@@ -358,9 +359,23 @@ function renderLevel3Content(wageData, profile) {
     </div>
   `;
 
+  // ROI quick-view badges (reuse detail-renderers)
+  const roiHtml = econ.roi?.layers
+    ? renderRoiLayers(econ.roi.layers)
+    : '';
+
+  const deepDiveHtml = `
+    <div class="roi-deep-dive">
+      <a href="#/detail/${soc}" class="outline" role="button">
+        ${t('profile.deep_dive_roi')} &rarr;
+      </a>
+    </div>
+  `;
+
   return `
     ${renderSection('prof-pay', 'profile.pay', paySectionHtml)}
     ${renderSection('prof-outlook', 'profile.job_outlook', outlookHtml)}
+    ${roiHtml ? renderSection('prof-roi', 'ipeds.competition_adjusted_roi', roiHtml + deepDiveHtml) : ''}
     ${renderSection('prof-state', 'profile.state_area_data', `
       <p>${t('profile.state_area_desc')}</p>
       <a href="${profile.state_url}" target="_blank" rel="noopener" role="button" class="outline">

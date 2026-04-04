@@ -381,6 +381,13 @@
   text-align: right;
 }
 
+/* ── ROI Deep Dive Link (Profile Level 3) ─────────────────────────── */
+
+.roi-deep-dive {
+  text-align: center;
+  margin-top: var(--space-md);
+}
+
 /* ── Profile Hero ──���───────────────────────────────────────────────── */
 
 .profile-hero {

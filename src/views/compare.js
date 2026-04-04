@@ -1,9 +1,6 @@
 import { t, getLocale } from '../i18n/i18n.js';
-import { CAREER_MAPPINGS, findBySoc, getBaselineSalary, getEducationDuration } from '../engine/mappings.js';
-import { calcThreeLayerROI } from '../engine/roi.js';
-import * as bls from '../api/bls.js';
-import * as scorecard from '../api/scorecard.js';
-import * as ipeds from '../api/ipeds.js';
+import { CAREER_MAPPINGS, findBySoc } from '../engine/mappings.js';
+import { fetchCareerEconomics } from '../api/career-data.js';
 import { formatCurrency, formatPercent } from '../utils/format.js';
 
 const getChart = () => window.Chart;
@@ -66,43 +63,16 @@ export function render() {
 
 /** Fetch tuition + wage + IPEDS for one career, return enriched object */
 async function fetchCareerData(career) {
-  const duration = getEducationDuration(career.typicalDegree);
-  const baseline = getBaselineSalary(career.typicalDegree);
-
-  const [wageRes, tuitionRes, ipedsRes] = await Promise.allSettled([
-    bls.getWageData(career.soc),
-    scorecard.getAverageTuition(career.cip),
-    ipeds.getIpedsData(career.cip),
-  ]);
-
-  const wage = wageRes.status === 'fulfilled' ? wageRes.value : null;
-  const tuition = tuitionRes.status === 'fulfilled' ? tuitionRes.value : null;
-  const ipedsData = ipedsRes.status === 'fulfilled' ? ipedsRes.value : null;
-
-  const medianSalary = wage?.annualMedian || baseline * 1.5; // rough fallback
-  const annualTuition = tuition?.netPrice || tuition?.inState || 20_000;
-  const salaryFallback = !wage?.annualMedian;
-  const totalEmployment = wage?.employment ?? wage?.tot_emp ?? null;
-
-  const roi = calcThreeLayerROI({
-    annualTuition,
-    educationYears: duration,
-    postDegreeSalary: medianSalary,
-    baselineSalary: baseline,
-    graduationRate: ipedsData?.graduationRate ?? null,
-    completionsTotal: ipedsData?.completionsTotal ?? null,
-    totalEmployment,
-  });
-
+  const econ = await fetchCareerEconomics(career);
   return {
     career,
-    duration,
-    baseline,
-    medianSalary,
-    annualTuition,
-    salaryFallback,
-    graduationRate: ipedsData?.graduationRate ?? null,
-    roi,
+    duration: econ.duration,
+    baseline: econ.baseline,
+    medianSalary: econ.medianSalary,
+    annualTuition: econ.avgTuition,
+    salaryFallback: econ.salaryFallback,
+    graduationRate: econ.graduationRate,
+    roi: econ.roi,
   };
 }
 

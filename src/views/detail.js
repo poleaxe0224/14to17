@@ -1,18 +1,15 @@
 /**
  * Detail view — ROI deep dive for a career.
  *
- * Thin orchestrator: renders the shell, fetches data in parallel,
- * then delegates to detail-renderers (pure HTML) and detail-sliders (wiring).
+ * Thin orchestrator: renders the shell, fetches data via shared career-data
+ * service, then delegates to detail-renderers (pure HTML) and detail-sliders.
  *
  * Route: #/detail/:soc (accessed from Profile page)
  */
 
 import { t, getLocale } from '../i18n/i18n.js';
-import { findBySoc, getBaselineSalary, getEducationDuration } from '../engine/mappings.js';
-import { calcThreeLayerROI } from '../engine/roi.js';
-import * as bls from '../api/bls.js';
-import * as scorecard from '../api/scorecard.js';
-import * as ipeds from '../api/ipeds.js';
+import { findBySoc, getEducationDuration } from '../engine/mappings.js';
+import { fetchCareerEconomics } from '../api/career-data.js';
 import {
   renderWagePanel,
   renderTuitionPanel,
@@ -97,56 +94,45 @@ export async function afterRender({ soc } = {}) {
     afterRender({ soc });
   }, { once: true });
 
-  const duration = getEducationDuration(career.typicalDegree);
-  const baseline = getBaselineSalary(career.typicalDegree);
-
-  // Fetch all data sources in parallel
-  const [wageResult, tuitionResult, ipedsResult] = await Promise.allSettled([
-    bls.getWageData(career.soc),
-    scorecard.getAverageTuition(career.cip),
-    ipeds.getIpedsData(career.cip),
-  ]);
+  // Fetch all economic data via shared service
+  const econ = await fetchCareerEconomics(career);
 
   // Render wage panel
   const wageEl = document.getElementById('wage-content');
   if (!wageEl) return;
-  const wageData = wageResult.status === 'fulfilled' ? wageResult.value : null;
-  const { html: wageHtml, medianSalary, totalEmployment } = renderWagePanel(wageData);
+  const { html: wageHtml } = renderWagePanel(econ.wageData);
   wageEl.innerHTML = wageHtml;
 
   // Render tuition panel
   const tuitionEl = document.getElementById('tuition-content');
   if (!tuitionEl) return;
-  const tuitionData = tuitionResult.status === 'fulfilled' ? tuitionResult.value : null;
-  const { html: tuitionHtml, avgTuition } = renderTuitionPanel(tuitionData);
+  const { html: tuitionHtml } = renderTuitionPanel(econ.tuitionData);
   tuitionEl.innerHTML = tuitionHtml;
 
   // Render IPEDS panel
   const ipedsEl = document.getElementById('ipeds-content');
   if (!ipedsEl) return;
-  const ipedsData = ipedsResult.status === 'fulfilled' ? ipedsResult.value : null;
-  const { html: ipedsHtml, graduationRate, completionsTotal } = renderIpedsPanel(ipedsData, totalEmployment);
+  const { html: ipedsHtml } = renderIpedsPanel(econ.ipedsData, econ.totalEmployment);
   ipedsEl.innerHTML = ipedsHtml;
 
-  // Compute and render three-layer ROI
+  // Render three-layer ROI
   const roiLayersEl = document.getElementById('roi-layers');
   if (!roiLayersEl) return;
 
   const layerState = {
-    annualTuition: avgTuition,
-    educationYears: duration,
-    postDegreeSalary: medianSalary,
-    baselineSalary: baseline,
-    graduationRate,
-    completionsTotal,
-    totalEmployment,
+    annualTuition: econ.avgTuition,
+    educationYears: econ.duration,
+    postDegreeSalary: econ.medianSalary,
+    baselineSalary: econ.baseline,
+    graduationRate: econ.graduationRate,
+    completionsTotal: econ.completionsTotal,
+    totalEmployment: econ.totalEmployment,
   };
 
-  const result = calcThreeLayerROI(layerState);
-  roiLayersEl.innerHTML = renderRoiLayers(result.layers);
+  roiLayersEl.innerHTML = renderRoiLayers(econ.roi.layers);
   roiLayersEl.classList.remove('hidden');
 
-  // Wire sliders (passes state by value — no module-level mutable state)
+  // Wire sliders
   wireSliders(layerState);
 
   // Show CTA
@@ -154,10 +140,10 @@ export async function afterRender({ soc } = {}) {
   if (!ctaEl) return;
   ctaEl.innerHTML = renderCtaButton({
     soc: career.soc,
-    tuition: avgTuition,
-    salary: medianSalary,
-    years: duration,
-    baseline,
+    tuition: econ.avgTuition,
+    salary: econ.medianSalary,
+    years: econ.duration,
+    baseline: econ.baseline,
   });
   ctaEl.classList.remove('hidden');
 }
