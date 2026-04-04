@@ -16,6 +16,7 @@ import * as onet from '../api/onet.js';
 import { fetchCareerEconomics } from '../api/career-data.js';
 import { renderRoiLayers } from './detail-renderers.js';
 import { formatCurrency, formatNumber } from '../utils/format.js';
+import { trackEvent } from '../tracker/tracker.js';
 
 function growthLabelKey(label) {
   const map = {
@@ -97,6 +98,8 @@ export function render({ soc } = {}) {
 export async function afterRender({ soc } = {}) {
   const career = findBySoc(soc);
   if (!career) return;
+
+  trackEvent('view_profile', { soc });
 
   // Re-render on locale change
   document.addEventListener('locale-changed', () => {

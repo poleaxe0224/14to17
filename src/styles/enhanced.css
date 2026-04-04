@@ -766,6 +766,174 @@
   background: linear-gradient(135deg, rgba(37, 99, 235, 0.05), rgba(5, 150, 105, 0.05));
 }
 
+/* ── Report View ──────────────────────────────────────────────────── */
+
+.report-view h3 {
+  margin-top: var(--space-2xl);
+  margin-bottom: var(--space-md);
+}
+
+.report-subtitle {
+  color: var(--pico-muted-color);
+  margin-bottom: var(--space-xl);
+}
+
+.report-empty {
+  text-align: center;
+  padding: var(--space-2xl) var(--space-lg);
+}
+
+.report-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
+}
+
+.report-stat-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-lg);
+  background: var(--pico-card-background-color);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card-teen);
+}
+
+.report-stat-value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--brand-primary);
+  line-height: 1.2;
+}
+
+.report-stat-label {
+  font-size: 0.85rem;
+  color: var(--pico-muted-color);
+  text-align: center;
+}
+
+.report-career-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.report-career-card {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-md) var(--space-lg);
+  background: var(--pico-card-background-color);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  text-decoration: none;
+  color: inherit;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  min-height: var(--touch-target-min);
+}
+
+.report-career-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-card-teen-hover);
+}
+
+.report-career-icon {
+  font-size: 1.8rem;
+  flex-shrink: 0;
+}
+
+.report-career-info {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.report-career-name {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.report-career-sub {
+  font-size: 0.8rem;
+}
+
+/* Report Timeline */
+
+.report-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding-left: var(--space-md);
+  border-left: 3px solid var(--pico-muted-border-color);
+  margin-bottom: var(--space-xl);
+}
+
+.timeline-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-md);
+  padding: var(--space-sm) 0;
+  position: relative;
+}
+
+.timeline-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--brand-primary);
+  flex-shrink: 0;
+  margin-top: 4px;
+  margin-left: calc(-1 * var(--space-md) - 7.5px);
+}
+
+.timeline-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.timeline-label {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.timeline-career {
+  font-size: 0.85rem;
+  color: var(--pico-color);
+}
+
+.timeline-time {
+  font-size: 0.75rem;
+}
+
+/* Report actions */
+
+.report-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  margin-top: var(--space-xl);
+  margin-bottom: var(--space-md);
+}
+
+.report-actions button {
+  min-height: var(--touch-target-min);
+}
+
+.report-import-wrap {
+  margin-top: var(--space-lg);
+  text-align: center;
+}
+
+.report-msg {
+  margin-top: var(--space-sm);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
 /* ── Responsive ────────────────────────────────────────────────────── */
 
 @media (max-width: 768px) {
@@ -825,5 +993,30 @@
 
   .skill-bar__label {
     font-size: 0.8rem;
+  }
+
+  /* Report */
+  .report-summary {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .report-career-card {
+    padding: var(--space-sm) var(--space-md);
+  }
+
+  .report-career-icon {
+    font-size: 1.4rem;
+  }
+
+  .report-actions {
+    flex-direction: column;
+  }
+
+  .report-actions button {
+    width: 100%;
+  }
+
+  .report-stat-value {
+    font-size: 1.6rem;
   }
 }

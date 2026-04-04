@@ -2,6 +2,8 @@ import { t, getLocale } from '../i18n/i18n.js';
 import { CAREER_MAPPINGS, findBySoc } from '../engine/mappings.js';
 import { fetchCareerEconomics } from '../api/career-data.js';
 import { formatCurrency, formatPercent } from '../utils/format.js';
+import { exportPdf } from '../utils/export-pdf.js';
+import { trackEvent } from '../tracker/tracker.js';
 
 const getChart = () => window.Chart;
 
@@ -241,6 +243,8 @@ export function afterRender() {
       const careers = valid.map((soc) => findBySoc(soc));
       const results = await Promise.all(careers.map(fetchCareerData));
 
+      trackEvent('compare', { socs: valid });
+
       resultsEl.innerHTML = renderTable(results);
       resultsEl.classList.remove('hidden');
 
@@ -262,51 +266,11 @@ export function afterRender() {
 
   // PDF export
   const exportBtn = document.getElementById('compare-export-pdf');
-  exportBtn.addEventListener('click', () => exportPdf(resultsEl));
-}
-
-async function exportPdf(contentEl) {
-  const btn = document.getElementById('compare-export-pdf');
-  const origText = btn.textContent;
-  btn.textContent = t('pdf.exporting');
-  btn.disabled = true;
-
-  try {
-    // Lazy-load html2pdf.js from CDN
-    if (!window.html2pdf) {
-      await new Promise((resolve, reject) => {
-        const s = document.createElement('script');
-        s.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.2/html2pdf.bundle.min.js';
-        s.onload = resolve;
-        s.onerror = reject;
-        document.head.appendChild(s);
-      });
-    }
-
-    const header = document.createElement('div');
-    header.innerHTML = `
-      <h2 style="text-align:center;margin-bottom:4px;">${t('pdf.report_title')}</h2>
-      <p style="text-align:center;color:#666;font-size:12px;margin-bottom:16px;">
-        ${t('pdf.generated').replace('{date}', new Date().toLocaleDateString())} |
-        ${t('pdf.disclaimer')}
-      </p>
-    `;
-
-    const wrapper = document.createElement('div');
-    wrapper.appendChild(header);
-    wrapper.appendChild(contentEl.cloneNode(true));
-
-    await window.html2pdf().set({
-      margin: [10, 10],
-      filename: `education-roi-comparison-${Date.now()}.pdf`,
-      image: { type: 'jpeg', quality: 0.95 },
-      html2canvas: { scale: 2 },
-      jsPDF: { unit: 'mm', format: 'a4', orientation: 'landscape' },
-    }).from(wrapper).save();
-  } catch (err) {
-    console.error('PDF export failed:', err);
-  } finally {
-    btn.textContent = origText;
-    btn.disabled = false;
-  }
+  exportBtn.addEventListener('click', () => {
+    exportPdf(resultsEl, {
+      filename: 'education-roi-comparison',
+      orientation: 'landscape',
+      statusBtn: exportBtn,
+    });
+  });
 }

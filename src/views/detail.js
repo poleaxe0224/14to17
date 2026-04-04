@@ -18,6 +18,7 @@ import {
   renderCtaButton,
 } from './detail-renderers.js';
 import { renderSliderPanel, wireSliders } from './detail-sliders.js';
+import { trackEvent } from '../tracker/tracker.js';
 
 export function render({ soc } = {}) {
   const career = findBySoc(soc);
@@ -85,6 +86,8 @@ export function render({ soc } = {}) {
 export async function afterRender({ soc } = {}) {
   const career = findBySoc(soc);
   if (!career) return;
+
+  trackEvent('view_detail', { soc });
 
   // Re-render on locale change
   document.addEventListener('locale-changed', () => {

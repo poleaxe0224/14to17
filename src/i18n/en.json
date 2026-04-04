@@ -5,7 +5,8 @@
     "search": "Explore",
     "calculator": "Calculator",
     "compare": "Compare",
-    "tools": "Tools"
+    "tools": "Tools",
+    "report": "My Report"
   },
   "home": {
     "title": "What Kind of Work Interests You?",
@@ -233,6 +234,31 @@
     "trades": "Trades & Technical",
     "legal": "Legal",
     "creative": "Creative & Media"
+  },
+  "report": {
+    "title": "My Exploration Report",
+    "subtitle": "A summary of the careers you've explored.",
+    "empty": "You haven't explored any careers yet. Start by browsing the home page!",
+    "summary_title": "Summary",
+    "careers_explored": "Careers Explored",
+    "profiles_viewed": "Profiles Viewed",
+    "comparisons_made": "Comparisons",
+    "calculations_run": "ROI Calculations",
+    "explored_careers": "Careers You Explored",
+    "timeline_title": "Exploration Timeline",
+    "event_view_profile": "Viewed profile",
+    "event_view_detail": "Viewed ROI detail",
+    "event_calculate_roi": "Calculated ROI",
+    "event_compare": "Compared careers",
+    "export_md": "Download Markdown",
+    "export_pdf": "Export PDF",
+    "export_json": "Export Data (JSON)",
+    "import_json": "Import Data",
+    "clear_data": "Clear All Data",
+    "clear_confirm": "Are you sure? This will delete all your exploration history.",
+    "imported_ok": "Data imported successfully!",
+    "import_error": "Invalid file format.",
+    "no_career_name": "Unknown Career"
   },
   "footer": {
     "data": "Data: BLS OES, College Scorecard & IPEDS",

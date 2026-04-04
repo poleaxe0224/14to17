@@ -7,6 +7,7 @@ import * as profileView from './views/profile.js';
 import * as detailView from './views/detail.js';
 import * as calculatorView from './views/calculator.js';
 import * as compareView from './views/compare.js';
+import * as reportView from './views/report.js';
 
 function notFound() {
   return `
@@ -44,6 +45,7 @@ export async function initApp() {
   addRoute('/detail/:soc', detailView);
   addRoute('/calculator', calculatorView);
   addRoute('/compare', compareView);
+  addRoute('/report', reportView);
   setNotFound(notFound);
 
   // Init i18n (loads translations, applies to static DOM)

@@ -2,6 +2,8 @@ import { t, getLocale } from '../i18n/i18n.js';
 import { calcFullROI, DEFAULTS } from '../engine/roi.js';
 import { findBySoc } from '../engine/mappings.js';
 import { formatCurrency, formatPercent } from '../utils/format.js';
+import { exportPdf } from '../utils/export-pdf.js';
+import { trackEvent } from '../tracker/tracker.js';
 
 // Chart.js loaded via CDN script tag in index.html (esbuild can't parse the npm dist on Windows NTFS)
 const getChart = () => window.Chart;
@@ -235,51 +237,6 @@ function renderCharts(result) {
   }
 }
 
-async function exportPdf(contentEl) {
-  const btn = document.getElementById('calc-export-pdf');
-  const origText = btn.textContent;
-  btn.textContent = t('pdf.exporting');
-  btn.disabled = true;
-
-  try {
-    if (!window.html2pdf) {
-      await new Promise((resolve, reject) => {
-        const s = document.createElement('script');
-        s.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.2/html2pdf.bundle.min.js';
-        s.onload = resolve;
-        s.onerror = reject;
-        document.head.appendChild(s);
-      });
-    }
-
-    const header = document.createElement('div');
-    header.innerHTML = `
-      <h2 style="text-align:center;margin-bottom:4px;">${t('pdf.report_title')}</h2>
-      <p style="text-align:center;color:#666;font-size:12px;margin-bottom:16px;">
-        ${t('pdf.generated').replace('{date}', new Date().toLocaleDateString())} |
-        ${t('pdf.disclaimer')}
-      </p>
-    `;
-
-    const wrapper = document.createElement('div');
-    wrapper.appendChild(header);
-    wrapper.appendChild(contentEl.cloneNode(true));
-
-    await window.html2pdf().set({
-      margin: [10, 10],
-      filename: `education-roi-calculator-${Date.now()}.pdf`,
-      image: { type: 'jpeg', quality: 0.95 },
-      html2canvas: { scale: 2 },
-      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-    }).from(wrapper).save();
-  } catch (err) {
-    console.error('PDF export failed:', err);
-  } finally {
-    btn.textContent = origText;
-    btn.disabled = false;
-  }
-}
-
 export function afterRender() {
   const form = document.getElementById('calc-form');
   const resultsEl = document.getElementById('calc-results');
@@ -304,6 +261,9 @@ export function afterRender() {
 
     const result = calcFullROI(inputs);
 
+    const qp = getQueryParams();
+    trackEvent('calculate_roi', { soc: qp.soc || null });
+
     resultsEl.innerHTML = renderResults(result);
     resultsEl.classList.remove('hidden');
 
@@ -323,7 +283,14 @@ export function afterRender() {
   });
 
   // PDF export
-  document.getElementById('calc-export-pdf').addEventListener('click', () => exportPdf(resultsEl));
+  const pdfBtn = document.getElementById('calc-export-pdf');
+  pdfBtn.addEventListener('click', () => {
+    exportPdf(resultsEl, {
+      filename: 'education-roi-calculator',
+      orientation: 'portrait',
+      statusBtn: pdfBtn,
+    });
+  });
 
   // Auto-calculate if pre-filled from detail page
   const qp = getQueryParams();

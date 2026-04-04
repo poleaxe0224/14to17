@@ -32,7 +32,8 @@ src/
 ├── data/         # Static JSON (wages, tuition, ipeds, cip-soc-crosswalk, occupation-profiles)
 ├── i18n/         # Translation JSON + runtime (en / zh-TW)
 ├── router/       # Hash-based SPA router (supports afterRender + query params)
-├── utils/        # Formatting helpers (currency, percent, number)
+├── tracker/      # localStorage exploration tracker (tracker.js)
+├── utils/        # Formatting helpers + shared export-pdf utility
 ├── views/        # Page components (render + optional afterRender)
 │   ├── home.js           # Interest-based exploration entry (4 category cards)
 │   ├── search.js         # Career search with interest filter chips
@@ -41,11 +42,12 @@ src/
 │   ├── detail-renderers.js  # Pure HTML renderers for detail panels
 │   ├── detail-sliders.js    # Competition parameter slider wiring
 │   ├── calculator.js     # 9-field ROI calculator + Chart.js
-│   └── compare.js        # 2-3 career side-by-side comparison
+│   ├── compare.js        # 2-3 career side-by-side comparison
+│   └── report.js         # Exploration report + export (Markdown/PDF/JSON)
 ├── styles/       # Design tokens + main.css + enhanced.css
 ├── app.js        # App init (router + i18n wiring)
 └── main.js       # Vite entry point
-tests/            # Vitest unit tests (118+)
+tests/            # Vitest unit tests (140+)
 ```
 
 ## User Flow
@@ -102,10 +104,10 @@ Home (interest cards) → Search (filter chips + keyword) → Profile (#/profile
 6. **IPEDS + Three-Layer ROI** ✓
 7. **Occupation Profile + Teen UI** ✓
 8. **Career Explorer UX Pivot (Phase 1)** ✓ — rebrand to FuturePath/未來路徑, interest-based home page (build/help/analyze/create), search filter chips, 4-level progressive disclosure in profile, lazy-load Level 3 data, 118 tests
-9. **O*NET API Integration** — knowledge, skills, education, certifications for Level 2
-10. **ROI Quick View in Level 3** — inline ROI badges + shared career-data.js fetcher
-11. **Assessment Report Export** — localStorage exploration tracker, report compiler (Markdown + PDF)
-12. **Polish** — a11y, responsive, CI pipeline, docs
+9. **O*NET API Integration** ✓ — knowledge, skills, education, certifications for Level 2
+10. **ROI Quick View in Level 3** ✓ — inline ROI badges + shared career-data.js fetcher
+11. **Assessment Report Export** ✓ — localStorage tracker, report view (#/report), Markdown + PDF + JSON export/import, shared export-pdf.js utility
+12. **Polish** ✓ — a11y (focus management, ARIA labels, skip link), responsive report view, CI verified
 
 ## Three-Layer ROI Model
 

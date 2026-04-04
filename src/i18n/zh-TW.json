@@ -5,7 +5,8 @@
     "search": "\u63a2\u7d22",
     "calculator": "\u8a08\u7b97\u5668",
     "compare": "\u6bd4\u8f03",
-    "tools": "\u5de5\u5177"
+    "tools": "\u5de5\u5177",
+    "report": "\u6211\u7684\u5831\u544a"
   },
   "home": {
     "title": "\u4ec0\u9ebc\u5de5\u4f5c\u5438\u5f15\u4f60\uff1f",
@@ -233,6 +234,31 @@
     "trades": "技術與技職",
     "legal": "法律",
     "creative": "創意與媒體"
+  },
+  "report": {
+    "title": "我的探索報告",
+    "subtitle": "你探索過的職業摘要。",
+    "empty": "你還沒有探索任何職業。從首頁開始吧！",
+    "summary_title": "摘要",
+    "careers_explored": "探索職業數",
+    "profiles_viewed": "瀏覽檔案數",
+    "comparisons_made": "比較次數",
+    "calculations_run": "ROI 計算次數",
+    "explored_careers": "你探索過的職業",
+    "timeline_title": "探索時間軸",
+    "event_view_profile": "瀏覽檔案",
+    "event_view_detail": "瀏覽 ROI 詳情",
+    "event_calculate_roi": "計算 ROI",
+    "event_compare": "比較職業",
+    "export_md": "下載 Markdown",
+    "export_pdf": "匯出 PDF",
+    "export_json": "匯出資料 (JSON)",
+    "import_json": "匯入資料",
+    "clear_data": "清除所有資料",
+    "clear_confirm": "確定嗎？這將刪除所有探索記錄。",
+    "imported_ok": "資料匯入成功！",
+    "import_error": "檔案格式無效。",
+    "no_career_name": "未知職業"
   },
   "footer": {
     "data": "資料來源：BLS OES、College Scorecard 及 IPEDS",
