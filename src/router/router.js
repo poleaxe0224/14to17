@@ -69,6 +69,10 @@ async function render() {
     outlet.replaceChildren(content);
   }
 
+  // Scroll to top and move focus to outlet for screen readers
+  window.scrollTo(0, 0);
+  outlet.focus({ preventScroll: true });
+
   // Notify i18n and other listeners to update the new DOM
   document.dispatchEvent(new CustomEvent('route-changed', { detail: { path, params } }));
 
