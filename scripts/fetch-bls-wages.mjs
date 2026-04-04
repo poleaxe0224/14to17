@@ -132,6 +132,11 @@ async function main() {
   const withEmp = Object.values(wages).filter((w) => w.tot_emp != null).length;
   console.log(`\nFetched: ${count} careers, ${complete} with median salary, ${withEmp} with employment data`);
 
+  // Guard: abort if BLS returned no usable data (API outage)
+  if (complete === 0) {
+    throw new Error(`BLS API returned no wage data — API may be down. Aborting build.`);
+  }
+
   // Write output
   mkdirSync(OUT_DIR, { recursive: true });
   const output = {
