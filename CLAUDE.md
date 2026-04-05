@@ -47,7 +47,7 @@ src/
 ├── styles/       # Design tokens + main.css + enhanced.css
 ├── app.js        # App init (router + i18n wiring)
 └── main.js       # Vite entry point
-tests/            # Vitest unit tests (140+)
+tests/            # Vitest unit tests (159+)
 ```
 
 ## User Flow
@@ -111,16 +111,18 @@ Home (interest cards) → Search (filter chips + keyword) → Profile (#/profile
 
 ## Three-Layer ROI Model
 
-- **Layer 1 (Basic)**: `(totalPremium - totalCost) / totalCost`
-- **Layer 2 (Risk-Adjusted)**: `graduationRate × basicROI`
+- **Layer 1 (Basic)**: `(totalPremium - totalCost) / totalCost` + discounted (present-value) variant
+- **Layer 2 (Risk-Adjusted)**: `E[ROI] = P(grad) × fullROI + P(dropout) × dropoutROI` (falls back to `gradRate × ROI` when dropout data unavailable)
 - **Layer 3 (Competition-Adjusted)**: `riskAdjustedROI × (1 - saturationPenalty)`
 - Saturation: `penalty = min(completions/employment × k, maxPenalty)`, defaults k=0.3, maxPenalty=0.25
+- Dropout model: `estimateAvgDropoutYear` (geometric from retention rate) + `calcDropoutROI` (partial tuition + some-college premium)
 - Graceful fallback: missing data → skip that layer, UI shows warning
 
 ## Data Files
 
 - `src/data/wages.json` — BLS OES (25 SOC codes, includes tot_emp) [gitignored, CI-generated]
 - `src/data/tuition.json` — College Scorecard (25 CIP codes, median tuition) [gitignored, CI-generated]
-- `src/data/ipeds.json` — IPEDS graduation rates + curated completions [tracked]
+- `src/data/cps_earnings.json` — BLS CPS weekly earnings by education level (dropout model) [gitignored, CI-generated]
+- `src/data/ipeds.json` — IPEDS graduation rates, retention rates + curated completions [tracked]
 - `src/data/cip-soc-crosswalk.json` — CIP→SOC mappings [tracked, hand-curated]
 - `src/data/occupation-profiles.json` — BLS OOH career profiles, bilingual (25 SOC codes) [tracked, hand-curated]
