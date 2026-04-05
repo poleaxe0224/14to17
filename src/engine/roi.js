@@ -162,6 +162,29 @@ export function calcLifetimeROI(cashFlows) {
 }
 
 /**
+ * Discounted Lifetime ROI — same as calcLifetimeROI but on present-value cash flows.
+ *
+ * @param {Array<{net: number}>} cashFlows
+ * @param {number} [rate] — discount rate (default 4%)
+ * @returns {{roi: number, totalCost: number, totalPremium: number, netGain: number}}
+ */
+export function calcDiscountedLifetimeROI(cashFlows, rate = DEFAULTS.discountRate) {
+  let totalCost = 0;
+  let totalPremium = 0;
+
+  for (let i = 0; i < cashFlows.length; i++) {
+    const pv = cashFlows[i].net / Math.pow(1 + rate, i);
+    if (pv < 0) totalCost += Math.abs(pv);
+    else totalPremium += pv;
+  }
+
+  const netGain = totalPremium - totalCost;
+  const roi = totalCost > 0 ? (netGain / totalCost) * 100 : 0;
+
+  return { roi, totalCost, totalPremium, netGain };
+}
+
+/**
  * Monthly loan payment (standard amortization).
  *
  * @param {number} principal — loan amount
@@ -208,6 +231,7 @@ export function calcFullROI(inputs) {
   const breakevenNominal = calcBreakeven(cashFlows);
   const breakevenDiscounted = calcBreakeven(cashFlows, discountRate);
   const lifetime = calcLifetimeROI(cashFlows);
+  const discounted = calcDiscountedLifetimeROI(cashFlows, discountRate);
 
   const totalTuition = annualTuition * educationYears;
   const monthlyPayment = calcMonthlyPayment(totalTuition, loanRate, loanTermYears);
@@ -225,6 +249,12 @@ export function calcFullROI(inputs) {
       totalPremium: Math.round(lifetime.totalPremium),
       netGain: Math.round(lifetime.netGain),
     },
+    discountedLifetime: {
+      roi: Math.round(discounted.roi * 10) / 10,
+      totalCost: Math.round(discounted.totalCost),
+      totalPremium: Math.round(discounted.totalPremium),
+      netGain: Math.round(discounted.netGain),
+    },
     loan: {
       totalBorrowed: totalTuition,
       monthlyPayment: Math.round(monthlyPayment * 100) / 100,
@@ -236,17 +266,93 @@ export function calcFullROI(inputs) {
 // ─── Three-Layer ROI Model ─────────────────────────────────────────────
 
 /**
- * Layer 2: Risk-adjusted ROI — expected ROI weighted by graduation probability.
+ * Estimate average dropout year from first-year retention rate.
+ * Uses geometric distribution model: P(dropout at year y) = R^(y-1) × (1-R)
+ *
+ * @param {number|null} retentionRate — first-year full-time retention (0.0–1.0)
+ * @param {number} [maxYears=4] — cap at education duration
+ * @returns {number} expected dropout year (1-indexed), or maxYears if no data
+ */
+export function estimateAvgDropoutYear(retentionRate, maxYears = 4) {
+  if (retentionRate == null || retentionRate >= 1) return maxYears;
+  if (retentionRate <= 0) return 1;
+  const attrition = 1 - retentionRate;
+  let weightedSum = 0;
+  let probSum = 0;
+  for (let y = 1; y <= maxYears; y++) {
+    const p = Math.pow(retentionRate, y - 1) * attrition;
+    weightedSum += y * p;
+    probSum += p;
+  }
+  return probSum > 0 ? weightedSum / probSum : 1;
+}
+
+/**
+ * Calculate dropout ROI — partial tuition cost with no degree premium,
+ * but potential "some college" earnings bump over HS-only baseline.
+ *
+ * @param {object} inputs
+ * @param {number} inputs.annualTuition — per-year tuition cost
+ * @param {number} inputs.avgDropoutYear — estimated dropout point (fractional OK)
+ * @param {number} inputs.dropoutSalary — "some college, no degree" annual salary
+ * @param {number} inputs.baselineSalary — HS-only annual salary
+ * @param {number} [inputs.salaryGrowthRate=0.02]
+ * @param {number} [inputs.careerYears=40]
+ * @returns {number} dropout ROI as percentage
+ */
+export function calcDropoutROI(inputs) {
+  const {
+    annualTuition,
+    avgDropoutYear,
+    dropoutSalary,
+    baselineSalary = DEFAULTS.highSchoolBaseline,
+    salaryGrowthRate = DEFAULTS.salaryGrowthRate,
+    careerYears = DEFAULTS.careerYears,
+  } = inputs;
+
+  // Cost: partial tuition + opportunity cost during enrollment
+  const yearsEnrolled = Math.ceil(avgDropoutYear);
+  let totalCost = 0;
+  for (let y = 0; y < yearsEnrolled; y++) {
+    const fraction = (y < Math.floor(avgDropoutYear)) ? 1 : (avgDropoutYear % 1 || 1);
+    totalCost += (annualTuition + baselineSalary * Math.pow(1 + salaryGrowthRate, y)) * fraction;
+  }
+
+  // Benefit: "some college" premium over baseline for remaining career
+  const remainingYears = careerYears + Math.ceil(DEFAULTS.educationYears) - yearsEnrolled;
+  let totalPremium = 0;
+  for (let y = 0; y < remainingYears; y++) {
+    const dropSal = dropoutSalary * Math.pow(1 + salaryGrowthRate, y);
+    const baseSal = baselineSalary * Math.pow(1 + salaryGrowthRate, y + yearsEnrolled);
+    const premium = dropSal - baseSal;
+    if (premium > 0) totalPremium += premium;
+  }
+
+  const netGain = totalPremium - totalCost;
+  return totalCost > 0 ? (netGain / totalCost) * 100 : 0;
+}
+
+/**
+ * Layer 2: Risk-adjusted ROI — expected ROI as weighted average of
+ * graduation and dropout outcomes.
+ *
+ * E[ROI] = P(graduate) × fullROI + P(dropout) × dropoutROI
  *
  * @param {number} basicRoi — Layer 1 ROI (percentage, e.g. 150.0)
  * @param {number|null} graduationRate — 0.0–1.0, or null if unavailable
+ * @param {number|null} [dropoutROI=null] — dropout ROI %, or null to fall back to legacy
  * @returns {{value: number, fallback: boolean}}
  */
-export function calcRiskAdjustedROI(basicRoi, graduationRate) {
+export function calcRiskAdjustedROI(basicRoi, graduationRate, dropoutROI = null) {
   if (graduationRate == null) {
     return { value: basicRoi, fallback: true };
   }
-  return { value: graduationRate * basicRoi, fallback: false };
+  if (dropoutROI == null) {
+    // Legacy fallback: assume dropout ROI = 0
+    return { value: graduationRate * basicRoi, fallback: true };
+  }
+  const expected = graduationRate * basicRoi + (1 - graduationRate) * dropoutROI;
+  return { value: expected, fallback: false };
 }
 
 /**
@@ -309,14 +415,36 @@ export function calcThreeLayerROI(inputs) {
     totalEmployment = null,
     competitionK = DEFAULTS.competitionK,
     maxPenalty = DEFAULTS.maxPenalty,
+    retentionRate = null,
+    dropoutSalary = null,
   } = inputs;
 
   const base = calcFullROI(inputs);
   const basicRoi = base.lifetime.roi;
+  const discountedBasicRoi = base.discountedLifetime.roi;
 
-  const risk = calcRiskAdjustedROI(basicRoi, graduationRate);
+  // Calculate dropout ROI if we have the data
+  let dropoutROI = null;
+  if (retentionRate != null && dropoutSalary != null) {
+    const avgDropoutYear = estimateAvgDropoutYear(retentionRate, inputs.educationYears);
+    dropoutROI = calcDropoutROI({
+      annualTuition: inputs.annualTuition,
+      avgDropoutYear,
+      dropoutSalary,
+      baselineSalary: inputs.baselineSalary,
+      salaryGrowthRate: inputs.salaryGrowthRate,
+      careerYears: inputs.careerYears,
+    });
+  }
+
+  const risk = calcRiskAdjustedROI(basicRoi, graduationRate, dropoutROI);
   const competition = calcCompetitionAdjustedROI(
     risk.value, completionsTotal, totalEmployment, competitionK, maxPenalty,
+  );
+
+  const discountedRisk = calcRiskAdjustedROI(discountedBasicRoi, graduationRate, dropoutROI != null ? dropoutROI : null);
+  const discountedCompetition = calcCompetitionAdjustedROI(
+    discountedRisk.value, completionsTotal, totalEmployment, competitionK, maxPenalty,
   );
 
   return {
@@ -324,15 +452,20 @@ export function calcThreeLayerROI(inputs) {
     layers: {
       basic: {
         roi: basicRoi,
+        discountedRoi: discountedBasicRoi,
         fallback: false,
       },
       riskAdjusted: {
         roi: Math.round(risk.value * 10) / 10,
+        discountedRoi: Math.round(discountedRisk.value * 10) / 10,
         graduationRate,
+        retentionRate,
+        dropoutROI: dropoutROI != null ? Math.round(dropoutROI * 10) / 10 : null,
         fallback: risk.fallback,
       },
       competitionAdjusted: {
         roi: Math.round(competition.value * 10) / 10,
+        discountedRoi: Math.round(discountedCompetition.value * 10) / 10,
         saturationRatio: competition.saturation.ratio != null
           ? Math.round(competition.saturation.ratio * 10000) / 10000
           : null,

@@ -56,6 +56,11 @@ export function wireSliders(layerState) {
     if (compEl) {
       compEl.textContent = `${updated.layers.competitionAdjusted.roi.toFixed(1)}%`;
     }
+    const discEl = document.getElementById('competition-roi-discounted');
+    if (discEl) {
+      const { discountedRoi } = updated.layers.competitionAdjusted;
+      discEl.textContent = `${discEl.textContent.split(':')[0]}: ${discountedRoi.toFixed(1)}%`;
+    }
   }
 
   sliderK.addEventListener('input', recalc);

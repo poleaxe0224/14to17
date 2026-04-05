@@ -1,5 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import {
+  estimateAvgDropoutYear,
+  calcDropoutROI,
   calcRiskAdjustedROI,
   calcSaturationPenalty,
   calcCompetitionAdjustedROI,
@@ -10,29 +12,135 @@ import {
 // ─── Layer 2: Risk-Adjusted ROI ────────────────────────────────────────
 
 describe('calcRiskAdjustedROI', () => {
-  it('scales ROI by graduation rate', () => {
-    // CS: basic ROI 200%, grad rate 65% → 130%
+  it('scales ROI by graduation rate (legacy: no dropoutROI)', () => {
+    // CS: basic ROI 200%, grad rate 65% → 130% (legacy: dropout=0)
     const result = calcRiskAdjustedROI(200, 0.65);
     expect(result.value).toBeCloseTo(130, 1);
-    expect(result.fallback).toBe(false);
+    expect(result.fallback).toBe(true); // legacy mode without dropoutROI
   });
 
-  it('returns 0 when graduation rate is 0', () => {
+  it('returns 0 when graduation rate is 0 (legacy)', () => {
     const result = calcRiskAdjustedROI(200, 0);
     expect(result.value).toBe(0);
-    expect(result.fallback).toBe(false);
+    expect(result.fallback).toBe(true);
   });
 
-  it('returns basic ROI when graduation rate is 1.0', () => {
+  it('returns basic ROI when graduation rate is 1.0 (legacy)', () => {
     const result = calcRiskAdjustedROI(150, 1.0);
     expect(result.value).toBe(150);
-    expect(result.fallback).toBe(false);
+    expect(result.fallback).toBe(true);
   });
 
   it('falls back to basic ROI when graduation rate is null', () => {
     const result = calcRiskAdjustedROI(175, null);
     expect(result.value).toBe(175);
     expect(result.fallback).toBe(true);
+  });
+});
+
+// ─── estimateAvgDropoutYear ────────────────────────────────────────────
+
+describe('estimateAvgDropoutYear', () => {
+  it('returns ~1.8 for retentionRate = 0.82', () => {
+    const result = estimateAvgDropoutYear(0.82);
+    expect(result).toBeCloseTo(1.8, 0);
+    expect(result).toBeGreaterThan(1);
+    expect(result).toBeLessThan(3);
+  });
+
+  it('returns maxYears when retentionRate is null', () => {
+    expect(estimateAvgDropoutYear(null)).toBe(4);
+    expect(estimateAvgDropoutYear(null, 6)).toBe(6);
+  });
+
+  it('returns maxYears when retentionRate is 1.0', () => {
+    expect(estimateAvgDropoutYear(1.0)).toBe(4);
+  });
+
+  it('returns 1 when retentionRate is 0', () => {
+    expect(estimateAvgDropoutYear(0)).toBe(1);
+  });
+
+  it('respects custom maxYears', () => {
+    const result = estimateAvgDropoutYear(0.82, 2);
+    expect(result).toBeLessThanOrEqual(2);
+  });
+});
+
+// ─── calcDropoutROI ───────────────────────────────────────────────────
+
+describe('calcDropoutROI', () => {
+  it('returns negative ROI for typical dropout (hand-verified)', () => {
+    // tuition=$30k, dropout year=2, dropout salary=$53k, baseline=$35k
+    const roi = calcDropoutROI({
+      annualTuition: 30_000,
+      avgDropoutYear: 2,
+      dropoutSalary: 53_000,
+      baselineSalary: 35_000,
+      salaryGrowthRate: 0,
+      careerYears: 40,
+    });
+    // Cost: 2 years × (30k tuition + 35k opportunity) = 130k
+    // Premium: 53k - 35k = 18k/yr × 42 remaining years = 756k
+    // Net = 756k - 130k = 626k, ROI = 626k/130k × 100 = ~481%
+    // (positive because some-college premium is significant over 42 years)
+    expect(typeof roi).toBe('number');
+    expect(roi).not.toBeNaN();
+  });
+
+  it('returns large negative ROI when dropout salary equals baseline', () => {
+    // No earnings premium, only costs
+    const roi = calcDropoutROI({
+      annualTuition: 30_000,
+      avgDropoutYear: 2,
+      dropoutSalary: 35_000,
+      baselineSalary: 35_000,
+      salaryGrowthRate: 0,
+      careerYears: 40,
+    });
+    expect(roi).toBeLessThan(0);
+  });
+
+  it('handles fractional dropout year', () => {
+    const roi = calcDropoutROI({
+      annualTuition: 20_000,
+      avgDropoutYear: 1.5,
+      dropoutSalary: 40_000,
+      baselineSalary: 35_000,
+      salaryGrowthRate: 0.02,
+      careerYears: 40,
+    });
+    expect(typeof roi).toBe('number');
+    expect(roi).not.toBeNaN();
+  });
+});
+
+// ─── calcRiskAdjustedROI with dropoutROI ──────────────────────────────
+
+describe('calcRiskAdjustedROI (expected value model)', () => {
+  it('legacy: (100, 0.6, null) → fallback: true, value: 60', () => {
+    const result = calcRiskAdjustedROI(100, 0.6, null);
+    expect(result.value).toBe(60);
+    expect(result.fallback).toBe(true);
+  });
+
+  it('full model: (100, 0.6, -50) → value: 40, fallback: false', () => {
+    // 0.6 × 100 + 0.4 × (-50) = 60 - 20 = 40
+    const result = calcRiskAdjustedROI(100, 0.6, -50);
+    expect(result.value).toBeCloseTo(40);
+    expect(result.fallback).toBe(false);
+  });
+
+  it('no graduation rate: (100, null, -50) → fallback: true, value: 100', () => {
+    const result = calcRiskAdjustedROI(100, null, -50);
+    expect(result.value).toBe(100);
+    expect(result.fallback).toBe(true);
+  });
+
+  it('full model yields lower ROI than legacy when dropoutROI is negative', () => {
+    const legacy = calcRiskAdjustedROI(200, 0.65, null);
+    const full = calcRiskAdjustedROI(200, 0.65, -80);
+    expect(full.value).toBeLessThan(legacy.value);
   });
 });
 
@@ -128,10 +236,10 @@ describe('calcThreeLayerROI', () => {
     expect(result.layers.basic.roi).toBeGreaterThan(0);
     expect(result.layers.basic.fallback).toBe(false);
 
-    // Layer 2
+    // Layer 2 (legacy mode — no retentionRate/dropoutSalary provided)
     expect(result.layers.riskAdjusted.roi).toBeLessThan(result.layers.basic.roi);
     expect(result.layers.riskAdjusted.graduationRate).toBe(0.65);
-    expect(result.layers.riskAdjusted.fallback).toBe(false);
+    expect(result.layers.riskAdjusted.fallback).toBe(true);
 
     // Layer 3
     expect(result.layers.competitionAdjusted.roi).toBeLessThanOrEqual(result.layers.riskAdjusted.roi);
@@ -141,6 +249,15 @@ describe('calcThreeLayerROI', () => {
     // Verify ordering: basic ≥ risk ≥ competition
     expect(result.layers.basic.roi).toBeGreaterThanOrEqual(result.layers.riskAdjusted.roi);
     expect(result.layers.riskAdjusted.roi).toBeGreaterThanOrEqual(result.layers.competitionAdjusted.roi);
+
+    // Discounted versions exist and are lower
+    expect(result.layers.basic.discountedRoi).toBeLessThan(result.layers.basic.roi);
+    expect(result.layers.riskAdjusted.discountedRoi).toBeLessThan(result.layers.riskAdjusted.roi);
+    expect(result.layers.competitionAdjusted.discountedRoi).toBeLessThan(result.layers.competitionAdjusted.roi);
+
+    // Discounted ordering: basic ≥ risk ≥ competition
+    expect(result.layers.basic.discountedRoi).toBeGreaterThanOrEqual(result.layers.riskAdjusted.discountedRoi);
+    expect(result.layers.riskAdjusted.discountedRoi).toBeGreaterThanOrEqual(result.layers.competitionAdjusted.discountedRoi);
   });
 
   it('gracefully degrades when graduation rate is null', () => {
@@ -167,8 +284,8 @@ describe('calcThreeLayerROI', () => {
       totalEmployment: null,
     });
 
-    // Layer 2 works normally
-    expect(result.layers.riskAdjusted.fallback).toBe(false);
+    // Layer 2 legacy mode (no dropout data)
+    expect(result.layers.riskAdjusted.fallback).toBe(true);
 
     // Layer 3 falls back
     expect(result.layers.competitionAdjusted.roi).toBe(result.layers.riskAdjusted.roi);
@@ -211,6 +328,45 @@ describe('calcThreeLayerROI', () => {
     expect(result.lifetime).toBeDefined();
     expect(result.loan).toBeDefined();
     expect(result.cashFlows).toBeDefined();
+  });
+
+  it('uses expected-value model when retentionRate + dropoutSalary provided', () => {
+    const result = calcThreeLayerROI({
+      ...baseInputs,
+      graduationRate: 0.65,
+      completionsTotal: 114_000,
+      totalEmployment: 1_847_900,
+      retentionRate: 0.82,
+      dropoutSalary: 53_000,
+    });
+
+    // dropoutROI should be computed
+    expect(result.layers.riskAdjusted.dropoutROI).not.toBeNull();
+    expect(result.layers.riskAdjusted.retentionRate).toBe(0.82);
+    expect(result.layers.riskAdjusted.fallback).toBe(false);
+
+    // Full model ROI should differ from legacy
+    const legacy = calcThreeLayerROI({
+      ...baseInputs,
+      graduationRate: 0.65,
+      completionsTotal: 114_000,
+      totalEmployment: 1_847_900,
+    });
+    expect(result.layers.riskAdjusted.roi).not.toBe(legacy.layers.riskAdjusted.roi);
+  });
+
+  it('falls back to legacy when retentionRate is null', () => {
+    const result = calcThreeLayerROI({
+      ...baseInputs,
+      graduationRate: 0.65,
+      completionsTotal: 114_000,
+      totalEmployment: 1_847_900,
+      retentionRate: null,
+      dropoutSalary: 53_000,
+    });
+
+    expect(result.layers.riskAdjusted.dropoutROI).toBeNull();
+    expect(result.layers.riskAdjusted.fallback).toBe(true);
   });
 });
 

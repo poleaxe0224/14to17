@@ -87,7 +87,7 @@ function destroyCharts() {
 }
 
 function renderResults(result) {
-  const { npv, irr, breakevenYear, breakevenYearDiscounted, lifetime, loan } = result;
+  const { npv, irr, breakevenYear, breakevenYearDiscounted, lifetime, discountedLifetime, loan } = result;
   const npvClass = npv >= 0 ? 'roi-positive' : 'roi-negative';
 
   function breakevenText(val) {
@@ -116,6 +116,10 @@ function renderResults(result) {
       <div class="result-card ${lifetime.roi >= 0 ? 'roi-positive' : 'roi-negative'}">
         <div class="result-label">${t('calculator.lifetime_roi')}</div>
         <div class="result-value">${lifetime.roi.toFixed(1)}%</div>
+      </div>
+      <div class="result-card ${discountedLifetime.roi >= 0 ? 'roi-positive' : 'roi-negative'}">
+        <div class="result-label">${t('calculator.discounted_roi')}</div>
+        <div class="result-value">${discountedLifetime.roi.toFixed(1)}%</div>
       </div>
       <div class="result-card">
         <div class="result-label">${t('calculator.total_cost')}</div>

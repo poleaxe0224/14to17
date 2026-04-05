@@ -5,6 +5,7 @@ import {
   calcIRR,
   calcBreakeven,
   calcLifetimeROI,
+  calcDiscountedLifetimeROI,
   calcMonthlyPayment,
   calcFullROI,
   DEFAULTS,
@@ -227,6 +228,49 @@ describe('calcLifetimeROI', () => {
   });
 });
 
+// --- calcDiscountedLifetimeROI ---
+
+describe('calcDiscountedLifetimeROI', () => {
+  it('discounted ROI is lower than nominal ROI for positive investments', () => {
+    const flows = [];
+    for (let i = 0; i < 4; i++) flows.push({ net: -50_000 });
+    for (let i = 0; i < 40; i++) flows.push({ net: 25_000 });
+
+    const nominal = calcLifetimeROI(flows);
+    const discounted = calcDiscountedLifetimeROI(flows, 0.04);
+
+    expect(discounted.roi).toBeLessThan(nominal.roi);
+    expect(discounted.roi).toBeGreaterThan(0);
+  });
+
+  it('returns same as nominal when discount rate is 0', () => {
+    const flows = [{ net: -100 }, { net: 200 }];
+    const nominal = calcLifetimeROI(flows);
+    const discounted = calcDiscountedLifetimeROI(flows, 0);
+
+    expect(discounted.roi).toBeCloseTo(nominal.roi, 5);
+  });
+
+  it('higher discount rate yields lower ROI', () => {
+    const flows = [{ net: -100_000 }, { net: 50_000 }, { net: 50_000 }, { net: 50_000 }];
+    const low = calcDiscountedLifetimeROI(flows, 0.02);
+    const high = calcDiscountedLifetimeROI(flows, 0.10);
+
+    expect(high.roi).toBeLessThan(low.roi);
+  });
+
+  it('returns correct structure', () => {
+    const flows = [{ net: -100 }, { net: 200 }];
+    const result = calcDiscountedLifetimeROI(flows, 0.05);
+
+    expect(result).toHaveProperty('roi');
+    expect(result).toHaveProperty('totalCost');
+    expect(result).toHaveProperty('totalPremium');
+    expect(result).toHaveProperty('netGain');
+    expect(result.netGain).toBeCloseTo(result.totalPremium - result.totalCost, 5);
+  });
+});
+
 // --- calcMonthlyPayment ---
 
 describe('calcMonthlyPayment', () => {
@@ -275,7 +319,14 @@ describe('calcFullROI', () => {
     expect(result).toHaveProperty('breakevenYear');
     expect(result).toHaveProperty('breakevenYearDiscounted');
     expect(result).toHaveProperty('lifetime');
+    expect(result).toHaveProperty('discountedLifetime');
     expect(result).toHaveProperty('loan');
+  });
+
+  it('discountedLifetime ROI is lower than nominal lifetime ROI', () => {
+    const result = calcFullROI(baseInputs);
+    expect(result.discountedLifetime.roi).toBeLessThan(result.lifetime.roi);
+    expect(result.discountedLifetime.roi).toBeGreaterThan(0);
   });
 
   it('NPV is positive for good investment', () => {

@@ -156,17 +156,20 @@ export function renderRoiLayers(layers) {
       <div class="roi-layer-card">
         <div class="roi-layer-label">${t('ipeds.basic_roi')}</div>
         <div class="roi-layer-value">${basic.roi.toFixed(1)}%</div>
+        <div class="roi-layer-discounted muted">${t('ipeds.discounted_roi_desc')}: ${basic.discountedRoi.toFixed(1)}%</div>
         <div class="roi-layer-desc muted">${t('ipeds.basic_roi_desc')}</div>
       </div>
       <div class="roi-layer-card ${riskAdjusted.fallback ? 'roi-layer-fallback' : ''}">
         <div class="roi-layer-label">${t('ipeds.risk_adjusted_roi')}</div>
         <div class="roi-layer-value">${riskAdjusted.roi.toFixed(1)}%</div>
+        <div class="roi-layer-discounted muted">${t('ipeds.discounted_roi_desc')}: ${riskAdjusted.discountedRoi.toFixed(1)}%</div>
         <div class="roi-layer-desc muted">${t('ipeds.risk_adjusted_desc')}</div>
       </div>
       <div class="roi-layer-card roi-layer-primary ${competitionAdjusted.fallback ? 'roi-layer-fallback' : ''}">
         <div class="roi-layer-badge">${t('ipeds.recommended')}</div>
         <div class="roi-layer-label">${t('ipeds.competition_adjusted_roi')}</div>
         <div class="roi-layer-value" id="competition-roi-value">${competitionAdjusted.roi.toFixed(1)}%</div>
+        <div class="roi-layer-discounted muted" id="competition-roi-discounted">${t('ipeds.discounted_roi_desc')}: ${competitionAdjusted.discountedRoi.toFixed(1)}%</div>
         <div class="roi-layer-desc muted">${t('ipeds.competition_adjusted_desc')}</div>
       </div>
     </div>

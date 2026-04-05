@@ -75,7 +75,7 @@ async function fetchGradRateForCip(cipCode) {
   const params = new URLSearchParams({
     api_key: API_KEY,
     'latest.programs.cip_4_digit.code': cipCode,
-    fields: 'id,latest.completion.consumer_rate',
+    fields: 'id,latest.completion.consumer_rate,latest.student.retention_rate.four_year.full_time',
     per_page: String(SAMPLE_SIZE),
   });
 
@@ -93,9 +93,15 @@ async function fetchGradRateForCip(cipCode) {
     .map((s) => s['latest.completion.consumer_rate'])
     .filter((r) => r != null && !Number.isNaN(r));
 
+  const retentionRates = schools
+    .map((s) => s['latest.student.retention_rate.four_year.full_time'])
+    .filter((r) => r != null && !Number.isNaN(r));
+
   return {
     graduationRate: median(rates),
     schoolCount: rates.length,
+    retentionRate: median(retentionRates),
+    retentionSample: retentionRates.length,
   };
 }
 
@@ -131,13 +137,18 @@ async function main() {
       graduation_rate_150pct: gradData.graduationRate != null
         ? Math.round(gradData.graduationRate * 10000) / 10000
         : null,
+      retention_rate_ft: gradData.retentionRate != null
+        ? Math.round(gradData.retentionRate * 10000) / 10000
+        : null,
+      retention_rate_sample: gradData.retentionSample,
       completions_total: info.total,
       cip_title: info.title,
       grad_rate_sample_schools: gradData.schoolCount,
     };
 
     const gr = byCip[cip].graduation_rate_150pct;
-    console.log(` grad_rate=${gr != null ? (gr * 100).toFixed(1) + '%' : 'null'}, completions=${info.total.toLocaleString()}`);
+    const rr = byCip[cip].retention_rate_ft;
+    console.log(` grad_rate=${gr != null ? (gr * 100).toFixed(1) + '%' : 'null'}, retention=${rr != null ? (rr * 100).toFixed(1) + '%' : 'null'}, completions=${info.total.toLocaleString()}`);
 
     // DEMO_KEY: ~1 req/sec limit
     if (i < CIP_CODES.length - 1) {

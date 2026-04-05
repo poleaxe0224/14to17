@@ -101,6 +101,7 @@ function renderTable(results) {
   const npvs = results.map((r) => r.roi.npv);
   const irrs = results.map((r) => r.roi.irr);
   const rois = results.map((r) => r.roi.lifetime.roi);
+  const discRois = results.map((r) => r.roi.discountedLifetime.roi);
   const gains = results.map((r) => r.roi.lifetime.netGain);
   const bkevens = results.map((r) => r.roi.breakevenYear);
   const payments = results.map((r) => r.roi.loan.monthlyPayment);
@@ -110,6 +111,7 @@ function renderTable(results) {
   const npvBest = best(npvs);
   const irrBest = best(irrs);
   const roiBest = best(rois);
+  const discRoiBest = best(discRois);
   const gainBest = best(gains);
   const bkBest = best(bkevens.map((b) => b ?? 999), 'min');
   const payBest = best(payments, 'min');
@@ -142,6 +144,7 @@ function renderTable(results) {
           ${row(t('compare.irr'), results.map((r, i) => ({ val: formatPercent(r.roi.irr), cls: irrBest[i] })))}
           ${row(t('compare.breakeven'), results.map((r, i) => ({ val: breakevenText(r.roi.breakevenYear), cls: bkBest[i] })))}
           ${row(t('compare.lifetime_roi'), results.map((r, i) => ({ val: `${r.roi.lifetime.roi.toFixed(1)}%`, cls: `${roiBest[i]} ${r.roi.lifetime.roi >= 0 ? 'roi-positive' : 'roi-negative'}` })))}
+          ${row(t('compare.discounted_roi'), results.map((r, i) => ({ val: `${r.roi.discountedLifetime.roi.toFixed(1)}%`, cls: `${discRoiBest[i]} ${r.roi.discountedLifetime.roi >= 0 ? 'roi-positive' : 'roi-negative'}` })))}
           ${row(t('ipeds.competition_adjusted_roi'), results.map((r, i) => ({ val: `${adjRois[i].toFixed(1)}%`, cls: `${adjRoiBest[i]} ${adjRois[i] >= 0 ? 'roi-positive' : 'roi-negative'}` })))}
           ${row(t('compare.net_gain'), results.map((r, i) => ({ val: formatCurrency(r.roi.lifetime.netGain), cls: `${gainBest[i]} ${r.roi.lifetime.netGain >= 0 ? 'roi-positive' : 'roi-negative'}` })))}
           ${row(t('compare.total_cost'), results.map((r) => ({ val: formatCurrency(r.roi.lifetime.totalCost) })))}
