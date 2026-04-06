@@ -769,28 +769,25 @@ footer {
   gap: var(--space-sm);
 }
 
-.quiz-option {
+button.quiz-option[type="button"] {
+  --pico-background-color: var(--pico-card-background-color);
+  --pico-border-color: var(--pico-muted-border-color);
+  --pico-color: var(--pico-contrast);
   padding: var(--space-md) var(--space-lg);
   border-radius: var(--radius-card);
   border: 2px solid var(--pico-muted-border-color);
-  background: transparent;
   font-size: 1rem;
   cursor: pointer;
-  transition: border-color var(--transition-fast), background var(--transition-fast);
+  transition: border-color var(--transition-fast), background-color var(--transition-fast);
   text-align: left;
   min-height: var(--touch-target-min);
-  color: var(--pico-color);
 }
 
-.quiz-option:hover {
+button.quiz-option[type="button"]:hover {
+  --pico-background-color: rgba(37, 99, 235, 0.08);
+  --pico-border-color: var(--brand-primary);
+  --pico-color: var(--pico-contrast);
   border-color: var(--brand-primary);
-  background: rgba(37, 99, 235, 0.05);
-}
-
-.quiz-option--selected {
-  border-color: var(--brand-primary);
-  background: rgba(37, 99, 235, 0.1);
-  font-weight: 600;
 }
 
 .quiz-actions {
