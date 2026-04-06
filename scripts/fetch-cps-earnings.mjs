@@ -51,10 +51,13 @@ async function fetchSeries(seriesIds, startYear, endYear) {
 }
 
 function getLatestValue(series) {
-  const latest = series.data?.[0];
-  if (!latest) return null;
-  const val = parseFloat(latest.value);
-  return Number.isNaN(val) ? null : { value: val, period: latest.periodName, year: latest.year };
+  for (const entry of series.data ?? []) {
+    const val = parseFloat(entry.value);
+    if (!Number.isNaN(val)) {
+      return { value: val, period: entry.periodName, year: entry.year };
+    }
+  }
+  return null;
 }
 
 async function main() {
