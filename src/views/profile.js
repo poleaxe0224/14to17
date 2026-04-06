@@ -18,6 +18,20 @@ import { renderRoiLayers } from './detail-renderers.js';
 import { formatCurrency, formatNumber } from '../utils/format.js';
 import { trackEvent } from '../tracker/tracker.js';
 
+/**
+ * Translate an O*NET name (skill, knowledge, or education level) to zh-TW if available.
+ * @param {string} name — English O*NET name
+ * @param {'skills'|'knowledge'|'education'} category
+ * @returns {string}
+ */
+function translateOnetName(name, category) {
+  if (getLocale() !== 'zh-TW') return name;
+  const translated = t(`onet_names.${category}.${name}`);
+  // t() returns the key path if not found — check for that
+  if (translated && !translated.startsWith('onet_names.')) return translated;
+  return name;
+}
+
 function growthLabelKey(label) {
   const map = {
     much_faster: 'profile.growth_much_faster',
@@ -282,7 +296,7 @@ function renderLevel2Content(profile, onetData) {
           const pct = Math.round((s.score / maxScore) * 100);
           return `
             <div class="skill-bar">
-              <span class="skill-bar__label">${s.name}</span>
+              <span class="skill-bar__label">${translateOnetName(s.name, 'skills')}</span>
               <div class="skill-bar__track">
                 <div class="skill-bar__fill" style="width:${pct}%"></div>
               </div>
@@ -301,7 +315,7 @@ function renderLevel2Content(profile, onetData) {
       <div class="knowledge-tags">
         ${top8.map((k) => `
           <span class="knowledge-tag">
-            ${k.name}
+            ${translateOnetName(k.name, 'knowledge')}
             <span class="knowledge-tag__score">${k.score.toFixed(1)}</span>
           </span>
         `).join('')}
@@ -317,7 +331,7 @@ function renderLevel2Content(profile, onetData) {
           .filter((e) => e.percentage > 0)
           .map((e) => `
             <div class="edu-bar">
-              <span class="edu-bar__label">${e.name}</span>
+              <span class="edu-bar__label">${translateOnetName(e.name, 'education')}</span>
               <span class="edu-bar__pct">${e.percentage}% ${t('onet.of_workers')}</span>
             </div>
           `).join('')}
