@@ -718,6 +718,21 @@ footer {
   visibility: visible;
 }
 
+/* Prevent tooltip overlap in tight definition lists */
+.detail-dl [data-tooltip]::after {
+  bottom: auto;
+  top: calc(100% + 4px);
+  left: 0;
+  transform: none;
+}
+
+.detail-panel > h3 [data-tooltip]::after {
+  bottom: auto;
+  top: calc(100% + 4px);
+  left: 0;
+  transform: none;
+}
+
 /* ---- Quiz (Onboarding) ---- */
 .quiz-container {
   max-width: 500px;
@@ -982,8 +997,10 @@ button.quiz-option[type="button"]:hover {
     max-width: none;
   }
 
-  .hidden {
-    /* Don't force-hide results sections that JS revealed */
+  #calc-results.hidden, #calc-charts.hidden,
+  #compare-results.hidden, #compare-chart-wrap.hidden {
+    /* Force-show result sections even if JS .hidden class is still present */
+    display: block !important;
   }
 
   /* Results sections should remain visible */

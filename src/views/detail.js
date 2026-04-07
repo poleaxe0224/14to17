@@ -123,8 +123,13 @@ export async function afterRender({ soc } = {}) {
 
   // Render undergrad major selector for graduate degrees
   const majorWrap = document.getElementById('undergrad-major-wrap');
+  const defaultUndergradCip = career.defaultUndergradCip || null;
   if (majorWrap && econ.isGraduateDegree) {
-    majorWrap.innerHTML = renderUndergradMajorSelect(null);
+    majorWrap.innerHTML = renderUndergradMajorSelect(defaultUndergradCip);
+    // Re-fetch with default undergrad CIP for initial tuition estimate
+    if (defaultUndergradCip) {
+      econ = await fetchCareerEconomics(career, { undergradCip: defaultUndergradCip });
+    }
   }
 
   // Render all panels from current econ data

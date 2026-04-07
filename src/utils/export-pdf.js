@@ -42,6 +42,8 @@ export async function exportPdf(_contentEl, { statusBtn } = {}) {
       } catch { /* tainted canvas — skip */ }
     });
 
+    // Wait for browser to lay out the inserted images before printing
+    await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
     window.print();
   } finally {
     // Restore canvases after print dialog closes
