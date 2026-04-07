@@ -1,5 +1,5 @@
 /**
- * Shared PDF export utility — lazy-loads html2pdf.js from CDN.
+ * Shared PDF export + share link utilities.
  * Used by compare, calculator, and report views.
  */
 
@@ -49,19 +49,53 @@ export async function exportPdf(contentEl, { filename, orientation = 'portrait',
     wrapper.appendChild(header);
     wrapper.appendChild(contentEl.cloneNode(true));
 
-    await window.html2pdf().set({
-      margin: [10, 10],
-      filename: `${filename}-${Date.now()}.pdf`,
-      image: { type: 'jpeg', quality: 0.95 },
-      html2canvas: { scale: 2 },
-      jsPDF: { unit: 'mm', format: 'a4', orientation },
-    }).from(wrapper).save();
+    // html2canvas needs the element in the DOM to compute styles
+    wrapper.style.position = 'fixed';
+    wrapper.style.left = '-9999px';
+    wrapper.style.top = '0';
+    wrapper.style.width = contentEl.offsetWidth ? `${contentEl.offsetWidth}px` : '800px';
+    document.body.appendChild(wrapper);
+
+    try {
+      await window.html2pdf().set({
+        margin: [10, 10],
+        filename: `${filename}-${Date.now()}.pdf`,
+        image: { type: 'jpeg', quality: 0.95 },
+        html2canvas: { scale: 2, useCORS: true },
+        jsPDF: { unit: 'mm', format: 'a4', orientation },
+      }).from(wrapper).save();
+    } finally {
+      document.body.removeChild(wrapper);
+    }
   } catch (err) {
     console.error('PDF export failed:', err);
+    alert(t('pdf.export_error') || 'PDF export failed. Please try again.');
   } finally {
     if (statusBtn) {
       statusBtn.textContent = origText;
       statusBtn.disabled = false;
     }
   }
+}
+
+/**
+ * Copy a share link to clipboard and show feedback.
+ * @param {string} hashRoute — e.g. '#/calculator?soc=15-1252&salary=60000'
+ * @param {HTMLElement} [msgEl] — element to show success/error message
+ */
+export function copyShareLink(hashRoute, msgEl) {
+  const baseUrl = window.location.href.split('#')[0];
+  const shareUrl = `${baseUrl}${hashRoute}`;
+
+  navigator.clipboard.writeText(shareUrl).then(() => {
+    if (msgEl) {
+      msgEl.textContent = t('share.copied');
+      msgEl.className = 'share-msg roi-positive';
+    }
+  }).catch(() => {
+    if (msgEl) {
+      msgEl.textContent = t('share.copy_fail');
+      msgEl.className = 'share-msg error-text';
+    }
+  });
 }

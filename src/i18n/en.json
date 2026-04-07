@@ -161,7 +161,13 @@
     "exporting": "Generating PDF\u2026",
     "report_title": "Career Assessment Report",
     "generated": "Generated {date}",
-    "disclaimer": "For informational purposes only. Actual costs and earnings may vary."
+    "disclaimer": "For informational purposes only. Actual costs and earnings may vary.",
+    "export_error": "PDF export failed. Please try again."
+  },
+  "share": {
+    "button": "Share",
+    "copied": "Link copied to clipboard!",
+    "copy_fail": "Copy failed \u2014 use the URL in your browser's address bar."
   },
   "common": {
     "loading": "Loading\u2026",
@@ -402,7 +408,7 @@
     "start": "Take the Quiz",
     "next": "Next",
     "see_results": "See My Results",
-    "skip": "Skip quiz",
+    "retake": "Try Again",
     "q1": "Which sounds more like you?",
     "q1_a": "I like solving puzzles and figuring out how things work",
     "q1_b": "I like working with people and helping them",

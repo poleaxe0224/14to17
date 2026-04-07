@@ -2,7 +2,7 @@ import { t, getLocale } from '../i18n/i18n.js';
 import { CAREER_MAPPINGS, findBySoc } from '../engine/mappings.js';
 import { fetchCareerEconomics } from '../api/career-data.js';
 import { formatCurrency, formatPercent } from '../utils/format.js';
-import { exportPdf } from '../utils/export-pdf.js';
+import { exportPdf, copyShareLink } from '../utils/export-pdf.js';
 import { trackEvent } from '../tracker/tracker.js';
 import { loadChart } from '../utils/load-chart.js';
 
@@ -34,8 +34,17 @@ function renderSelectors() {
   `).join('');
 }
 
+function getCompareParams() {
+  const hash = window.location.hash;
+  const qIdx = hash.indexOf('?');
+  if (qIdx === -1) return {};
+  return Object.fromEntries(new URLSearchParams(hash.slice(qIdx + 1)));
+}
+
 export function render() {
-  selections = ['', ''];
+  const qp = getCompareParams();
+  selections = [qp.soc1 || '', qp.soc2 || ''];
+  if (qp.soc3) selections.push(qp.soc3);
   return `
     <section class="compare-view">
       <h2 data-i18n="compare.title">${t('compare.title')}</h2>
@@ -55,9 +64,11 @@ export function render() {
       <div id="compare-chart-wrap" class="compare-chart-wrap hidden">
         <canvas id="compare-chart"></canvas>
       </div>
-      <div id="compare-pdf-wrap" class="hidden" style="text-align:center; margin-top:var(--space-lg);">
+      <div id="compare-pdf-wrap" class="hidden" style="text-align:center; margin-top:var(--space-lg); display:flex; gap:var(--space-md); justify-content:center; flex-wrap:wrap;">
         <button type="button" id="compare-export-pdf" class="outline">${t('pdf.export')}</button>
+        <button type="button" id="compare-share" class="outline share-link-btn">${t('share.button')}</button>
       </div>
+      <div id="compare-share-msg"></div>
     </section>
   `;
 }
@@ -318,4 +329,21 @@ export function afterRender() {
       statusBtn: exportBtn,
     });
   });
+
+  // Share link
+  const shareCompareBtn = document.getElementById('compare-share');
+  const compareShareMsg = document.getElementById('compare-share-msg');
+  shareCompareBtn.addEventListener('click', () => {
+    const valid = selections.filter(Boolean);
+    if (valid.length < 2) return;
+    const params = new URLSearchParams();
+    valid.forEach((soc, i) => params.set(`soc${i + 1}`, soc));
+    copyShareLink(`#/compare?${params.toString()}`, compareShareMsg);
+  });
+
+  // Auto-compare if shared link has valid SOCs
+  const qp = getCompareParams();
+  if (qp.soc1 && qp.soc2) {
+    compareBtn.click();
+  }
 }

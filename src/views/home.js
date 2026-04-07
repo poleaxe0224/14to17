@@ -54,15 +54,12 @@ function renderPopularCareers() {
 }
 
 function renderQuizStart() {
-  const quizDone = localStorage.getItem('14to17-quiz-done');
-  if (quizDone) return '';
   return `
     <section class="home-onboarding" id="quiz-section">
       <p class="onboarding-cta">${t('quiz.title')}</p>
       <p class="onboarding-desc muted">${t('quiz.subtitle')}</p>
-      <div style="display:flex; gap:var(--space-md); justify-content:center; margin-top:var(--space-md); flex-wrap:wrap;">
+      <div id="quiz-start-wrap" style="display:flex; gap:var(--space-md); justify-content:center; margin-top:var(--space-md); flex-wrap:wrap;">
         <button type="button" id="quiz-start-btn">${t('quiz.start')}</button>
-        <button type="button" id="quiz-skip-btn" class="outline secondary">${t('quiz.skip')}</button>
       </div>
       <div id="quiz-body" class="hidden"></div>
     </section>
@@ -110,18 +107,12 @@ export function render() {
 
 export function afterRender() {
   const startBtn = document.getElementById('quiz-start-btn');
-  const skipBtn = document.getElementById('quiz-skip-btn');
+  const startWrap = document.getElementById('quiz-start-wrap');
   const quizBody = document.getElementById('quiz-body');
-  const quizSection = document.getElementById('quiz-section');
   if (!startBtn || !quizBody) return;
 
-  skipBtn.addEventListener('click', () => {
-    localStorage.setItem('14to17-quiz-done', '1');
-    quizSection.classList.add('hidden');
-  });
-
   startBtn.addEventListener('click', () => {
-    startBtn.parentElement.classList.add('hidden');
+    startWrap.classList.add('hidden');
     quizBody.classList.remove('hidden');
     runQuiz(quizBody);
   });
@@ -185,11 +176,16 @@ function runQuiz(container) {
         <div class="quiz-result">
           <p class="quiz-question">${t('quiz.result_prefix')}</p>
           <div class="quiz-result-interests">${chips}</div>
+          <button type="button" id="quiz-retake" class="outline secondary" style="margin-top:var(--space-md);">${t('quiz.retake')}</button>
         </div>
       </div>
     `;
 
-    localStorage.setItem('14to17-quiz-done', '1');
+    document.getElementById('quiz-retake').addEventListener('click', () => {
+      step = 0;
+      answers.length = 0;
+      renderStep();
+    });
   }
 
   renderStep();

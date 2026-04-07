@@ -3,7 +3,7 @@ import { calcFullROI, DEFAULTS } from '../engine/roi.js';
 import { findBySoc } from '../engine/mappings.js';
 import { fetchCareerEconomics } from '../api/career-data.js';
 import { formatCurrency, formatPercent } from '../utils/format.js';
-import { exportPdf } from '../utils/export-pdf.js';
+import { exportPdf, copyShareLink } from '../utils/export-pdf.js';
 import { trackEvent } from '../tracker/tracker.js';
 import { loadChart } from '../utils/load-chart.js';
 import { tooltip } from '../utils/glossary.js';
@@ -75,9 +75,11 @@ export function render() {
           <canvas id="chart-cumulative"></canvas>
         </div>
       </div>
-      <div id="calc-pdf-wrap" class="hidden" style="text-align:center; margin-top:var(--space-lg);">
+      <div id="calc-pdf-wrap" class="hidden" style="text-align:center; margin-top:var(--space-lg); display:flex; gap:var(--space-md); justify-content:center; flex-wrap:wrap;">
         <button type="button" id="calc-export-pdf" class="outline">${t('pdf.export')}</button>
+        <button type="button" id="calc-share" class="outline share-link-btn">${t('share.button')}</button>
       </div>
+      <div id="calc-share-msg"></div>
     </section>
   `;
 }
@@ -303,6 +305,21 @@ export function afterRender() {
       orientation: 'portrait',
       statusBtn: pdfBtn,
     });
+  });
+
+  // Share link
+  const shareBtn = document.getElementById('calc-share');
+  const shareMsgEl = document.getElementById('calc-share-msg');
+  shareBtn.addEventListener('click', () => {
+    const fd = new FormData(form);
+    const params = new URLSearchParams();
+    const qp = getQueryParams();
+    if (qp.soc) params.set('soc', qp.soc);
+    params.set('tuition', fd.get('annualTuition'));
+    params.set('years', fd.get('educationYears'));
+    params.set('salary', fd.get('postDegreeSalary'));
+    params.set('baseline', fd.get('baselineSalary'));
+    copyShareLink(`#/calculator?${params.toString()}`, shareMsgEl);
   });
 
   // Auto-calculate if pre-filled from detail page

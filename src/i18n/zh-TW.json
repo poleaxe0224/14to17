@@ -161,7 +161,13 @@
     "exporting": "正在產生 PDF\u2026",
     "report_title": "職涯評估報告",
     "generated": "產生於 {date}",
-    "disclaimer": "僅供參考用途，實際費用與收入可能有所不同。"
+    "disclaimer": "僅供參考用途，實際費用與收入可能有所不同。",
+    "export_error": "PDF 匯出失敗，請稍後再試。"
+  },
+  "share": {
+    "button": "分享",
+    "copied": "連結已複製到剪貼簿！",
+    "copy_fail": "複製失敗 — 請使用瀏覽器網址列的連結。"
   },
   "common": {
     "loading": "載入中\u2026",
@@ -402,7 +408,7 @@
     "start": "開始測驗",
     "next": "下一題",
     "see_results": "查看結果",
-    "skip": "跳過測驗",
+    "retake": "再測一次",
     "q1": "哪個比較像你？",
     "q1_a": "我喜歡解謎和搞清楚事物的運作方式",
     "q1_b": "我喜歡和人互動、幫助他們",
