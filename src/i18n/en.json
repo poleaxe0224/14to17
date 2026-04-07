@@ -166,8 +166,13 @@
   },
   "share": {
     "button": "Share",
+    "copy_link": "Copy Link",
     "copied": "Link copied to clipboard!",
-    "copy_fail": "Copy failed \u2014 use the URL in your browser's address bar."
+    "copy_fail": "Copy failed \u2014 use the URL in your browser's address bar.",
+    "twitter": "\ud835\udd4f (Twitter)",
+    "email": "Email",
+    "ig_copied": "Link copied! Paste it in your Instagram story or bio.",
+    "default_title": "Career Compass \u2014 Explore Your Future"
   },
   "common": {
     "loading": "Loading\u2026",

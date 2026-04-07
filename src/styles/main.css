@@ -914,9 +914,91 @@ button.quiz-option[type="button"]:hover {
   }
 }
 
-/* ---- Report: Share Link ---- */
+/* ---- Share Dropdown ---- */
 .share-link-btn {
   min-height: var(--touch-target-min);
+}
+
+.share-dropdown ul {
+  min-width: 160px;
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+.share-dropdown ul li a {
+  display: block;
+  padding: var(--space-xs) var(--space-md);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.share-msg {
+  margin-top: var(--space-xs);
+  font-size: 0.85rem;
+  font-weight: 500;
+  min-height: 1.2em;
+}
+
+/* ---- Print / PDF Export ---- */
+.print-chart-img {
+  display: none;
+}
+
+.print-hidden {
+  /* toggled by JS during print */
+}
+
+@media print {
+  /* Hide chrome */
+  header, footer, .us-data-banner, .skip-link,
+  .share-dropdown, .share-link-btn, .share-msg,
+  .report-actions, .action-bar,
+  [id$="-pdf-wrap"], [id$="-share-msg"],
+  button, select, input, details.dropdown,
+  .quiz-card, .us-data-banner, .onboarding-overlay {
+    display: none !important;
+  }
+
+  /* Show chart images, hide canvases */
+  .print-chart-img {
+    display: block !important;
+    max-width: 100%;
+    page-break-inside: avoid;
+  }
+
+  .print-hidden {
+    display: none !important;
+  }
+
+  /* Clean layout */
+  body {
+    font-size: 11pt;
+    color: #000 !important;
+    background: #fff !important;
+  }
+
+  main.container {
+    padding: 0;
+    max-width: none;
+  }
+
+  .hidden {
+    /* Don't force-hide results sections that JS revealed */
+  }
+
+  /* Results sections should remain visible */
+  #calc-results, #calc-charts, #compare-results,
+  #compare-chart-wrap, .report-view {
+    display: block !important;
+  }
+
+  /* Page breaks */
+  h2, h3 { page-break-after: avoid; }
+  .chart-wrapper, .compare-card { page-break-inside: avoid; }
+
+  @page {
+    margin: 2cm;
+  }
 }
 
 /* ---- Responsive ---- */

@@ -166,8 +166,13 @@
   },
   "share": {
     "button": "分享",
+    "copy_link": "複製連結",
     "copied": "連結已複製到剪貼簿！",
-    "copy_fail": "複製失敗 — 請使用瀏覽器網址列的連結。"
+    "copy_fail": "複製失敗 — 請使用瀏覽器網址列的連結。",
+    "twitter": "\ud835\udd4f (Twitter)",
+    "email": "Email",
+    "ig_copied": "連結已複製！請貼到 Instagram 限時動態或個人簡介。",
+    "default_title": "職涯羅盤 — 探索你的未來"
   },
   "common": {
     "loading": "載入中\u2026",

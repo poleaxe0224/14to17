@@ -3,7 +3,7 @@ import { calcFullROI, DEFAULTS } from '../engine/roi.js';
 import { findBySoc } from '../engine/mappings.js';
 import { fetchCareerEconomics } from '../api/career-data.js';
 import { formatCurrency, formatPercent } from '../utils/format.js';
-import { exportPdf, copyShareLink } from '../utils/export-pdf.js';
+import { exportPdf, renderShareMenu, initShareHandlers } from '../utils/export-pdf.js';
 import { trackEvent } from '../tracker/tracker.js';
 import { loadChart } from '../utils/load-chart.js';
 import { tooltip } from '../utils/glossary.js';
@@ -75,11 +75,10 @@ export function render() {
           <canvas id="chart-cumulative"></canvas>
         </div>
       </div>
-      <div id="calc-pdf-wrap" class="hidden" style="text-align:center; margin-top:var(--space-lg); display:flex; gap:var(--space-md); justify-content:center; flex-wrap:wrap;">
+      <div id="calc-pdf-wrap" class="action-bar hidden" style="text-align:center; margin-top:var(--space-lg); display:flex; gap:var(--space-md); justify-content:center; align-items:start; flex-wrap:wrap;">
         <button type="button" id="calc-export-pdf" class="outline">${t('pdf.export')}</button>
-        <button type="button" id="calc-share" class="outline share-link-btn">${t('share.button')}</button>
+        ${renderShareMenu('calc-share-msg')}
       </div>
-      <div id="calc-share-msg"></div>
     </section>
   `;
 }
@@ -307,10 +306,10 @@ export function afterRender() {
     });
   });
 
-  // Share link
-  const shareBtn = document.getElementById('calc-share');
+  // Share menu
+  const pdfWrapEl = document.getElementById('calc-pdf-wrap');
   const shareMsgEl = document.getElementById('calc-share-msg');
-  shareBtn.addEventListener('click', () => {
+  initShareHandlers(pdfWrapEl, () => {
     const fd = new FormData(form);
     const params = new URLSearchParams();
     const qp = getQueryParams();
@@ -319,8 +318,8 @@ export function afterRender() {
     params.set('years', fd.get('educationYears'));
     params.set('salary', fd.get('postDegreeSalary'));
     params.set('baseline', fd.get('baselineSalary'));
-    copyShareLink(`#/calculator?${params.toString()}`, shareMsgEl);
-  });
+    return `#/calculator?${params.toString()}`;
+  }, shareMsgEl);
 
   // Auto-calculate if pre-filled from detail page
   const qp = getQueryParams();

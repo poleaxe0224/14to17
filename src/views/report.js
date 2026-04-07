@@ -8,7 +8,7 @@
 import { t, getLocale } from '../i18n/i18n.js';
 import { findBySoc } from '../engine/mappings.js';
 import { getEvents, getExploredSocs, getEventCounts, clearTracker, exportJSON, importJSON } from '../tracker/tracker.js';
-import { exportPdf } from '../utils/export-pdf.js';
+import { exportPdf, renderShareMenu, initShareHandlers } from '../utils/export-pdf.js';
 
 function careerName(soc) {
   const career = findBySoc(soc);
@@ -142,8 +142,8 @@ export function render() {
       </div>
 
       <!-- Export / Import actions -->
-      <div class="report-actions">
-        <button type="button" id="report-share-link" class="share-link-btn">${t('report.share_link')}</button>
+      <div class="report-actions action-bar" style="display:flex; gap:var(--space-sm); flex-wrap:wrap; align-items:start;">
+        ${renderShareMenu('report-share-msg')}
         <button type="button" id="report-export-md" class="outline">${t('report.export_md')}</button>
         <button type="button" id="report-export-pdf" class="outline">${t('report.export_pdf')}</button>
         <button type="button" id="report-export-json" class="outline secondary">${t('report.export_json')}</button>
@@ -229,36 +229,15 @@ function downloadFile(content, filename, mimeType) {
 export function afterRender() {
   const msgEl = document.getElementById('report-msg');
 
-  // Share link
-  const shareBtn = document.getElementById('report-share-link');
-  if (shareBtn) {
-    shareBtn.addEventListener('click', () => {
-      try {
-        // Compact payload: just SOC codes explored
-        const socs = getExploredSocs();
-        const payload = btoa(JSON.stringify(socs));
-        const baseUrl = window.location.href.split('#')[0];
-        const shareUrl = `${baseUrl}#/report?data=${payload}`;
-
-        navigator.clipboard.writeText(shareUrl).then(() => {
-          if (msgEl) {
-            msgEl.textContent = t('report.link_copied');
-            msgEl.className = 'report-msg roi-positive';
-          }
-        }).catch(() => {
-          // Fallback: prompt user
-          if (msgEl) {
-            msgEl.textContent = t('report.link_copy_fail');
-            msgEl.className = 'report-msg error-text';
-          }
-        });
-      } catch {
-        if (msgEl) {
-          msgEl.textContent = t('report.link_copy_fail');
-          msgEl.className = 'report-msg error-text';
-        }
-      }
-    });
+  // Share menu
+  const reportActions = document.querySelector('.report-actions');
+  const shareMsgEl = document.getElementById('report-share-msg');
+  if (reportActions) {
+    initShareHandlers(reportActions, () => {
+      const socs = getExploredSocs();
+      const payload = btoa(JSON.stringify(socs));
+      return `#/report?data=${payload}`;
+    }, shareMsgEl);
   }
 
   // Markdown export
