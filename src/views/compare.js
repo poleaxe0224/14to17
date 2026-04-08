@@ -62,7 +62,7 @@ export function render() {
       <div id="compare-msg" class="compare-msg"></div>
       <div id="compare-results" class="hidden"></div>
       <div id="compare-chart-wrap" class="compare-chart-wrap hidden">
-        <canvas id="compare-chart"></canvas>
+        <canvas id="compare-chart" role="img" aria-label="${t('compare.chart_label')}"></canvas>
       </div>
       <div id="compare-pdf-wrap" class="action-bar hidden" style="text-align:center; margin-top:var(--space-lg); display:flex; gap:var(--space-md); justify-content:center; align-items:start; flex-wrap:wrap;">
         <button type="button" id="compare-export-pdf" class="outline">${t('pdf.export')}</button>

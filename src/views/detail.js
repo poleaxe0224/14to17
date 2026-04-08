@@ -97,7 +97,7 @@ export function render({ soc } = {}) {
 
       <div id="breakeven-chart-wrap" class="breakeven-chart-wrap hidden">
         <h3>${t('detail.breakeven_chart')}</h3>
-        <canvas id="breakeven-chart"></canvas>
+        <canvas id="breakeven-chart" role="img" aria-label="${t('detail.breakeven_chart_label')}"></canvas>
         <p class="breakeven-note">${t('detail.breakeven_note')}</p>
       </div>
 

@@ -78,6 +78,7 @@
     "cost_curve": "累積成本（學費 + 機會成本）",
     "earnings_curve": "累積收入溢價",
     "breakeven_note": "交叉點就是你的學位開始「回本」的時候。",
+    "breakeven_chart_label": "折線圖：顯示有無學位的累計收入，並標示回本交叉點",
     "undergrad": "大學",
     "grad": "研究所",
     "undergrad_tuition": "大學學費",
@@ -131,7 +132,9 @@
     "help_discount_rate": "考慮「現在的錢比未來值錢」的係數。可以想成「急迫度」——數字越高，代表你越看重現在就拿到錢。",
     "help_career_years": "你計畫在這個職業工作幾年。",
     "help_loan_rate": "學貸的年利率。",
-    "help_loan_term": "學貸還款的年數。"
+    "help_loan_term": "學貸還款的年數。",
+    "chart_cashflow_label": "長條圖：顯示每年現金流，就學期間為負值，工作後為正值",
+    "chart_cumulative_label": "折線圖：顯示職涯期間的累計淨值"
   },
   "compare": {
     "title": "比較職業",
@@ -158,6 +161,7 @@
     "total_cost": "總成本",
     "best_value": "最佳",
     "chart_title": "ROI 比較",
+    "chart_label": "長條圖：比較所選職業的薪資、ROI 與回本年數",
     "salary_note": "* BLS 薪資無法取得，使用預估基準值",
     "never": "永不回本",
     "swipe_hint": "左右滑動比較"
@@ -305,6 +309,17 @@
     "share_link": "複製分享連結",
     "link_copied": "連結已複製到剪貼簿！",
     "link_copy_fail": "複製失敗 \u2014 請使用瀏覽器網址列的連結。"
+  },
+  "page_title": {
+    "suffix": "職涯羅盤",
+    "home": "探索你的未來",
+    "search": "探索職業",
+    "profile": "{name}",
+    "detail": "{name} — ROI",
+    "calculator": "ROI 計算器",
+    "compare": "比較職業",
+    "report": "我的報告",
+    "not_found": "404"
   },
   "footer": {
     "data": "資料來源：BLS OES、College Scorecard 及 IPEDS",

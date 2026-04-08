@@ -69,10 +69,10 @@ export function render() {
       <div id="calc-results" class="hidden"></div>
       <div id="calc-charts" class="calc-charts hidden">
         <div class="chart-wrapper">
-          <canvas id="chart-cashflow"></canvas>
+          <canvas id="chart-cashflow" role="img" aria-label="${t('calculator.chart_cashflow_label')}"></canvas>
         </div>
         <div class="chart-wrapper">
-          <canvas id="chart-cumulative"></canvas>
+          <canvas id="chart-cumulative" role="img" aria-label="${t('calculator.chart_cumulative_label')}"></canvas>
         </div>
       </div>
       <div id="calc-pdf-wrap" class="action-bar hidden" style="text-align:center; margin-top:var(--space-lg); display:flex; gap:var(--space-md); justify-content:center; align-items:start; flex-wrap:wrap;">

@@ -54,6 +54,18 @@ function growthBadgeClass(label) {
   return map[label] ?? 'growth-badge--avg';
 }
 
+/** Non-color indicator for growth badges (WCAG 1.4.1) */
+function growthIcon(label) {
+  const map = {
+    much_faster: '\u25B2\u25B2', // ▲▲
+    faster: '\u25B2',            // ▲
+    average: '\u25CF',           // ●
+    slower: '\u25BC',            // ▼
+    declining: '\u25BC\u25BC',   // ▼▼
+  };
+  return map[label] ?? '\u25CF';
+}
+
 export function render({ soc } = {}) {
   const career = findBySoc(soc);
 
@@ -366,7 +378,7 @@ function renderLevel3Content(econ, profile, soc) {
         <span class="outlook-label">${t('profile.employment_2024')}</span>
       </div>
       <div class="outlook-stat">
-        <span class="growth-badge ${growthBadgeClass(ol.growth_label)}">${growthSign}${ol.growth_rate}%</span>
+        <span class="growth-badge ${growthBadgeClass(ol.growth_label)}">${growthIcon(ol.growth_label)} ${growthSign}${ol.growth_rate}%</span>
         <span class="outlook-label">${t('profile.projected_growth')}</span>
         <span class="outlook-note">${t(growthLabelKey(ol.growth_label))}</span>
       </div>

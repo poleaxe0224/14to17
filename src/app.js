@@ -1,5 +1,6 @@
 import { addRoute, setNotFound, initRouter, refresh } from './router/router.js';
-import { initI18n, toggleLocale, getLocale } from './i18n/i18n.js';
+import { initI18n, toggleLocale, getLocale, t } from './i18n/i18n.js';
+import { findBySoc } from './engine/mappings.js';
 
 import * as homeView from './views/home.js';
 import * as searchView from './views/search.js';
@@ -81,6 +82,36 @@ function setupDisclaimerBanner() {
   });
 }
 
+function updatePageTitle(path, params) {
+  const suffix = t('page_title.suffix');
+  const isZh = getLocale() === 'zh-TW';
+
+  let pageTitle;
+  if (path === '/') {
+    pageTitle = t('page_title.home');
+  } else if (path === '/search') {
+    pageTitle = t('page_title.search');
+  } else if (path.startsWith('/profile/') && params.soc) {
+    const career = findBySoc(params.soc);
+    const name = career ? (isZh ? career.careerZh : career.career) : params.soc;
+    pageTitle = t('page_title.profile').replace('{name}', name);
+  } else if (path.startsWith('/detail/') && params.soc) {
+    const career = findBySoc(params.soc);
+    const name = career ? (isZh ? career.careerZh : career.career) : params.soc;
+    pageTitle = t('page_title.detail').replace('{name}', name);
+  } else if (path === '/calculator') {
+    pageTitle = t('page_title.calculator');
+  } else if (path === '/compare') {
+    pageTitle = t('page_title.compare');
+  } else if (path === '/report') {
+    pageTitle = t('page_title.report');
+  } else {
+    pageTitle = t('page_title.not_found');
+  }
+
+  document.title = `${pageTitle} — ${suffix}`;
+}
+
 function setupNavToggle() {
   const toggle = document.getElementById('nav-toggle');
   const menu = document.getElementById('nav-menu');
@@ -142,6 +173,11 @@ export async function initApp() {
 
   // Wire up US data disclaimer banner dismiss
   setupDisclaimerBanner();
+
+  // Update page title on route change
+  document.addEventListener('route-changed', (e) => {
+    updatePageTitle(e.detail.path, e.detail.params);
+  });
 
   // Re-render current route when locale changes (so t() calls in render() update)
   document.addEventListener('locale-changed', () => refresh());

@@ -78,6 +78,7 @@
     "cost_curve": "Cumulative Cost (Tuition + Opportunity)",
     "earnings_curve": "Cumulative Earnings Premium",
     "breakeven_note": "The crossover point is where your degree starts paying for itself.",
+    "breakeven_chart_label": "Line chart showing cumulative earnings with and without a degree, highlighting the breakeven crossover point",
     "undergrad": "undergrad",
     "grad": "grad",
     "undergrad_tuition": "Undergrad Tuition",
@@ -131,7 +132,9 @@
     "help_discount_rate": "Accounts for money being worth more today than in the future. Think of it as the \"impatience factor\" \u2014 a higher rate means you value having money sooner.",
     "help_career_years": "How many years you plan to work in this career.",
     "help_loan_rate": "The interest rate charged on your student loan.",
-    "help_loan_term": "How many years to pay back the loan."
+    "help_loan_term": "How many years to pay back the loan.",
+    "chart_cashflow_label": "Bar chart showing annual cash flow: negative during education, positive during career years",
+    "chart_cumulative_label": "Line chart showing cumulative net value over career duration"
   },
   "compare": {
     "title": "Compare Careers",
@@ -158,6 +161,7 @@
     "total_cost": "Total Cost",
     "best_value": "Best",
     "chart_title": "ROI Comparison",
+    "chart_label": "Bar chart comparing salary, ROI, and breakeven year across selected careers",
     "salary_note": "* BLS salary unavailable; using estimated baseline",
     "never": "Never",
     "swipe_hint": "Swipe to compare"
@@ -305,6 +309,17 @@
     "share_link": "Copy Share Link",
     "link_copied": "Link copied to clipboard!",
     "link_copy_fail": "Copy failed \u2014 use the URL in your browser's address bar."
+  },
+  "page_title": {
+    "suffix": "Career Compass",
+    "home": "Explore Your Future",
+    "search": "Explore Careers",
+    "profile": "{name}",
+    "detail": "{name} — ROI",
+    "calculator": "ROI Calculator",
+    "compare": "Compare Careers",
+    "report": "My Report",
+    "not_found": "404"
   },
   "footer": {
     "data": "Data: BLS OES, College Scorecard & IPEDS",
