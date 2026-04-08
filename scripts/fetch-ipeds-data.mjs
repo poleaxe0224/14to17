@@ -55,6 +55,7 @@ const CURATED_COMPLETIONS = {
   '2203': { total: 8_200,   title: 'Legal Support Services', year: 2022 },
   '5010': { total: 13_000,  title: 'Arts, Entertainment, and Media (Graphic Design)', year: 2022 },
   '0904': { total: 23_000,  title: 'Journalism', year: 2022 },
+  '3070': { total: 15_000,  title: 'Data Science', year: 2022 },
 };
 
 const CIP_CODES = Object.keys(CURATED_COMPLETIONS);

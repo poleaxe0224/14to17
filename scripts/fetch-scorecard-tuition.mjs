@@ -22,7 +22,7 @@ const CIP_CAREERS = [
   { cip: '1107', career: 'Software Developer' },
   { cip: '1101', career: 'Computer Systems Analyst' },
   { cip: '1104', career: 'Information Security Analyst' },
-  { cip: '2701', career: 'Data Scientist' },
+  { cip: '3070', career: 'Data Scientist' },
   { cip: '5138', career: 'Registered Nurse' },
   { cip: '5109', career: 'Physician Assistant' },
   { cip: '5104', career: 'Dentist' },
@@ -44,6 +44,11 @@ const CIP_CAREERS = [
   { cip: '2203', career: 'Paralegal' },
   { cip: '5010', career: 'Graphic Designer' },
   { cip: '0904', career: 'News Analyst / Reporter' },
+  // Undergrad CIPs for graduate-degree careers (defaultUndergradCip)
+  { cip: '2601', career: 'Biology (undergrad for PA / Dentist)' },
+  { cip: '4002', career: 'Chemistry (undergrad for Pharmacist)' },
+  { cip: '4501', career: 'Political Science (undergrad for Lawyer)' },
+  { cip: '2701', career: 'Mathematics (undergrad for Data Scientist)' },
 ];
 
 const FIELDS = [

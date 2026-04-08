@@ -10,6 +10,7 @@
     { "cip_code": "1101", "cip_title": "Computer and Information Sciences, General", "soc_codes": ["15-1211", "15-1212", "15-1245"], "primary_soc": "15-1211" },
     { "cip_code": "1104", "cip_title": "Information Science/Studies", "soc_codes": ["15-1212", "15-1299"], "primary_soc": "15-1212" },
     { "cip_code": "2701", "cip_title": "Mathematics, General", "soc_codes": ["15-2051", "15-2041"], "primary_soc": "15-2051" },
+    { "cip_code": "3070", "cip_title": "Data Science", "soc_codes": ["15-2051", "15-2098"], "primary_soc": "15-2051" },
     { "cip_code": "5138", "cip_title": "Registered Nursing", "soc_codes": ["29-1141"], "primary_soc": "29-1141" },
     { "cip_code": "5109", "cip_title": "Allied Health / Physician Assistant", "soc_codes": ["29-1071", "29-2061"], "primary_soc": "29-1071" },
     { "cip_code": "5104", "cip_title": "Dentistry", "soc_codes": ["29-1021", "29-1029"], "primary_soc": "29-1021" },

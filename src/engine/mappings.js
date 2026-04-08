@@ -84,7 +84,7 @@ export const CAREER_MAPPINGS = Object.freeze([
   { soc: '15-1252', cip: '1107', career: 'Software Developer', careerZh: '軟體工程師', typicalDegree: 'bachelors', category: 'tech', interests: ['build', 'create'], icon: '\u{1F4BB}' },
   { soc: '15-1211', cip: '1101', career: 'Computer Systems Analyst', careerZh: '電腦系統分析師', typicalDegree: 'bachelors', category: 'tech', interests: ['analyze'], icon: '\u{1F5A5}' },
   { soc: '15-1212', cip: '1104', career: 'Information Security Analyst', careerZh: '資安分析師', typicalDegree: 'bachelors', category: 'tech', interests: ['analyze'], icon: '\u{1F512}' },
-  { soc: '15-2051', cip: '2701', career: 'Data Scientist', careerZh: '資料科學家', typicalDegree: 'masters', category: 'tech', interests: ['analyze'], icon: '\u{1F4CA}', defaultUndergradCip: '2701' },
+  { soc: '15-2051', cip: '3070', career: 'Data Scientist', careerZh: '資料科學家', typicalDegree: 'masters', category: 'tech', interests: ['analyze'], icon: '\u{1F4CA}', defaultUndergradCip: '2701' },
 
   // Healthcare
   { soc: '29-1141', cip: '5138', career: 'Registered Nurse', careerZh: '註冊護理師', typicalDegree: 'bachelors', category: 'healthcare', interests: ['help'], icon: '\u{1FA7A}' },

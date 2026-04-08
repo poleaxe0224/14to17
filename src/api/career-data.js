@@ -64,7 +64,7 @@ export async function fetchCareerEconomics(career, options = {}) {
   const completionsTotal = ipedsData?.completionsTotal ?? null;
 
   // Tuition: graduate degrees use split undergrad + grad rates
-  const gradTuition = tuitionData?.netPrice || tuitionData?.inState || 20_000;
+  let gradTuition = tuitionData?.netPrice || tuitionData?.inState || 20_000;
   let roiInputs;
 
   if (isGrad) {
@@ -73,6 +73,12 @@ export async function fetchCareerEconomics(career, options = {}) {
     // Undergrad tuition: CIP-specific if user selected a major, else national average fallback
     const undergradTuition = undergradTuitionData?.netPrice
       || scorecard.getTuitionFallback('bachelors').netPrice;
+
+    // Sanity check: grad tuition should not be lower than undergrad (data quality issue
+    // when a broad CIP mixes cheap certificate programs with expensive graduate programs)
+    if (gradTuition < undergradTuition) {
+      gradTuition = scorecard.getTuitionFallback(degree).netPrice;
+    }
 
     roiInputs = {
       undergradTuition,
