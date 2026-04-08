@@ -139,16 +139,34 @@ header nav .brand {
     margin: var(--space-xs) var(--space-md) var(--space-sm);
   }
 
-  /* Tools dropdown in mobile: full-width, not positioned */
+  /* Tools dropdown in mobile: force open, flatten into nav list */
+  .nav-menu .dropdown {
+    display: contents;
+  }
+
+  .nav-menu .dropdown summary {
+    display: none;
+  }
+
   .nav-menu .dropdown ul {
+    display: flex;
+    flex-direction: column;
     position: static;
     box-shadow: none;
-    padding-left: var(--space-lg);
+    padding: 0;
+    margin: 0;
+    background: none;
+    border: none;
+    width: 100%;
   }
 
   .nav-menu .dropdown ul[dir="rtl"] {
     direction: ltr;
     text-align: left;
+  }
+
+  .nav-menu .dropdown ul li a {
+    padding: var(--space-sm) var(--space-md);
   }
 }
 
