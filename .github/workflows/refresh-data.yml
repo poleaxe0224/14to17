@@ -1,0 +1,84 @@
+name: Refresh Data
+
+on:
+  schedule:
+    # Every Monday at 06:00 UTC (14:00 Taiwan time)
+    - cron: '0 6 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh-data
+  cancel-in-progress: true
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 20
+
+      - run: npm install
+
+      # --- Fetch all 5 data sources (each has its own fallback) ---
+      - name: Fetch BLS wage data
+        run: node scripts/fetch-bls-wages.mjs
+
+      - name: Fetch CPS earnings data
+        run: node scripts/fetch-cps-earnings.mjs
+        env:
+          BLS_API_KEY: ${{ secrets.BLS_API_KEY }}
+
+      - name: Fetch Scorecard tuition data
+        run: node scripts/fetch-scorecard-tuition.mjs --force
+        env:
+          SCORECARD_API_KEY: ${{ secrets.SCORECARD_API_KEY }}
+
+      - name: Fetch IPEDS data (graduation rates + completions)
+        run: node scripts/fetch-ipeds-data.mjs
+        env:
+          SCORECARD_API_KEY: ${{ secrets.SCORECARD_API_KEY }}
+
+      - name: Fetch O*NET data (skills, knowledge, education)
+        run: node scripts/fetch-onet-data.mjs
+
+      # --- Tests must pass before we commit anything ---
+      - run: npm test
+
+      # --- Update fallback files when fresh data was fetched ---
+      # If a fetch succeeded, src/data/X.json differs from scripts/fallback/X.json.
+      # If a fetch failed, the script copied the fallback → files are identical → no update.
+      - name: Sync fresh data to fallbacks
+        run: |
+          for f in wages tuition cps_earnings ipeds onet-data; do
+            src="src/data/$f.json"
+            fb="scripts/fallback/$f.json"
+            if [ -f "$src" ] && [ -f "$fb" ] && ! diff -q "$src" "$fb" > /dev/null 2>&1; then
+              cp "$src" "$fb"
+              echo "Updated fallback: $f.json"
+            else
+              echo "Skipped fallback: $f.json (unchanged or missing)"
+            fi
+          done
+
+      # --- Commit and push only if files changed ---
+      # Note: GITHUB_TOKEN pushes do not trigger other workflows (GitHub design).
+      # The deploy workflow runs on the next code push, or trigger it manually:
+      #   gh workflow run deploy.yml
+      - name: Commit updated data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/data/ scripts/fallback/
+          if git diff --cached --quiet; then
+            echo "No data changes — skipping commit."
+          else
+            git commit -m "chore: refresh data sources ($(date -u +%Y-%m-%d))"
+            git push
+          fi
