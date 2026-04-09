@@ -4,6 +4,7 @@
  */
 
 import { t } from '../i18n/i18n.js';
+import { applyChartTheme } from './load-chart.js';
 
 /* ------------------------------------------------------------------ */
 /*  PDF Export via window.print()                                      */
@@ -22,6 +23,18 @@ export async function exportPdf(_contentEl, { statusBtn } = {}) {
   if (statusBtn) {
     statusBtn.textContent = t('pdf.exporting');
     statusBtn.disabled = true;
+  }
+
+  // Force light theme so print output has white backgrounds
+  const htmlEl = document.documentElement;
+  const wasDark = htmlEl.getAttribute('data-theme') === 'dark';
+  if (wasDark) {
+    htmlEl.setAttribute('data-theme', 'light');
+    if (window.Chart) {
+      applyChartTheme(window.Chart);
+      Object.values(window.Chart.instances).forEach((c) => c.update('none'));
+    }
+    await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
   }
 
   const restored = [];
@@ -51,6 +64,16 @@ export async function exportPdf(_contentEl, { statusBtn } = {}) {
       canvas.classList.remove('print-hidden');
       img.remove();
     });
+
+    // Restore dark theme if it was active
+    if (wasDark) {
+      htmlEl.setAttribute('data-theme', 'dark');
+      if (window.Chart) {
+        applyChartTheme(window.Chart);
+        Object.values(window.Chart.instances).forEach((c) => c.update('none'));
+      }
+    }
+
     if (statusBtn) {
       statusBtn.textContent = origText;
       statusBtn.disabled = false;
