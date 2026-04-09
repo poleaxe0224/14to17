@@ -4,33 +4,208 @@
     "graduation_rate_source": "College Scorecard latest.completion.consumer_rate (IPEDS-derived)",
     "completions_source": "NCES IPEDS Completions Survey 2021-22",
     "year": "2022",
-    "fetched_at": "2026-04-02T14:38:00Z"
+    "fetched_at": "2026-04-09T16:43:33.183Z"
   },
   "by_cip": {
-    "1101": { "graduation_rate_150pct": 0.413, "completions_total": 56000, "cip_title": "Computer and Information Sciences, General", "grad_rate_sample_schools": 100 },
-    "1104": { "graduation_rate_150pct": 0.586, "completions_total": 8500, "cip_title": "Information Science/Studies", "grad_rate_sample_schools": 100 },
-    "1106": { "graduation_rate_150pct": 0.284, "completions_total": 11000, "cip_title": "Data Entry/Computer Applications", "grad_rate_sample_schools": 100 },
-    "1107": { "graduation_rate_150pct": 0.442, "completions_total": 114000, "cip_title": "Computer Science", "grad_rate_sample_schools": 100 },
-    "1312": { "graduation_rate_150pct": 0.443, "completions_total": 26000, "cip_title": "Teacher Education, Specific Levels (Elementary)", "grad_rate_sample_schools": 100 },
-    "1313": { "graduation_rate_150pct": 0.554, "completions_total": 13000, "cip_title": "Teacher Education, Specific Subjects (Secondary)", "grad_rate_sample_schools": 100 },
-    "1409": { "graduation_rate_150pct": 0.683, "completions_total": 18500, "cip_title": "Civil Engineering", "grad_rate_sample_schools": 100 },
-    "1410": { "graduation_rate_150pct": 0.695, "completions_total": 23000, "cip_title": "Electrical, Electronics Engineering", "grad_rate_sample_schools": 100 },
-    "1419": { "graduation_rate_150pct": 0.697, "completions_total": 34000, "cip_title": "Mechanical Engineering", "grad_rate_sample_schools": 100 },
-    "2201": { "graduation_rate_150pct": 0.712, "completions_total": 38500, "cip_title": "Law (J.D.)", "grad_rate_sample_schools": 100 },
-    "2203": { "graduation_rate_150pct": 0.279, "completions_total": 8200, "cip_title": "Legal Support Services", "grad_rate_sample_schools": 100 },
-    "2701": { "graduation_rate_150pct": 0.531, "completions_total": 28000, "cip_title": "Mathematics, General", "grad_rate_sample_schools": 100 },
-    "4601": { "graduation_rate_150pct": 0.403, "completions_total": 13000, "cip_title": "Construction Trades, General", "grad_rate_sample_schools": 100 },
-    "4702": { "graduation_rate_150pct": 0.469, "completions_total": 29000, "cip_title": "Heating, Ventilation, AC and Refrigeration", "grad_rate_sample_schools": 100 },
-    "5010": { "graduation_rate_150pct": 0.642, "completions_total": 13000, "cip_title": "Arts, Entertainment, and Media (Graphic Design)", "grad_rate_sample_schools": 100 },
-    "5104": { "graduation_rate_150pct": 0.778, "completions_total": 6800, "cip_title": "Dentistry (D.D.S., D.M.D.)", "grad_rate_sample_schools": 60 },
-    "5109": { "graduation_rate_150pct": 0.425, "completions_total": 42000, "cip_title": "Allied Health Diagnostic (PA + LPN)", "grad_rate_sample_schools": 100 },
-    "5120": { "graduation_rate_150pct": 0.648, "completions_total": 13500, "cip_title": "Pharmacy, Pharmaceutical Sciences", "grad_rate_sample_schools": 100 },
-    "5138": { "graduation_rate_150pct": 0.445, "completions_total": 178000, "cip_title": "Registered Nursing", "grad_rate_sample_schools": 100 },
-    "5203": { "graduation_rate_150pct": 0.420, "completions_total": 62000, "cip_title": "Accounting and Related Services", "grad_rate_sample_schools": 100 },
-    "5208": { "graduation_rate_150pct": 0.488, "completions_total": 72000, "cip_title": "Finance and Financial Management", "grad_rate_sample_schools": 100 },
-    "5210": { "graduation_rate_150pct": 0.601, "completions_total": 19000, "cip_title": "Human Resources Management", "grad_rate_sample_schools": 100 },
-    "5214": { "graduation_rate_150pct": 0.563, "completions_total": 49000, "cip_title": "Marketing", "grad_rate_sample_schools": 100 },
-    "0904": { "graduation_rate_150pct": 0.340, "completions_total": 23000, "cip_title": "Journalism", "grad_rate_sample_schools": 100 },
-    "3070": { "graduation_rate_150pct": 0.580, "completions_total": 15000, "cip_title": "Data Science", "grad_rate_sample_schools": 100 }
+    "1101": {
+      "graduation_rate_150pct": 0.4126,
+      "retention_rate_ft": 0.7401,
+      "retention_rate_sample": 42,
+      "completions_total": 56000,
+      "cip_title": "Computer and Information Sciences, General",
+      "grad_rate_sample_schools": 100
+    },
+    "1104": {
+      "graduation_rate_150pct": 0.586,
+      "retention_rate_ft": 0.8015,
+      "retention_rate_sample": 76,
+      "completions_total": 8500,
+      "cip_title": "Information Science/Studies",
+      "grad_rate_sample_schools": 98
+    },
+    "1106": {
+      "graduation_rate_150pct": 0.284,
+      "retention_rate_ft": 0.7143,
+      "retention_rate_sample": 13,
+      "completions_total": 11000,
+      "cip_title": "Data Entry/Computer Applications",
+      "grad_rate_sample_schools": 100
+    },
+    "1107": {
+      "graduation_rate_150pct": 0.4416,
+      "retention_rate_ft": 0.8153,
+      "retention_rate_sample": 56,
+      "completions_total": 114000,
+      "cip_title": "Computer Science",
+      "grad_rate_sample_schools": 100
+    },
+    "1312": {
+      "graduation_rate_150pct": 0.4433,
+      "retention_rate_ft": 0.7275,
+      "retention_rate_sample": 61,
+      "completions_total": 26000,
+      "cip_title": "Teacher Education, Specific Levels (Elementary)",
+      "grad_rate_sample_schools": 100
+    },
+    "1313": {
+      "graduation_rate_150pct": 0.554,
+      "retention_rate_ft": 0.7559,
+      "retention_rate_sample": 80,
+      "completions_total": 13000,
+      "cip_title": "Teacher Education, Specific Subjects (Secondary)",
+      "grad_rate_sample_schools": 100
+    },
+    "1409": {
+      "graduation_rate_150pct": 0.6827,
+      "retention_rate_ft": 0.8436,
+      "retention_rate_sample": 98,
+      "completions_total": 18500,
+      "cip_title": "Civil Engineering",
+      "grad_rate_sample_schools": 98
+    },
+    "1410": {
+      "graduation_rate_150pct": 0.6945,
+      "retention_rate_ft": 0.8664,
+      "retention_rate_sample": 89,
+      "completions_total": 23000,
+      "cip_title": "Electrical, Electronics Engineering",
+      "grad_rate_sample_schools": 99
+    },
+    "1419": {
+      "graduation_rate_150pct": 0.6968,
+      "retention_rate_ft": 0.8637,
+      "retention_rate_sample": 97,
+      "completions_total": 34000,
+      "cip_title": "Mechanical Engineering",
+      "grad_rate_sample_schools": 99
+    },
+    "2201": {
+      "graduation_rate_150pct": 0.7117,
+      "retention_rate_ft": 0.8684,
+      "retention_rate_sample": 87,
+      "completions_total": 38500,
+      "cip_title": "Law (J.D.)",
+      "grad_rate_sample_schools": 91
+    },
+    "2203": {
+      "graduation_rate_150pct": 0.2794,
+      "retention_rate_ft": 0.7648,
+      "retention_rate_sample": 19,
+      "completions_total": 8200,
+      "cip_title": "Legal Support Services",
+      "grad_rate_sample_schools": 100
+    },
+    "2701": {
+      "graduation_rate_150pct": 0.5312,
+      "retention_rate_ft": 0.773,
+      "retention_rate_sample": 74,
+      "completions_total": 28000,
+      "cip_title": "Mathematics, General",
+      "grad_rate_sample_schools": 100
+    },
+    "3070": {
+      "graduation_rate_150pct": 0.662,
+      "retention_rate_ft": 0.8302,
+      "retention_rate_sample": 90,
+      "completions_total": 15000,
+      "cip_title": "Data Science",
+      "grad_rate_sample_schools": 99
+    },
+    "4601": {
+      "graduation_rate_150pct": 0.4028,
+      "retention_rate_ft": 0.73,
+      "retention_rate_sample": 2,
+      "completions_total": 13000,
+      "cip_title": "Construction Trades, General",
+      "grad_rate_sample_schools": 61
+    },
+    "4702": {
+      "graduation_rate_150pct": 0.4695,
+      "retention_rate_ft": 0.7222,
+      "retention_rate_sample": 5,
+      "completions_total": 29000,
+      "cip_title": "Heating, Ventilation, AC and Refrigeration",
+      "grad_rate_sample_schools": 100
+    },
+    "5010": {
+      "graduation_rate_150pct": 0.6416,
+      "retention_rate_ft": 0.8094,
+      "retention_rate_sample": 88,
+      "completions_total": 13000,
+      "cip_title": "Arts, Entertainment, and Media (Graphic Design)",
+      "grad_rate_sample_schools": 99
+    },
+    "5104": {
+      "graduation_rate_150pct": 0.7776,
+      "retention_rate_ft": 0.8784,
+      "retention_rate_sample": 55,
+      "completions_total": 6800,
+      "cip_title": "Dentistry (D.D.S., D.M.D.)",
+      "grad_rate_sample_schools": 68
+    },
+    "5109": {
+      "graduation_rate_150pct": 0.4251,
+      "retention_rate_ft": 0.7406,
+      "retention_rate_sample": 37,
+      "completions_total": 42000,
+      "cip_title": "Allied Health Diagnostic (PA + LPN)",
+      "grad_rate_sample_schools": 100
+    },
+    "5120": {
+      "graduation_rate_150pct": 0.6475,
+      "retention_rate_ft": 0.8212,
+      "retention_rate_sample": 82,
+      "completions_total": 13500,
+      "cip_title": "Pharmacy, Pharmaceutical Sciences",
+      "grad_rate_sample_schools": 95
+    },
+    "5138": {
+      "graduation_rate_150pct": 0.4455,
+      "retention_rate_ft": 0.7364,
+      "retention_rate_sample": 38,
+      "completions_total": 178000,
+      "cip_title": "Registered Nursing",
+      "grad_rate_sample_schools": 100
+    },
+    "5203": {
+      "graduation_rate_150pct": 0.4197,
+      "retention_rate_ft": 0.7222,
+      "retention_rate_sample": 55,
+      "completions_total": 62000,
+      "cip_title": "Accounting and Related Services",
+      "grad_rate_sample_schools": 100
+    },
+    "5208": {
+      "graduation_rate_150pct": 0.4884,
+      "retention_rate_ft": 0.7959,
+      "retention_rate_sample": 69,
+      "completions_total": 72000,
+      "cip_title": "Finance and Financial Management",
+      "grad_rate_sample_schools": 99
+    },
+    "5210": {
+      "graduation_rate_150pct": 0.6005,
+      "retention_rate_ft": 0.7959,
+      "retention_rate_sample": 75,
+      "completions_total": 19000,
+      "cip_title": "Human Resources Management",
+      "grad_rate_sample_schools": 96
+    },
+    "5214": {
+      "graduation_rate_150pct": 0.5626,
+      "retention_rate_ft": 0.7574,
+      "retention_rate_sample": 81,
+      "completions_total": 49000,
+      "cip_title": "Marketing",
+      "grad_rate_sample_schools": 99
+    },
+    "0904": {
+      "graduation_rate_150pct": 0.3396,
+      "retention_rate_ft": 0.7985,
+      "retention_rate_sample": 46,
+      "completions_total": 23000,
+      "cip_title": "Journalism",
+      "grad_rate_sample_schools": 100
+    }
   }
 }
