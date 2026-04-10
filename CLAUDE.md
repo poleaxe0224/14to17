@@ -41,7 +41,8 @@ src/
 │   ├── home.js           # Interest-based exploration entry (4 category cards)
 │   ├── search.js         # Career search with interest filter chips
 │   ├── profile.js        # 4-level progressive disclosure (Discover/Plan/Evaluate/Decide)
-│   ├── detail.js         # ROI deep dive (wages, tuition, 3-layer ROI)
+│   ├── detail.js         # ROI deep dive orchestrator (thin: delegates to sub-modules)
+│   ├── detail-chart.js      # Breakeven chart (cost vs. earnings crossover)
 │   ├── detail-renderers.js  # Pure HTML renderers for detail panels
 │   ├── detail-sliders.js    # Competition parameter slider wiring
 │   ├── calculator.js     # 9-field ROI calculator + Chart.js
