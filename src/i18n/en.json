@@ -19,6 +19,8 @@
     "tools_compare": "Compare Careers",
     "tools_compare_desc": "Side-by-side comparison of salary, cost, and ROI.",
     "career_count": "{count} careers",
+    "recommended_for_you": "Recommended for You",
+    "recommended_desc": "Based on your quiz results — careers you haven't explored yet.",
     "onboarding_cta": "First time here? Start exploring!",
     "onboarding_desc": "Pick an interest above to discover careers that match you."
   },
@@ -321,6 +323,15 @@
     "compare": "Compare Careers",
     "report": "My Report",
     "not_found": "404"
+  },
+  "meta": {
+    "home": "Explore careers, discover what they're really like, and evaluate ROI with real federal data. For teens aged 14-17.",
+    "search": "Browse 25 careers by interest — building, helping, analyzing, or creating. Filter and compare with real salary data.",
+    "profile": "Explore {name}: salary, education path, job outlook, skills, and career ROI analysis.",
+    "detail": "{name} — detailed ROI analysis with tuition costs, breakeven chart, and three-layer risk model.",
+    "calculator": "Calculate education ROI: net present value, internal rate of return, breakeven year, and loan repayment.",
+    "compare": "Compare 2-3 careers side by side: salary, education cost, ROI, and job outlook.",
+    "report": "Your personalized career exploration report — export as PDF, Markdown, or JSON."
   },
   "footer": {
     "data": "Data: BLS OES, College Scorecard & IPEDS",

@@ -7,6 +7,7 @@
 
 import { t, getLocale } from '../i18n/i18n.js';
 import { CAREER_MAPPINGS } from '../engine/mappings.js';
+import { getExploredSocs } from '../tracker/tracker.js';
 
 const INTEREST_GROUPS = [
   { key: 'build', icon: '\u{1F6E0}' },
@@ -53,6 +54,57 @@ function renderPopularCareers() {
     `).join('');
 }
 
+/**
+ * Build personalized career recommendations based on quiz interests
+ * and browsing history. Returns empty string if no quiz data exists.
+ */
+function renderRecommendations() {
+  let interests;
+  try {
+    const raw = localStorage.getItem('14to17-quiz-interests');
+    interests = raw ? JSON.parse(raw) : null;
+  } catch {
+    return '';
+  }
+  if (!interests || !interests.length) return '';
+
+  const explored = new Set(getExploredSocs());
+  const isZh = getLocale() === 'zh-TW';
+
+  // Score careers: +2 for primary interest match, +1 for secondary
+  const scored = CAREER_MAPPINGS
+    .filter((c) => !explored.has(c.soc))
+    .map((c) => {
+      let score = 0;
+      for (let i = 0; i < interests.length; i++) {
+        if (c.interests.includes(interests[i])) score += 2 - i;
+      }
+      return { career: c, score };
+    })
+    .filter((s) => s.score > 0)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 6);
+
+  if (!scored.length) return '';
+
+  const cards = scored.map(({ career: c }) => `
+    <a href="#/profile/${c.soc}" class="popular-card" data-category="${c.category}">
+      <span class="popular-card__icon" aria-hidden="true">${c.icon}</span>
+      <span class="popular-card__name">${isZh ? c.careerZh : c.career}</span>
+    </a>
+  `).join('');
+
+  return `
+    <section class="home-recommendations">
+      <h2>${t('home.recommended_for_you')}</h2>
+      <p class="muted">${t('home.recommended_desc')}</p>
+      <div class="popular-grid">
+        ${cards}
+      </div>
+    </section>
+  `;
+}
+
 function renderQuizStart() {
   return `
     <section class="home-onboarding" id="quiz-section">
@@ -74,6 +126,8 @@ export function render() {
     </section>
 
     ${renderQuizStart()}
+
+    ${renderRecommendations()}
 
     <section class="home-interests">
       <h2 data-i18n="home.explore_by_interest">${t('home.explore_by_interest')}</h2>
@@ -165,6 +219,11 @@ function runQuiz(container) {
     // Sort by frequency, take top 2
     const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]);
     const topInterests = sorted.slice(0, 2).map(([key]) => key);
+
+    // Persist quiz results for recommendations
+    try {
+      localStorage.setItem('14to17-quiz-interests', JSON.stringify(topInterests));
+    } catch { /* localStorage unavailable */ }
 
     const chips = topInterests.map((key) => {
       const group = INTEREST_GROUPS.find((g) => g.key === key);

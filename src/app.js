@@ -102,34 +102,47 @@ function setupDisclaimerBanner() {
   });
 }
 
-function updatePageTitle(path, params) {
+function updatePageMeta(path, params) {
   const suffix = t('page_title.suffix');
   const isZh = getLocale() === 'zh-TW';
 
   let pageTitle;
+  let pageDesc;
   if (path === '/') {
     pageTitle = t('page_title.home');
+    pageDesc = t('meta.home');
   } else if (path === '/search') {
     pageTitle = t('page_title.search');
+    pageDesc = t('meta.search');
   } else if (path.startsWith('/profile/') && params.soc) {
     const career = findBySoc(params.soc);
     const name = career ? (isZh ? career.careerZh : career.career) : params.soc;
     pageTitle = t('page_title.profile').replace('{name}', name);
+    pageDesc = t('meta.profile').replace('{name}', name);
   } else if (path.startsWith('/detail/') && params.soc) {
     const career = findBySoc(params.soc);
     const name = career ? (isZh ? career.careerZh : career.career) : params.soc;
     pageTitle = t('page_title.detail').replace('{name}', name);
+    pageDesc = t('meta.detail').replace('{name}', name);
   } else if (path === '/calculator') {
     pageTitle = t('page_title.calculator');
+    pageDesc = t('meta.calculator');
   } else if (path === '/compare') {
     pageTitle = t('page_title.compare');
+    pageDesc = t('meta.compare');
   } else if (path === '/report') {
     pageTitle = t('page_title.report');
+    pageDesc = t('meta.report');
   } else {
     pageTitle = t('page_title.not_found');
+    pageDesc = t('meta.home');
   }
 
   document.title = `${pageTitle} — ${suffix}`;
+
+  // Update meta description
+  const metaDesc = document.querySelector('meta[name="description"]');
+  if (metaDesc) metaDesc.setAttribute('content', pageDesc);
 }
 
 function setupNavToggle() {
@@ -202,7 +215,7 @@ export async function initApp() {
 
   // Update page title on route change
   document.addEventListener('route-changed', (e) => {
-    updatePageTitle(e.detail.path, e.detail.params);
+    updatePageMeta(e.detail.path, e.detail.params);
   });
 
   // Re-render current route when locale changes (so t() calls in render() update)

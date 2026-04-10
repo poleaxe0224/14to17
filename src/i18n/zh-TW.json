@@ -19,6 +19,8 @@
     "tools_compare": "比較職業",
     "tools_compare_desc": "並排比較薪資、成本與 ROI。",
     "career_count": "{count} 個職業",
+    "recommended_for_you": "為你推薦",
+    "recommended_desc": "根據你的測驗結果，推薦你還沒看過的職業。",
     "onboarding_cta": "第一次來？從這裡開始！",
     "onboarding_desc": "從上方選一個你有興趣的方向，探索適合你的職業。"
   },
@@ -321,6 +323,15 @@
     "compare": "比較職業",
     "report": "我的報告",
     "not_found": "404"
+  },
+  "meta": {
+    "home": "探索職業，了解真實工作樣貌，用美國聯邦數據評估教育投資報酬率。適合 14-17 歲青少年。",
+    "search": "依興趣瀏覽 25 種職業——建造、助人、分析或創作。用真實薪資數據篩選比較。",
+    "profile": "探索{name}：薪資、教育路徑、就業展望、技能需求與 ROI 分析。",
+    "detail": "{name}——詳細 ROI 分析：學費成本、損益兩平圖表與三層風險模型。",
+    "calculator": "計算教育 ROI：淨現值、內部報酬率、損益兩平年與貸款還款計畫。",
+    "compare": "並排比較 2-3 個職業：薪資、教育成本、ROI 與就業展望。",
+    "report": "你的個人職涯探索報告——可匯出 PDF、Markdown 或 JSON。"
   },
   "footer": {
     "data": "資料來源：BLS OES、College Scorecard 及 IPEDS",

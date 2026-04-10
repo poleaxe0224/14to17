@@ -7,12 +7,14 @@
 
 .home-interests,
 .home-popular,
+.home-recommendations,
 .home-tools {
   margin-bottom: var(--space-2xl);
 }
 
 .home-interests h2,
 .home-popular h2,
+.home-recommendations h2,
 .home-tools h2 {
   margin-bottom: var(--space-lg);
 }

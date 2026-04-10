@@ -89,8 +89,13 @@ export function copyShareLink(hashRoute, msgEl) {
 /* ------------------------------------------------------------------ */
 
 function buildShareUrl(hashRoute) {
-  const baseUrl = window.location.href.split('#')[0];
-  return `${baseUrl}${hashRoute}`;
+  const baseUrl = window.location.href.split('#')[0].replace(/\/$/, '');
+  // For profile/detail routes, use SSG share pages (better OG tags for social crawlers)
+  const socMatch = hashRoute.match(/^#\/(?:profile|detail)\/(\d{2}-\d{4})/);
+  if (socMatch) {
+    return `${baseUrl}/share/${socMatch[1]}.html`;
+  }
+  return `${baseUrl}/${hashRoute}`;
 }
 
 /**

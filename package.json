@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "node scripts/generate-freshness-badge.mjs && vite build",
+    "build": "node scripts/generate-freshness-badge.mjs && vite build && node scripts/generate-share-pages.mjs",
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",
