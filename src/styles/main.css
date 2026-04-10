@@ -1152,14 +1152,20 @@ button.quiz-option[type="button"]:hover {
   }
 
   #calc-results.hidden, #calc-charts.hidden,
-  #compare-results.hidden, #compare-chart-wrap.hidden {
+  #compare-results.hidden, #compare-chart-wrap.hidden,
+  #roi-layers.hidden, #breakeven-chart-wrap.hidden, #roi-cta.hidden {
     /* Force-show result sections even if JS .hidden class is still present */
     display: block !important;
   }
 
+  /* Hide interactive sliders in print */
+  .advanced-params {
+    display: none !important;
+  }
+
   /* Results sections should remain visible */
   #calc-results, #calc-charts, #compare-results,
-  #compare-chart-wrap, .report-view {
+  #compare-chart-wrap, .report-view, .detail-view {
     display: block !important;
   }
 

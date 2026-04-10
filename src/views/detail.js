@@ -22,6 +22,7 @@ import { renderSliderPanel, wireSliders } from './detail-sliders.js';
 import { trackEvent } from '../tracker/tracker.js';
 import { tooltip, degreeLabel } from '../utils/glossary.js';
 import { loadChart } from '../utils/load-chart.js';
+import { exportPdf, renderShareMenu, initShareHandlers } from '../utils/export-pdf.js';
 
 export function render({ soc } = {}) {
   const career = findBySoc(soc);
@@ -102,6 +103,11 @@ export function render({ soc } = {}) {
       </div>
 
       <div id="roi-cta" class="roi-cta hidden"></div>
+
+      <div id="detail-pdf-wrap" class="action-bar hidden" style="text-align:center; margin-top:var(--space-lg); display:flex; gap:var(--space-md); justify-content:center; align-items:start; flex-wrap:wrap;">
+        <button type="button" id="detail-export-pdf" class="outline">${t('pdf.export')}</button>
+        ${renderShareMenu('detail-share-msg')}
+      </div>
     </section>
   `;
 }
@@ -134,6 +140,23 @@ export async function afterRender({ soc } = {}) {
 
   // Render all panels from current econ data
   renderEconPanels(econ, career);
+
+  // Show PDF export bar once data is loaded
+  const pdfWrap = document.getElementById('detail-pdf-wrap');
+  if (pdfWrap) {
+    pdfWrap.classList.remove('hidden');
+
+    const pdfBtn = document.getElementById('detail-export-pdf');
+    if (pdfBtn) {
+      pdfBtn.addEventListener('click', () => {
+        const content = document.querySelector('.detail-view');
+        exportPdf(content, { statusBtn: pdfBtn });
+      });
+    }
+
+    const shareMsgEl = document.getElementById('detail-share-msg');
+    initShareHandlers(pdfWrap, () => `#/detail/${soc}`, shareMsgEl);
+  }
 
   // Wire undergrad major change handler
   if (majorWrap && econ.isGraduateDegree) {
