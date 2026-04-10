@@ -1,5 +1,7 @@
 # 14to17
 
+![data updated](https://img.shields.io/endpoint?url=https://poleaxe0224.github.io/14to17/data-freshness.json)
+
 A bilingual (English / Traditional Chinese) career exploration tool for teens (14-17), with progressive disclosure from discovery to ROI analysis. Powered by real US federal data.
 
 **Live**: [poleaxe0224.github.io/14to17](https://poleaxe0224.github.io/14to17/)
@@ -31,10 +33,11 @@ Vanilla JS (ES modules), Vite 6, Pico CSS 2, Chart.js 4 (CDN), html2pdf.js (CDN,
 
 ```bash
 npm install
-npm run dev        # Start dev server
-npm test           # Run 140 unit tests
-npm run build      # Production build -> dist/
-npm run preview    # Preview production build
+npm run dev           # Start dev server
+npm test              # Run unit tests
+npm run build         # Production build -> dist/
+npm run preview       # Preview production build
+npm run refresh-data  # Re-fetch all 5 data sources (needs API keys)
 ```
 
 ## API Keys

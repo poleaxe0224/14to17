@@ -18,11 +18,12 @@ Static SPA deployed to GitHub Pages. Progressive career exploration tool for tee
 ## Commands
 
 ```bash
-npm run dev      # Dev server
-npm run build    # Production build → dist/
-npm run preview  # Preview production build
-npm test         # Run tests (vitest)
-npm run test:watch  # Watch mode
+npm run dev           # Dev server
+npm run build         # Generate freshness badge + production build → dist/
+npm run preview       # Preview production build
+npm test              # Run tests (vitest)
+npm run test:watch    # Watch mode
+npm run refresh-data  # Re-fetch all 5 data sources (needs API keys in env)
 ```
 
 ## Architecture

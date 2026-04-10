@@ -5,10 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "node scripts/generate-freshness-badge.mjs && vite build",
     "preview": "vite preview",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "refresh-data": "node scripts/fetch-bls-wages.mjs && node scripts/fetch-cps-earnings.mjs && node scripts/fetch-scorecard-tuition.mjs --force && node scripts/fetch-ipeds-data.mjs && node scripts/fetch-onet-data.mjs"
   },
   "dependencies": {
     "@picocss/pico": "^2.1.1"
