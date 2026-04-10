@@ -342,6 +342,9 @@
     "us_data_body": "All salary, tuition, and employment data is sourced from U.S. federal agencies (BLS, IPEDS, College Scorecard). If you are outside the U.S., use this as a reference for studying or working in the United States only.",
     "dismiss": "Got it"
   },
+  "offline": {
+    "message": "You are offline — browsing cached data."
+  },
   "glossary": {
     "roi": "Return on Investment \u2014 how long it takes to earn back what you spent on education.",
     "npv": "Net Present Value \u2014 total value of future earnings minus costs, adjusted for time.",

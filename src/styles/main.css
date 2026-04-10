@@ -826,6 +826,21 @@ footer {
   min-height: var(--touch-target-min);
 }
 
+/* ---- Offline indicator ---- */
+.offline-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 900;
+  padding: var(--space-sm) var(--space-md);
+  background: var(--brand-accent);
+  color: #fff;
+  text-align: center;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
 /* ---- Glossary Tooltip (CSS-only) ---- */
 [data-tooltip] {
   position: relative;

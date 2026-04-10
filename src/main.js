@@ -9,3 +9,12 @@ if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/14to17/sw.js').catch(() => {});
   });
 }
+
+// Offline indicator
+function updateOfflineBanner() {
+  const banner = document.getElementById('offline-banner');
+  if (banner) banner.classList.toggle('hidden', navigator.onLine);
+}
+window.addEventListener('online', updateOfflineBanner);
+window.addEventListener('offline', updateOfflineBanner);
+updateOfflineBanner();
