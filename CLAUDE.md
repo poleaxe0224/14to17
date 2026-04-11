@@ -51,7 +51,7 @@ src/
 ├── styles/       # Design tokens + main.css + enhanced.css
 ├── app.js        # App init (router + i18n wiring)
 └── main.js       # Vite entry point
-tests/            # Vitest unit tests (209+)
+tests/            # Vitest unit tests (214+)
 ```
 
 ## User Flow
@@ -69,10 +69,10 @@ Home (interest cards) → Search (filter chips + keyword) → Profile (#/profile
 ## Interest Groups (Home Page)
 
 4 groups, multi-tagged (careers can appear in multiple):
-- **build**: engineers, developers, trades (8 careers)
-- **help**: healthcare, education, legal support (7 careers)
-- **analyze**: data, finance, security, law (7 careers)
-- **create**: design, media, marketing (5 careers)
+- **build**: engineers, developers, trades, protective (14 careers)
+- **help**: healthcare, education, community, protective (21 careers)
+- **analyze**: data, finance, security, science, law (14 careers)
+- **create**: design, media, marketing, culinary (9 careers)
 
 ## Notes
 
@@ -114,7 +114,8 @@ Home (interest cards) → Search (filter chips + keyword) → Profile (#/profile
 12. **Polish** ✓ — a11y (focus management, ARIA labels, skip link), responsive report view, CI verified
 13. **Impact & Completeness Upgrade** ✓ — US data disclaimer, glossary tooltips (CSS-only), onboarding quiz (4Q→interest routing), Search→Calculator quick ROI (auto-fetch), Detail breakeven chart (crossover), mobile compare cards (scroll-snap), Report share link (base64 URL)
 14. **Phase 4 Polish** ✓ — Dark mode (toggle + auto-detect + localStorage), Social card WebP, bilingual degree tooltips (en↔zh-TW)
-15. **Phase 15** (in progress) — Tech debt resolved (detail.js 4-module split), SEO dynamic meta + SSG share pages (25 career-specific OG pages), personalized recommendations (quiz→localStorage→home), PWA offline (build-time SW, 43-file pre-cache, CDN caching, offline banner)
+15. **Phase 15** (in progress) — Tech debt resolved (detail.js 4-module split), SEO dynamic meta + SSG share pages (50 career-specific OG pages), personalized recommendations (quiz→localStorage→home), PWA offline (build-time SW, 68-file pre-cache, CDN caching, offline banner)
+16. **Phase 16** ✓ — Career database expansion (25→50 careers), 4 new categories (community, science, protective, transportation), BLS OOH-sourced profiles
 
 ## Three-Layer ROI Model
 
@@ -128,11 +129,11 @@ Home (interest cards) → Search (filter chips + keyword) → Profile (#/profile
 
 ## Data Files
 
-- `src/data/wages.json` — BLS OES (25 SOC codes, includes tot_emp) [tracked, CI-refreshed]
-- `src/data/tuition.json` — College Scorecard (28 CIP codes, median tuition) [tracked, CI-refreshed]
+- `src/data/wages.json` — BLS OES (50 SOC codes, includes tot_emp) [tracked, CI-refreshed]
+- `src/data/tuition.json` — College Scorecard (46 CIP codes, median tuition) [tracked, CI-refreshed]
 - `src/data/cps_earnings.json` — BLS CPS weekly earnings by education level (dropout model) [tracked, CI-refreshed]
 - `src/data/ipeds.json` — IPEDS graduation rates, retention rates + curated completions [tracked, CI-refreshed]
-- `src/data/onet-data.json` — O*NET 30.2 skills, knowledge, education (25 SOC codes) [gitignored, 198KB exceeds WOF threshold]
+- `src/data/onet-data.json` — O*NET 30.2 skills, knowledge, education (50 SOC codes) [gitignored, 198KB exceeds WOF threshold]
 - `src/data/cip-soc-crosswalk.json` — CIP→SOC mappings [tracked, hand-curated]
-- `src/data/occupation-profiles.json` — BLS OOH career profiles, bilingual (25 SOC codes) [tracked, hand-curated]
+- `src/data/occupation-profiles.json` — BLS OOH career profiles, bilingual (50 SOC codes) [tracked, hand-curated]
 - `scripts/fallback/*.json` — Static fallbacks for all 5 API-fetched data files [tracked, committed]

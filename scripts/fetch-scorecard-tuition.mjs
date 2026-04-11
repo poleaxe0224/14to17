@@ -1,5 +1,5 @@
 /**
- * Fetch College Scorecard tuition data for all 25 mapped CIP codes.
+ * Fetch College Scorecard tuition data for all 50 mapped CIP codes.
  * Run from project root: node scripts/fetch-scorecard-tuition.mjs
  *
  * Output: src/data/tuition.json
@@ -20,14 +20,15 @@ const API_KEY = process.env.SCORECARD_API_KEY || 'DEMO_KEY';
 
 /** CIP codes from CAREER_MAPPINGS (soc → cip) */
 const CIP_CAREERS = [
+  // Original 25
   { cip: '1107', career: 'Software Developer' },
   { cip: '1101', career: 'Computer Systems Analyst' },
   { cip: '1104', career: 'Information Security Analyst' },
   { cip: '3070', career: 'Data Scientist' },
   { cip: '5138', career: 'Registered Nurse' },
-  { cip: '5109', career: 'Physician Assistant' },
+  { cip: '5109', career: 'Physician Assistant / LPN' },
   { cip: '5104', career: 'Dentist' },
-  { cip: '5120', career: 'Pharmacist' },
+  { cip: '5120', career: 'Pharmacist / Pharmacy Technician' },
   { cip: '5203', career: 'Accountant' },
   { cip: '5208', career: 'Financial Analyst' },
   { cip: '5214', career: 'Marketing Manager' },
@@ -39,14 +40,35 @@ const CIP_CAREERS = [
   { cip: '1313', career: 'High School Teacher' },
   { cip: '4702', career: 'HVAC Technician' },
   { cip: '4601', career: 'Electrician' },
-  { cip: '5109', career: 'Licensed Practical Nurse' },
   { cip: '1106', career: 'Web Developer' },
   { cip: '2201', career: 'Lawyer' },
   { cip: '2203', career: 'Paralegal' },
-  { cip: '5010', career: 'Graphic Designer' },
+  { cip: '5010', career: 'Graphic Designer / Multimedia Artist' },
   { cip: '0904', career: 'News Analyst / Reporter' },
+  // Expanded 25
+  { cip: '0402', career: 'Architect' },
+  { cip: '1405', career: 'Biomedical Engineer' },
+  { cip: '4407', career: 'Social Worker' },
+  { cip: '5115', career: 'Mental Health Counselor' },
+  { cip: '1103', career: 'Database Administrator' },
+  { cip: '4605', career: 'Plumber' },
+  { cip: '4602', career: 'Carpenter' },
+  { cip: '1205', career: 'Chef / Head Cook' },
+  { cip: '5123', career: 'Physical Therapist / OT' },
+  { cip: '5118', career: 'Veterinarian' },
+  { cip: '5106', career: 'Dental Hygienist' },
+  { cip: '5117', career: 'Physician / Surgeon' },
+  { cip: '4201', career: 'Psychologist' },
+  { cip: '0301', career: 'Environmental Scientist' },
+  { cip: '4301', career: 'Criminal Justice / Forensic Science' },
+  { cip: '5202', career: 'Human Resources Manager' },
+  { cip: '5107', career: 'Medical / Health Services Manager' },
+  { cip: '0902', career: 'Public Relations Specialist' },
+  { cip: '3105', career: 'Fitness Trainer' },
+  { cip: '4302', career: 'Firefighter' },
+  { cip: '4902', career: 'Airline Pilot' },
   // Undergrad CIPs for graduate-degree careers (defaultUndergradCip)
-  { cip: '2601', career: 'Biology (undergrad for PA / Dentist)' },
+  { cip: '2601', career: 'Biology (undergrad for PA / Dentist / PT / Vet / MD / OT)' },
   { cip: '4002', career: 'Chemistry (undergrad for Pharmacist)' },
   { cip: '4501', career: 'Political Science (undergrad for Lawyer)' },
   { cip: '2701', career: 'Mathematics (undergrad for Data Scientist)' },

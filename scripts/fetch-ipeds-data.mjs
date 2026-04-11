@@ -1,5 +1,5 @@
 /**
- * Fetch IPEDS-derived graduation rates and completions data for 25 CIP codes.
+ * Fetch IPEDS-derived graduation rates and completions data for 46 CIP codes.
  * Run from project root: node scripts/fetch-ipeds-data.mjs
  *
  * Output: src/data/ipeds.json
@@ -32,6 +32,7 @@ const API_KEY = process.env.SCORECARD_API_KEY || 'DEMO_KEY';
  * Updated annually; next update expected ~late 2026.
  */
 const CURATED_COMPLETIONS = {
+  // Original 25
   '1107': { total: 114_000, title: 'Computer Science', year: 2022 },
   '1101': { total: 56_000,  title: 'Computer and Information Sciences, General', year: 2022 },
   '1104': { total: 8_500,   title: 'Information Science/Studies', year: 2022 },
@@ -57,6 +58,28 @@ const CURATED_COMPLETIONS = {
   '5010': { total: 13_000,  title: 'Arts, Entertainment, and Media (Graphic Design)', year: 2022 },
   '0904': { total: 23_000,  title: 'Journalism', year: 2022 },
   '3070': { total: 15_000,  title: 'Data Science', year: 2022 },
+  // Expanded 25
+  '0402': { total: 9_200,   title: 'Architecture', year: 2022 },
+  '1405': { total: 7_800,   title: 'Biomedical / Medical Engineering', year: 2022 },
+  '4407': { total: 38_000,  title: 'Social Work', year: 2022 },
+  '5115': { total: 35_000,  title: 'Mental and Social Health Services', year: 2022 },
+  '1103': { total: 42_000,  title: 'Information Technology', year: 2022 },
+  '4605': { total: 5_200,   title: 'Plumbing Technology', year: 2022 },
+  '4602': { total: 7_800,   title: 'Carpentry', year: 2022 },
+  '1205': { total: 16_000,  title: 'Culinary Arts / Food Service', year: 2022 },
+  '5123': { total: 22_000,  title: 'Rehabilitation and Therapeutic Professions', year: 2022 },
+  '5118': { total: 4_200,   title: 'Veterinary Medicine (D.V.M.)', year: 2022 },
+  '5106': { total: 12_500,  title: 'Dental Hygiene / Dental Clinical Sciences', year: 2022 },
+  '5117': { total: 22_000,  title: 'Medicine (M.D., D.O.)', year: 2022 },
+  '4201': { total: 121_000, title: 'Psychology, General', year: 2022 },
+  '0301': { total: 14_000,  title: 'Natural Resources Conservation and Research', year: 2022 },
+  '4301': { total: 54_000,  title: 'Criminal Justice and Corrections', year: 2022 },
+  '5202': { total: 92_000,  title: 'Business Administration and Management', year: 2022 },
+  '5107': { total: 18_000,  title: 'Health and Medical Administrative Services', year: 2022 },
+  '0902': { total: 28_000,  title: 'Public Relations, Advertising, Communication', year: 2022 },
+  '3105': { total: 31_000,  title: 'Kinesiology and Exercise Science', year: 2022 },
+  '4302': { total: 10_000,  title: 'Fire Protection and Safety Technology', year: 2022 },
+  '4902': { total: 5_500,   title: 'Aviation / Airline Pilot Training', year: 2022 },
 };
 
 const CIP_CODES = Object.keys(CURATED_COMPLETIONS);

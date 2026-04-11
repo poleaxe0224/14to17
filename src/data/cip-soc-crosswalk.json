@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "source": "NCES CIP-SOC Crosswalk, curated for 25 CIP codes",
+    "source": "NCES CIP-SOC Crosswalk, curated for 50 career mappings",
     "note": "primary_soc = direct career match from CAREER_MAPPINGS; soc_codes includes related occupations",
     "cip_version": "CIP 2020",
     "soc_version": "SOC 2018"
@@ -30,6 +30,26 @@
     { "cip_code": "2201", "cip_title": "Law", "soc_codes": ["23-1011", "23-1012"], "primary_soc": "23-1011" },
     { "cip_code": "2203", "cip_title": "Legal Support Services", "soc_codes": ["23-2011"], "primary_soc": "23-2011" },
     { "cip_code": "5010", "cip_title": "Visual Arts / Graphic Design", "soc_codes": ["27-1024", "27-1014"], "primary_soc": "27-1024" },
-    { "cip_code": "0904", "cip_title": "Journalism", "soc_codes": ["27-3023", "27-3022"], "primary_soc": "27-3023" }
+    { "cip_code": "0904", "cip_title": "Journalism", "soc_codes": ["27-3023", "27-3022"], "primary_soc": "27-3023" },
+    { "cip_code": "0402", "cip_title": "Architecture", "soc_codes": ["17-1011"], "primary_soc": "17-1011" },
+    { "cip_code": "1405", "cip_title": "Biomedical / Medical Engineering", "soc_codes": ["17-2031"], "primary_soc": "17-2031" },
+    { "cip_code": "4407", "cip_title": "Social Work", "soc_codes": ["21-1021", "21-1022"], "primary_soc": "21-1021" },
+    { "cip_code": "5115", "cip_title": "Mental Health Counseling", "soc_codes": ["21-1018", "21-1014"], "primary_soc": "21-1018" },
+    { "cip_code": "1103", "cip_title": "Information Technology / Database", "soc_codes": ["15-1242", "15-1244"], "primary_soc": "15-1242" },
+    { "cip_code": "4605", "cip_title": "Plumbing Technology", "soc_codes": ["47-2152"], "primary_soc": "47-2152" },
+    { "cip_code": "4602", "cip_title": "Carpentry / Construction Trades", "soc_codes": ["47-2031"], "primary_soc": "47-2031" },
+    { "cip_code": "1205", "cip_title": "Culinary Arts / Food Service", "soc_codes": ["35-1011", "35-1012"], "primary_soc": "35-1011" },
+    { "cip_code": "5123", "cip_title": "Rehabilitation / Physical Therapy", "soc_codes": ["29-1123", "29-1122"], "primary_soc": "29-1123" },
+    { "cip_code": "5118", "cip_title": "Veterinary Medicine", "soc_codes": ["29-1131"], "primary_soc": "29-1131" },
+    { "cip_code": "5106", "cip_title": "Dental Hygiene", "soc_codes": ["29-1292"], "primary_soc": "29-1292" },
+    { "cip_code": "5117", "cip_title": "Medicine (M.D. / D.O.)", "soc_codes": ["29-1228", "29-1211", "29-1218"], "primary_soc": "29-1228" },
+    { "cip_code": "0301", "cip_title": "Environmental Science", "soc_codes": ["19-2041", "19-2042"], "primary_soc": "19-2041" },
+    { "cip_code": "4301", "cip_title": "Criminal Justice / Forensic Science", "soc_codes": ["19-4092", "33-3051"], "primary_soc": "33-3051" },
+    { "cip_code": "5202", "cip_title": "Business Administration / HR Management", "soc_codes": ["11-3121", "11-1021"], "primary_soc": "11-3121" },
+    { "cip_code": "5107", "cip_title": "Health / Hospital Administration", "soc_codes": ["11-9111"], "primary_soc": "11-9111" },
+    { "cip_code": "0902", "cip_title": "Public Relations / Communications", "soc_codes": ["27-3031", "27-3041"], "primary_soc": "27-3031" },
+    { "cip_code": "3105", "cip_title": "Kinesiology / Exercise Science", "soc_codes": ["39-9031"], "primary_soc": "39-9031" },
+    { "cip_code": "4302", "cip_title": "Fire Science / Firefighting", "soc_codes": ["33-2011"], "primary_soc": "33-2011" },
+    { "cip_code": "4902", "cip_title": "Aviation / Airline Pilot Training", "soc_codes": ["53-2011", "53-2012"], "primary_soc": "53-2011" }
   ]
 }

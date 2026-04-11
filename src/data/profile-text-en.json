@@ -223,5 +223,230 @@
       "experience": "Internships at newspapers, TV stations, or digital media outlets are highly valuable. School newspaper experience helps.",
       "training": "On-the-job training under experienced reporters. Learning multimedia skills (video editing, social media) is increasingly important."
     }
+  },
+  "17-1011": {
+    "what_they_do": "Architects plan and design buildings, homes, and other structures. They meet with clients, create blueprints, and ensure designs meet safety codes while balancing aesthetics and function.",
+    "work_environment": "Work in offices, though they frequently visit construction sites. Most work full time. Deadlines may require overtime, especially as projects near completion.",
+    "how_to_become": {
+      "education": "Bachelor of Architecture (B.Arch, 5-year program) or a master's degree in architecture.",
+      "experience": "Most states require a paid internship (Architectural Experience Program) before licensing. The ARE exam is required for licensure.",
+      "training": "Continuous learning in sustainable design, building codes, and new CAD/BIM software tools."
+    }
+  },
+  "17-2031": {
+    "what_they_do": "Biomedical engineers combine engineering principles with medical and biological sciences to design healthcare solutions — prosthetics, medical devices, imaging equipment, and biocompatible materials.",
+    "work_environment": "Work in hospitals, laboratories, research facilities, or manufacturing plants. Standard full-time hours with occasional overtime for project deadlines.",
+    "how_to_become": {
+      "education": "Bachelor's degree in biomedical engineering or a related engineering field.",
+      "experience": "Internships and co-op programs in medical device companies are valuable. Entry-level positions available with a bachelor's degree.",
+      "training": "On-the-job training in FDA regulations, quality systems, and specific medical technologies."
+    }
+  },
+  "27-1014": {
+    "what_they_do": "Multimedia artists and animators create visual effects, animation, and other visual images using computers and creative tools for movies, video games, television, and other media.",
+    "work_environment": "Work in offices or studios for film, gaming, or advertising companies. Freelancing is common. Deadlines often require long hours, especially near project milestones.",
+    "how_to_become": {
+      "education": "Bachelor's degree in fine arts, computer graphics, animation, or a related field.",
+      "experience": "A strong portfolio or demo reel is essential. Internships at studios or personal projects help build a body of work.",
+      "training": "Continuous learning of new animation software (Maya, Blender, After Effects) and emerging techniques like motion capture."
+    }
+  },
+  "21-1021": {
+    "what_they_do": "Social workers help people solve and cope with problems in their everyday lives. They may assist with issues like substance abuse, child welfare, mental health, poverty, and family conflicts.",
+    "work_environment": "Work in schools, hospitals, mental health clinics, and government agencies. May travel to visit clients. Emotionally demanding work with irregular hours.",
+    "how_to_become": {
+      "education": "Bachelor's degree in social work (BSW) for entry-level; master's (MSW) required for clinical positions.",
+      "experience": "Supervised fieldwork during degree programs provides hands-on experience.",
+      "training": "State licensure required. Continuing education to maintain licensure and stay current with best practices."
+    }
+  },
+  "21-1018": {
+    "what_they_do": "Mental health counselors help individuals dealing with anxiety, depression, addiction, and other behavioral disorders. They develop treatment plans, provide therapy, and connect clients with support resources.",
+    "work_environment": "Work in outpatient care centers, residential treatment facilities, hospitals, or private practice. May have evening/weekend hours to accommodate clients.",
+    "how_to_become": {
+      "education": "Master's degree in counseling, psychology, or a related field.",
+      "experience": "Supervised clinical experience (2,000-4,000 hours) is required before independent licensure.",
+      "training": "State licensure required. Continuing education in evidence-based therapies (CBT, DBT) and ethical practice."
+    }
+  },
+  "15-1242": {
+    "what_they_do": "Database administrators and architects design, implement, and maintain database systems that organizations use to store and organize data. They ensure data is available, secure, and performing efficiently.",
+    "work_environment": "Work in offices for companies across all industries. Most work full time. Some may be on call for database emergencies outside normal hours.",
+    "how_to_become": {
+      "education": "Bachelor's degree in computer science, information technology, or a related field.",
+      "experience": "Some positions require experience as a database developer or systems administrator.",
+      "training": "Database certifications (Oracle, Microsoft SQL Server, AWS) are valuable. Continuous learning in cloud databases and data security."
+    }
+  },
+  "47-2152": {
+    "what_they_do": "Plumbers install and repair piping systems in homes, businesses, and factories. They work with water supply lines, drainage systems, gas lines, and related fixtures and appliances.",
+    "work_environment": "Work in homes, commercial buildings, and construction sites. Physically demanding — crawling, lifting, and working in tight spaces. May be on call for emergencies.",
+    "how_to_become": {
+      "education": "High school diploma, then a 4-5 year apprenticeship combining on-the-job training with classroom instruction.",
+      "experience": "Apprenticeships provide paid hands-on training. Must pass a licensing exam in most states.",
+      "training": "Journeyman and master plumber certifications available. Must stay current with building codes."
+    }
+  },
+  "47-2031": {
+    "what_they_do": "Carpenters build, install, and repair structures made of wood and other materials. They work on everything from kitchen cabinets and door frames to entire building frameworks.",
+    "work_environment": "Work on construction sites, both indoors and outdoors. Physically demanding — lifting, standing, climbing. May travel to different job sites.",
+    "how_to_become": {
+      "education": "High school diploma. Most learn through a 3-4 year apprenticeship program.",
+      "experience": "Apprenticeships combine paid on-the-job training with technical instruction. Some start as helpers.",
+      "training": "Specialized certifications available in areas like finish carpentry, scaffolding, and green building."
+    }
+  },
+  "35-1011": {
+    "what_they_do": "Chefs and head cooks oversee food preparation in restaurants, hotels, and other dining establishments. They create menus, direct kitchen staff, and ensure food quality and safety.",
+    "work_environment": "Work in hot, fast-paced kitchens. Often work early mornings, late evenings, weekends, and holidays. Physically demanding — standing for long hours.",
+    "how_to_become": {
+      "education": "Certificate or associate's degree from a culinary school, though many learn through work experience.",
+      "experience": "Most chefs start as line cooks and work their way up. Years of kitchen experience are valued more than formal education.",
+      "training": "ServSafe certification required. Specialized training in pastry, cuisine types, or restaurant management."
+    }
+  },
+  "29-1123": {
+    "what_they_do": "Physical therapists help injured or ill people improve movement and manage pain. They develop treatment plans, guide patients through exercises, and educate them on preventing further injury.",
+    "work_environment": "Work in hospitals, clinics, nursing homes, or patients' homes. Physically active — helping patients move and exercise. Most work full time; some work evenings/weekends.",
+    "how_to_become": {
+      "education": "Doctor of Physical Therapy (DPT) degree — a 3-year program after a bachelor's degree.",
+      "experience": "Clinical rotations during DPT program. Must pass the National Physical Therapy Examination (NPTE) for licensure.",
+      "training": "Board certification available in specialties like sports, geriatrics, or pediatric physical therapy."
+    }
+  },
+  "29-1131": {
+    "what_they_do": "Veterinarians diagnose and treat diseases and injuries in animals. They perform surgeries, prescribe medications, vaccinate animals, and advise owners on animal care and nutrition.",
+    "work_environment": "Work in veterinary clinics, hospitals, farms, or laboratories. May be on call for emergencies. Some work with large animals and travel to farms.",
+    "how_to_become": {
+      "education": "Doctor of Veterinary Medicine (DVM) degree — a 4-year program after completing pre-vet undergraduate coursework.",
+      "experience": "Veterinary experience (volunteering, technician work) strengthens applications. Must pass the NAVLE for licensure.",
+      "training": "Residency programs available for specialization (surgery, oncology, cardiology). Board certification through specialty colleges."
+    }
+  },
+  "29-1292": {
+    "what_they_do": "Dental hygienists clean teeth, examine patients for oral diseases, take dental X-rays, and educate patients on proper oral hygiene. They work closely with dentists.",
+    "work_environment": "Work in dentists' offices in clean clinical settings. Many work part time or flexible schedules. Physical — standing and bending over patients.",
+    "how_to_become": {
+      "education": "Associate's degree in dental hygiene from an accredited program.",
+      "experience": "Clinical training is part of the degree program. Must pass the National Board Dental Hygiene Examination.",
+      "training": "State licensure required. Continuing education to maintain licensure."
+    }
+  },
+  "29-1228": {
+    "what_they_do": "Physicians and surgeons diagnose and treat injuries and illnesses. They examine patients, order and interpret tests, prescribe medications, and perform surgeries when necessary.",
+    "work_environment": "Work in hospitals, clinics, and private practices. Long and irregular hours are common, including overnight shifts. Emotionally and physically demanding.",
+    "how_to_become": {
+      "education": "Doctor of Medicine (M.D.) or Doctor of Osteopathic Medicine (D.O.) — 4 years of medical school after a bachelor's degree.",
+      "experience": "3-7 years of residency training after medical school, depending on specialty. Must pass USMLE or COMLEX for licensure.",
+      "training": "Board certification in a chosen specialty. Continuing medical education (CME) required to maintain licensure."
+    }
+  },
+  "29-1122": {
+    "what_they_do": "Occupational therapists help patients develop, recover, and improve the skills needed for daily living and working. They work with people recovering from injuries, disabilities, or illness.",
+    "work_environment": "Work in hospitals, rehabilitation centers, schools, or patients' homes. Physically active. Most work full time; some evening/weekend hours.",
+    "how_to_become": {
+      "education": "Master's degree in occupational therapy from an accredited program.",
+      "experience": "Supervised fieldwork is required during the degree program. Must pass the NBCOT exam for certification.",
+      "training": "State licensure required. Continuing education to maintain certification. Specializations available."
+    }
+  },
+  "29-2052": {
+    "what_they_do": "Pharmacy technicians assist pharmacists in dispensing prescription medications. They receive prescription requests, count tablets, label bottles, and process insurance claims.",
+    "work_environment": "Work in pharmacies (retail, hospital, mail-order). Standing for long periods. May work evenings, weekends, and holidays.",
+    "how_to_become": {
+      "education": "High school diploma. Many complete postsecondary certificate programs in pharmacy technology.",
+      "experience": "On-the-job training is common. Certification (PTCB or ExCPT) is required or preferred in many states.",
+      "training": "Continuing education to maintain certification. Some pursue advanced certifications."
+    }
+  },
+  "11-9111": {
+    "what_they_do": "Medical and health services managers plan, direct, and coordinate the business activities of healthcare providers. They manage facilities, departments, or medical practices.",
+    "work_environment": "Work in hospitals, physician offices, nursing homes, or group medical practices. Standard office hours, though some facilities operate 24/7.",
+    "how_to_become": {
+      "education": "Bachelor's degree in health administration, public health, or business administration. Master's preferred for some positions.",
+      "experience": "Many positions require administrative experience in a healthcare setting.",
+      "training": "Professional certifications (FACHE, CMPE) are available. Continuous learning in healthcare regulations and technology."
+    }
+  },
+  "39-9031": {
+    "what_they_do": "Fitness trainers and instructors lead, instruct, and motivate individuals or groups in exercise activities. They design workout programs, demonstrate techniques, and monitor clients' progress.",
+    "work_environment": "Work in gyms, health clubs, recreation centers, or clients' homes. Physically active. Hours vary — early mornings, evenings, and weekends are common.",
+    "how_to_become": {
+      "education": "High school diploma required; many have a certificate or associate's degree in fitness or exercise science.",
+      "experience": "Personal training experience and a strong fitness background are valued.",
+      "training": "Certification from a nationally recognized organization (ACE, NASM, ACSM) is typically required. CPR/AED certification required."
+    }
+  },
+  "19-3031": {
+    "what_they_do": "Psychologists study cognitive, emotional, and social processes and behavior. They help people understand and manage mental health conditions, conduct research, and may provide therapy.",
+    "work_environment": "Work in hospitals, schools, mental health centers, research institutions, or private practice. Standard office hours; some offer evening sessions.",
+    "how_to_become": {
+      "education": "Doctoral degree (Ph.D. or Psy.D.) in psychology for clinical practice. Some research and industrial positions accept a master's degree.",
+      "experience": "Supervised clinical experience (internship/postdoctoral) required for licensure.",
+      "training": "State licensure required for clinical practice. Continuing education to maintain licensure."
+    }
+  },
+  "19-2041": {
+    "what_they_do": "Environmental scientists study the environment and develop solutions to environmental problems like pollution, climate change, and natural resource management.",
+    "work_environment": "Split between offices, laboratories, and fieldwork outdoors. May travel to study sites. Most work full time; fieldwork may require irregular hours.",
+    "how_to_become": {
+      "education": "Bachelor's degree in environmental science, biology, chemistry, or a related natural science.",
+      "experience": "Internships with government agencies or environmental consulting firms are helpful.",
+      "training": "Professional certifications available. GIS and data analysis skills increasingly important."
+    }
+  },
+  "19-4092": {
+    "what_they_do": "Forensic science technicians collect and analyze physical evidence from crime scenes. They document scenes, perform lab tests on evidence, and provide expert testimony in court.",
+    "work_environment": "Work in laboratories and at crime scenes. Crime scene work can be outdoors and physically demanding. May work irregular hours responding to crime scenes.",
+    "how_to_become": {
+      "education": "Bachelor's degree in forensic science, chemistry, biology, or a related natural science.",
+      "experience": "Laboratory experience and internships with law enforcement agencies are valuable.",
+      "training": "Specialized training in areas like DNA analysis, ballistics, or digital forensics. Professional certification available."
+    }
+  },
+  "11-3121": {
+    "what_they_do": "Human resources managers plan, coordinate, and direct the administrative functions of an organization. They oversee recruiting, interviewing, hiring, employee relations, and benefits.",
+    "work_environment": "Work in offices across nearly every industry. Standard full-time hours. Some travel for recruiting events or to visit branch offices.",
+    "how_to_become": {
+      "education": "Bachelor's degree in human resources, business administration, or a related field.",
+      "experience": "Several years of experience as an HR specialist or generalist before advancing to management.",
+      "training": "Professional certifications (PHR, SPHR, SHRM-CP) are valued. Staying current with employment law is essential."
+    }
+  },
+  "27-3031": {
+    "what_they_do": "Public relations specialists create and maintain a favorable public image for the organizations they represent. They write press releases, manage media relations, and develop communication strategies.",
+    "work_environment": "Work in offices, though some travel for events or media appearances. Fast-paced with tight deadlines. Some crisis management requires after-hours work.",
+    "how_to_become": {
+      "education": "Bachelor's degree in public relations, communications, journalism, or a related field.",
+      "experience": "Internships in PR agencies or communications departments are valuable. Entry-level positions are available.",
+      "training": "Accreditation in Public Relations (APR) available. Social media and digital marketing skills are increasingly important."
+    }
+  },
+  "33-3051": {
+    "what_they_do": "Police officers protect lives and property by enforcing laws, responding to emergencies, patrolling communities, conducting investigations, and apprehending suspects.",
+    "work_environment": "Work in patrol cars, on foot, and in offices. Shift work including nights, weekends, and holidays. Physically demanding and potentially dangerous.",
+    "how_to_become": {
+      "education": "High school diploma required; many agencies prefer some college coursework or an associate's/bachelor's degree in criminal justice.",
+      "experience": "Must complete a police academy training program (12-14 weeks). Background check and physical fitness test required.",
+      "training": "Field training after the academy. Continuing education in law, tactics, and community policing."
+    }
+  },
+  "33-2011": {
+    "what_they_do": "Firefighters respond to fires and other emergencies. They extinguish fires, provide emergency medical services, perform rescue operations, and educate the public about fire safety.",
+    "work_environment": "Work at fire stations with 24-hour shifts (e.g., 24 on / 48 off). Physically demanding and dangerous. Must maintain peak physical fitness.",
+    "how_to_become": {
+      "education": "High school diploma required. Many complete fire science certificate or associate's degree programs.",
+      "experience": "Must complete fire academy training. EMT certification is typically required.",
+      "training": "Ongoing training in firefighting techniques, hazmat handling, and emergency medical procedures."
+    }
+  },
+  "53-2011": {
+    "what_they_do": "Airline pilots fly and navigate airplanes for airlines, transporting passengers and cargo. They perform pre-flight inspections, communicate with air traffic control, and ensure safe takeoffs and landings.",
+    "work_environment": "Work in cockpits. Away from home frequently, with overnight layovers. Irregular schedules including nights, weekends, and holidays. FAA limits flight hours.",
+    "how_to_become": {
+      "education": "Bachelor's degree (any field accepted by airlines, though aviation-related degrees are common). FAA Airline Transport Pilot (ATP) certificate required.",
+      "experience": "1,500 flight hours minimum for an ATP certificate. Many start as flight instructors or regional airline pilots.",
+      "training": "Type ratings for specific aircraft. Regular proficiency checks and medical exams required by the FAA."
+    }
   }
 }

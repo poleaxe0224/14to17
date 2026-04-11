@@ -377,6 +377,370 @@
       "similar_soc": [
         "27-1024"
       ]
+    },
+    "17-1011": {
+      "ooh_url": "https://www.bls.gov/ooh/architecture-and-engineering/architects.htm",
+      "onet_url": "https://www.onetonline.org/link/summary/17-1011.00",
+      "state_url": "https://www.bls.gov/oes/current/oes171011.htm",
+      "outlook": {
+        "employment_2024": 129200,
+        "growth_rate": 5,
+        "projected_change": 6500,
+        "growth_label": "average"
+      },
+      "similar_soc": [
+        "17-2051",
+        "27-1024"
+      ]
+    },
+    "17-2031": {
+      "ooh_url": "https://www.bls.gov/ooh/architecture-and-engineering/biomedical-engineers.htm",
+      "onet_url": "https://www.onetonline.org/link/summary/17-2031.00",
+      "state_url": "https://www.bls.gov/oes/current/oes172031.htm",
+      "outlook": {
+        "employment_2024": 22100,
+        "growth_rate": 5,
+        "projected_change": 1100,
+        "growth_label": "average"
+      },
+      "similar_soc": [
+        "17-2071",
+        "17-2141"
+      ]
+    },
+    "27-1014": {
+      "ooh_url": "https://www.bls.gov/ooh/arts-and-design/multimedia-artists-and-animators.htm",
+      "onet_url": "https://www.onetonline.org/link/summary/27-1014.00",
+      "state_url": "https://www.bls.gov/oes/current/oes271014.htm",
+      "outlook": {
+        "employment_2024": 97200,
+        "growth_rate": 4,
+        "projected_change": 3900,
+        "growth_label": "average"
+      },
+      "similar_soc": [
+        "27-1024",
+        "15-1231"
+      ]
+    },
+    "21-1021": {
+      "ooh_url": "https://www.bls.gov/ooh/community-and-social-service/social-workers.htm",
+      "onet_url": "https://www.onetonline.org/link/summary/21-1021.00",
+      "state_url": "https://www.bls.gov/oes/current/oes211021.htm",
+      "outlook": {
+        "employment_2024": 708100,
+        "growth_rate": 7,
+        "projected_change": 49600,
+        "growth_label": "faster"
+      },
+      "similar_soc": [
+        "21-1018",
+        "19-3031"
+      ]
+    },
+    "21-1018": {
+      "ooh_url": "https://www.bls.gov/ooh/community-and-social-service/substance-abuse-behavioral-disorder-and-mental-health-counselors.htm",
+      "onet_url": "https://www.onetonline.org/link/summary/21-1018.00",
+      "state_url": "https://www.bls.gov/oes/current/oes211018.htm",
+      "outlook": {
+        "employment_2024": 366000,
+        "growth_rate": 18,
+        "projected_change": 65900,
+        "growth_label": "much_faster"
+      },
+      "similar_soc": [
+        "21-1021",
+        "19-3031"
+      ]
+    },
+    "15-1242": {
+      "ooh_url": "https://www.bls.gov/ooh/computer-and-information-technology/database-administrators.htm",
+      "onet_url": "https://www.onetonline.org/link/summary/15-1242.00",
+      "state_url": "https://www.bls.gov/oes/current/oes151242.htm",
+      "outlook": {
+        "employment_2024": 168000,
+        "growth_rate": 9,
+        "projected_change": 15100,
+        "growth_label": "much_faster"
+      },
+      "similar_soc": [
+        "15-1252",
+        "15-1211"
+      ]
+    },
+    "47-2152": {
+      "ooh_url": "https://www.bls.gov/ooh/construction-and-extraction/plumbers-pipefitters-and-steamfitters.htm",
+      "onet_url": "https://www.onetonline.org/link/summary/47-2152.00",
+      "state_url": "https://www.bls.gov/oes/current/oes472152.htm",
+      "outlook": {
+        "employment_2024": 496400,
+        "growth_rate": 6,
+        "projected_change": 29800,
+        "growth_label": "faster"
+      },
+      "similar_soc": [
+        "47-2111",
+        "49-9021"
+      ]
+    },
+    "47-2031": {
+      "ooh_url": "https://www.bls.gov/ooh/construction-and-extraction/carpenters.htm",
+      "onet_url": "https://www.onetonline.org/link/summary/47-2031.00",
+      "state_url": "https://www.bls.gov/oes/current/oes472031.htm",
+      "outlook": {
+        "employment_2024": 945200,
+        "growth_rate": 1,
+        "projected_change": 9500,
+        "growth_label": "slower"
+      },
+      "similar_soc": [
+        "47-2111",
+        "47-2152"
+      ]
+    },
+    "35-1011": {
+      "ooh_url": "https://www.bls.gov/ooh/food-preparation-and-serving/chefs-and-head-cooks.htm",
+      "onet_url": "https://www.onetonline.org/link/summary/35-1011.00",
+      "state_url": "https://www.bls.gov/oes/current/oes351011.htm",
+      "outlook": {
+        "employment_2024": 161200,
+        "growth_rate": 6,
+        "projected_change": 9700,
+        "growth_label": "faster"
+      },
+      "similar_soc": []
+    },
+    "29-1123": {
+      "ooh_url": "https://www.bls.gov/ooh/healthcare/physical-therapists.htm",
+      "onet_url": "https://www.onetonline.org/link/summary/29-1123.00",
+      "state_url": "https://www.bls.gov/oes/current/oes291123.htm",
+      "outlook": {
+        "employment_2024": 234000,
+        "growth_rate": 14,
+        "projected_change": 32800,
+        "growth_label": "much_faster"
+      },
+      "similar_soc": [
+        "29-1122",
+        "29-1141"
+      ]
+    },
+    "29-1131": {
+      "ooh_url": "https://www.bls.gov/ooh/healthcare/veterinarians.htm",
+      "onet_url": "https://www.onetonline.org/link/summary/29-1131.00",
+      "state_url": "https://www.bls.gov/oes/current/oes291131.htm",
+      "outlook": {
+        "employment_2024": 76300,
+        "growth_rate": 20,
+        "projected_change": 15300,
+        "growth_label": "much_faster"
+      },
+      "similar_soc": [
+        "29-1021",
+        "29-1141"
+      ]
+    },
+    "29-1292": {
+      "ooh_url": "https://www.bls.gov/ooh/healthcare/dental-hygienists.htm",
+      "onet_url": "https://www.onetonline.org/link/summary/29-1292.00",
+      "state_url": "https://www.bls.gov/oes/current/oes291292.htm",
+      "outlook": {
+        "employment_2024": 225200,
+        "growth_rate": 7,
+        "projected_change": 15800,
+        "growth_label": "faster"
+      },
+      "similar_soc": [
+        "29-1021",
+        "29-2061"
+      ]
+    },
+    "29-1228": {
+      "ooh_url": "https://www.bls.gov/ooh/healthcare/physicians-and-surgeons.htm",
+      "onet_url": "https://www.onetonline.org/link/summary/29-1228.00",
+      "state_url": "https://www.bls.gov/oes/current/oes291228.htm",
+      "outlook": {
+        "employment_2024": 735600,
+        "growth_rate": 3,
+        "projected_change": 22100,
+        "growth_label": "average"
+      },
+      "similar_soc": [
+        "29-1071",
+        "29-1021"
+      ]
+    },
+    "29-1122": {
+      "ooh_url": "https://www.bls.gov/ooh/healthcare/occupational-therapists.htm",
+      "onet_url": "https://www.onetonline.org/link/summary/29-1122.00",
+      "state_url": "https://www.bls.gov/oes/current/oes291122.htm",
+      "outlook": {
+        "employment_2024": 137700,
+        "growth_rate": 12,
+        "projected_change": 16500,
+        "growth_label": "much_faster"
+      },
+      "similar_soc": [
+        "29-1123",
+        "29-1141"
+      ]
+    },
+    "29-2052": {
+      "ooh_url": "https://www.bls.gov/ooh/healthcare/pharmacy-technicians.htm",
+      "onet_url": "https://www.onetonline.org/link/summary/29-2052.00",
+      "state_url": "https://www.bls.gov/oes/current/oes292052.htm",
+      "outlook": {
+        "employment_2024": 462800,
+        "growth_rate": 6,
+        "projected_change": 27800,
+        "growth_label": "faster"
+      },
+      "similar_soc": [
+        "29-1051"
+      ]
+    },
+    "11-9111": {
+      "ooh_url": "https://www.bls.gov/ooh/management/medical-and-health-services-managers.htm",
+      "onet_url": "https://www.onetonline.org/link/summary/11-9111.00",
+      "state_url": "https://www.bls.gov/oes/current/oes119111.htm",
+      "outlook": {
+        "employment_2024": 571900,
+        "growth_rate": 29,
+        "projected_change": 165800,
+        "growth_label": "much_faster"
+      },
+      "similar_soc": [
+        "11-3031",
+        "29-1141"
+      ]
+    },
+    "39-9031": {
+      "ooh_url": "https://www.bls.gov/ooh/personal-care-and-service/fitness-trainers-and-instructors.htm",
+      "onet_url": "https://www.onetonline.org/link/summary/39-9031.00",
+      "state_url": "https://www.bls.gov/oes/current/oes399031.htm",
+      "outlook": {
+        "employment_2024": 365400,
+        "growth_rate": 14,
+        "projected_change": 51200,
+        "growth_label": "much_faster"
+      },
+      "similar_soc": [
+        "29-1123"
+      ]
+    },
+    "19-3031": {
+      "ooh_url": "https://www.bls.gov/ooh/life-physical-and-social-science/psychologists.htm",
+      "onet_url": "https://www.onetonline.org/link/summary/19-3031.00",
+      "state_url": "https://www.bls.gov/oes/current/oes193031.htm",
+      "outlook": {
+        "employment_2024": 193200,
+        "growth_rate": 6,
+        "projected_change": 11600,
+        "growth_label": "faster"
+      },
+      "similar_soc": [
+        "21-1018",
+        "21-1021"
+      ]
+    },
+    "19-2041": {
+      "ooh_url": "https://www.bls.gov/ooh/life-physical-and-social-science/environmental-scientists-and-specialists.htm",
+      "onet_url": "https://www.onetonline.org/link/summary/19-2041.00",
+      "state_url": "https://www.bls.gov/oes/current/oes192041.htm",
+      "outlook": {
+        "employment_2024": 82300,
+        "growth_rate": 6,
+        "projected_change": 4900,
+        "growth_label": "faster"
+      },
+      "similar_soc": [
+        "19-4092",
+        "17-2051"
+      ]
+    },
+    "19-4092": {
+      "ooh_url": "https://www.bls.gov/ooh/life-physical-and-social-science/forensic-science-technicians.htm",
+      "onet_url": "https://www.onetonline.org/link/summary/19-4092.00",
+      "state_url": "https://www.bls.gov/oes/current/oes194092.htm",
+      "outlook": {
+        "employment_2024": 18200,
+        "growth_rate": 11,
+        "projected_change": 2000,
+        "growth_label": "much_faster"
+      },
+      "similar_soc": [
+        "33-3051"
+      ]
+    },
+    "11-3121": {
+      "ooh_url": "https://www.bls.gov/ooh/management/human-resources-managers.htm",
+      "onet_url": "https://www.onetonline.org/link/summary/11-3121.00",
+      "state_url": "https://www.bls.gov/oes/current/oes113121.htm",
+      "outlook": {
+        "employment_2024": 198300,
+        "growth_rate": 6,
+        "projected_change": 11900,
+        "growth_label": "faster"
+      },
+      "similar_soc": [
+        "11-3031",
+        "13-2011"
+      ]
+    },
+    "27-3031": {
+      "ooh_url": "https://www.bls.gov/ooh/media-and-communication/public-relations-specialists.htm",
+      "onet_url": "https://www.onetonline.org/link/summary/27-3031.00",
+      "state_url": "https://www.bls.gov/oes/current/oes273031.htm",
+      "outlook": {
+        "employment_2024": 274800,
+        "growth_rate": 6,
+        "projected_change": 16500,
+        "growth_label": "faster"
+      },
+      "similar_soc": [
+        "11-2021",
+        "27-3023"
+      ]
+    },
+    "33-3051": {
+      "ooh_url": "https://www.bls.gov/ooh/protective-service/police-and-detectives.htm",
+      "onet_url": "https://www.onetonline.org/link/summary/33-3051.00",
+      "state_url": "https://www.bls.gov/oes/current/oes333051.htm",
+      "outlook": {
+        "employment_2024": 671600,
+        "growth_rate": 3,
+        "projected_change": 20100,
+        "growth_label": "average"
+      },
+      "similar_soc": [
+        "33-2011"
+      ]
+    },
+    "33-2011": {
+      "ooh_url": "https://www.bls.gov/ooh/protective-service/firefighters.htm",
+      "onet_url": "https://www.onetonline.org/link/summary/33-2011.00",
+      "state_url": "https://www.bls.gov/oes/current/oes332011.htm",
+      "outlook": {
+        "employment_2024": 327900,
+        "growth_rate": 4,
+        "projected_change": 13100,
+        "growth_label": "average"
+      },
+      "similar_soc": [
+        "33-3051"
+      ]
+    },
+    "53-2011": {
+      "ooh_url": "https://www.bls.gov/ooh/transportation-and-material-moving/airline-and-commercial-pilots.htm",
+      "onet_url": "https://www.onetonline.org/link/summary/53-2011.00",
+      "state_url": "https://www.bls.gov/oes/current/oes532011.htm",
+      "outlook": {
+        "employment_2024": 103800,
+        "growth_rate": 6,
+        "projected_change": 6200,
+        "growth_label": "faster"
+      },
+      "similar_soc": []
     }
   }
 }

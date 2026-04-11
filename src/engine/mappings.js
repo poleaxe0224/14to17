@@ -136,6 +136,49 @@ export const CAREER_MAPPINGS = Object.freeze([
   // Creative & Media
   { soc: '27-1024', cip: '5010', career: 'Graphic Designer', careerZh: '平面設計師', typicalDegree: 'bachelors', category: 'creative', interests: ['create'], icon: '\u{1F3A8}' },
   { soc: '27-3023', cip: '0904', career: 'News Analyst / Reporter', careerZh: '新聞記者', typicalDegree: 'bachelors', category: 'creative', interests: ['create'], icon: '\u{1F4F0}' },
+  { soc: '27-1014', cip: '5010', career: 'Multimedia Artist / Animator', careerZh: '多媒體動畫師', typicalDegree: 'bachelors', category: 'creative', interests: ['create'], icon: '\u{1F3AC}' },
+  { soc: '27-3031', cip: '0902', career: 'Public Relations Specialist', careerZh: '公關專員', typicalDegree: 'bachelors', category: 'creative', interests: ['create'], icon: '\u{1F4E2}' },
+
+  // Architecture & Biomedical Engineering
+  { soc: '17-1011', cip: '0402', career: 'Architect', careerZh: '建築師', typicalDegree: 'bachelors', category: 'engineering', interests: ['build', 'create'], icon: '\u{1F3DB}\uFE0F' },
+  { soc: '17-2031', cip: '1405', career: 'Biomedical Engineer', careerZh: '生醫工程師', typicalDegree: 'bachelors', category: 'engineering', interests: ['build', 'analyze'], icon: '\u{1F9EC}' },
+
+  // Community & Social Service
+  { soc: '21-1021', cip: '4407', career: 'Social Worker', careerZh: '社工師', typicalDegree: 'bachelors', category: 'community', interests: ['help'], icon: '\u{1F91D}' },
+  { soc: '21-1018', cip: '5115', career: 'Mental Health Counselor', careerZh: '心理諮商師', typicalDegree: 'masters', category: 'community', interests: ['help'], icon: '\u{1F9E0}', defaultUndergradCip: '4201' },
+
+  // Healthcare (expanded)
+  { soc: '29-1123', cip: '5123', career: 'Physical Therapist', careerZh: '物理治療師', typicalDegree: 'doctoral', category: 'healthcare', interests: ['help'], icon: '\u{1F3C3}', defaultUndergradCip: '2601' },
+  { soc: '29-1131', cip: '5118', career: 'Veterinarian', careerZh: '獸醫', typicalDegree: 'firstProfessional', category: 'healthcare', interests: ['help'], icon: '\u{1F43E}', defaultUndergradCip: '2601' },
+  { soc: '29-1292', cip: '5106', career: 'Dental Hygienist', careerZh: '牙科衛生師', typicalDegree: 'associates', category: 'healthcare', interests: ['help'], icon: '\u2728' },
+  { soc: '29-1228', cip: '5117', career: 'Physician / Surgeon', careerZh: '醫師', typicalDegree: 'firstProfessional', category: 'healthcare', interests: ['help', 'analyze'], icon: '\u2695\uFE0F', defaultUndergradCip: '2601' },
+  { soc: '29-1122', cip: '5123', career: 'Occupational Therapist', careerZh: '職能治療師', typicalDegree: 'masters', category: 'healthcare', interests: ['help'], icon: '\u{1F9E9}', defaultUndergradCip: '2601' },
+  { soc: '29-2052', cip: '5120', career: 'Pharmacy Technician', careerZh: '藥劑技術員', typicalDegree: 'certificate', category: 'healthcare', interests: ['help'], icon: '\u{1F9EA}' },
+  { soc: '11-9111', cip: '5107', career: 'Medical / Health Services Manager', careerZh: '醫療管理師', typicalDegree: 'bachelors', category: 'healthcare', interests: ['help', 'analyze'], icon: '\u{1F3E5}' },
+  { soc: '39-9031', cip: '3105', career: 'Fitness Trainer', careerZh: '健身教練', typicalDegree: 'certificate', category: 'healthcare', interests: ['help'], icon: '\u{1F4AA}' },
+
+  // Science
+  { soc: '19-3031', cip: '4201', career: 'Psychologist', careerZh: '心理學家', typicalDegree: 'doctoral', category: 'science', interests: ['help', 'analyze'], icon: '\u{1F52C}', defaultUndergradCip: '4201' },
+  { soc: '19-2041', cip: '0301', career: 'Environmental Scientist', careerZh: '環境科學家', typicalDegree: 'bachelors', category: 'science', interests: ['analyze'], icon: '\u{1F33F}' },
+  { soc: '19-4092', cip: '4301', career: 'Forensic Science Technician', careerZh: '鑑識科學技術員', typicalDegree: 'bachelors', category: 'science', interests: ['analyze'], icon: '\u{1F50D}' },
+
+  // Business (expanded)
+  { soc: '11-3121', cip: '5202', career: 'Human Resources Manager', careerZh: '人力資源經理', typicalDegree: 'bachelors', category: 'business', interests: ['help'], icon: '\u{1F465}' },
+
+  // Trades (expanded)
+  { soc: '47-2152', cip: '4605', career: 'Plumber', careerZh: '水電工', typicalDegree: 'certificate', category: 'trades', interests: ['build'], icon: '\u{1F527}' },
+  { soc: '47-2031', cip: '4602', career: 'Carpenter', careerZh: '木工', typicalDegree: 'certificate', category: 'trades', interests: ['build', 'create'], icon: '\u{1F528}' },
+  { soc: '35-1011', cip: '1205', career: 'Chef / Head Cook', careerZh: '主廚', typicalDegree: 'certificate', category: 'trades', interests: ['create'], icon: '\u{1F373}' },
+
+  // Protective Service
+  { soc: '33-3051', cip: '4301', career: 'Police Officer', careerZh: '警察', typicalDegree: 'certificate', category: 'protective', interests: ['help', 'analyze'], icon: '\u{1F6A8}' },
+  { soc: '33-2011', cip: '4302', career: 'Firefighter', careerZh: '消防員', typicalDegree: 'certificate', category: 'protective', interests: ['help', 'build'], icon: '\u{1F692}' },
+
+  // Transportation
+  { soc: '53-2011', cip: '4902', career: 'Airline Pilot', careerZh: '民航機師', typicalDegree: 'bachelors', category: 'transportation', interests: ['build'], icon: '\u2708\uFE0F' },
+
+  // Computer & IT (expanded)
+  { soc: '15-1242', cip: '1103', career: 'Database Administrator', careerZh: '資料庫管理師', typicalDegree: 'bachelors', category: 'tech', interests: ['build', 'analyze'], icon: '\u{1F5C4}\uFE0F' },
 ]);
 
 /**
