@@ -86,21 +86,6 @@ function setupLangToggle() {
   updateLabel();
 }
 
-function setupDisclaimerBanner() {
-  const banner = document.getElementById('us-data-banner');
-  const btn = document.getElementById('dismiss-banner');
-  if (!banner || !btn) return;
-
-  if (localStorage.getItem('14to17-banner-dismissed')) {
-    banner.classList.add('hidden');
-    return;
-  }
-
-  btn.addEventListener('click', () => {
-    banner.classList.add('hidden');
-    localStorage.setItem('14to17-banner-dismissed', '1');
-  });
-}
 
 function updatePageMeta(path, params) {
   const suffix = t('page_title.suffix');
@@ -215,8 +200,6 @@ export async function initApp() {
   // Wire up mobile navigation toggle
   setupNavToggle();
 
-  // Wire up US data disclaimer banner dismiss
-  setupDisclaimerBanner();
 
   // Update page title on route change
   document.addEventListener('route-changed', (e) => {
