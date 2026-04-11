@@ -133,7 +133,7 @@ Home (interest cards) → Search (filter chips + keyword) → Profile (#/profile
 - `src/data/tuition.json` — College Scorecard (46 CIP codes, median tuition) [tracked, CI-refreshed]
 - `src/data/cps_earnings.json` — BLS CPS weekly earnings by education level (dropout model) [tracked, CI-refreshed]
 - `src/data/ipeds.json` — IPEDS graduation rates, retention rates + curated completions [tracked, CI-refreshed]
-- `src/data/onet-data.json` — O*NET 30.2 skills, knowledge, education (50 SOC codes) [gitignored, 198KB exceeds WOF threshold]
+- `src/data/onet-data.json` — O*NET 30.2 skills, knowledge, education (50 SOC codes) [tracked, CC BY 4.0 public data]
 - `src/data/cip-soc-crosswalk.json` — CIP→SOC mappings [tracked, hand-curated]
 - `src/data/occupation-profiles.json` — BLS OOH career profiles, bilingual (50 SOC codes) [tracked, hand-curated]
 - `scripts/fallback/*.json` — Static fallbacks for all 5 API-fetched data files [tracked, committed]

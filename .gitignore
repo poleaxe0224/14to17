@@ -6,7 +6,4 @@ dist/
 .DS_Store
 Thumbs.db
 
-# NTFS WOF compresses large files — git/MSYS2 reads raw bytes as binary
-# onet-data.json (198KB) exceeds WOF threshold; others (<10KB) are safe to track
-src/data/onet-data.json
 package-lock.json
