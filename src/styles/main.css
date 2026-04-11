@@ -865,6 +865,12 @@ footer {
   color: var(--brand-accent);
 }
 
+.us-data-banner__btn {
+  flex-shrink: 0;
+  margin-bottom: 0;
+  min-height: var(--touch-target-min);
+}
+
 
 /* ---- Offline indicator ---- */
 .offline-banner {

@@ -75,12 +75,13 @@
     <span data-i18n="offline.message">You are offline — browsing cached data.</span>
   </aside>
 
-  <!-- US Data Disclaimer Banner (always visible — many users are outside the U.S.) -->
-  <aside class="us-data-banner container" role="note" aria-label="Data source notice">
+  <!-- US Data Disclaimer Banner (shows every visit — many users are outside the U.S.) -->
+  <aside id="us-data-banner" class="us-data-banner container" role="note" aria-label="Data source notice">
     <div class="us-data-banner__body">
       <strong data-i18n="disclaimer.us_data_title">U.S. Market Data Only</strong>
       <span data-i18n="disclaimer.us_data_body">All salary, tuition, and employment data is sourced from U.S. federal agencies (BLS, IPEDS, College Scorecard). If you are outside the U.S., use this as a reference for studying or working in the United States only.</span>
     </div>
+    <button type="button" id="dismiss-banner" class="outline secondary us-data-banner__btn" data-i18n="disclaimer.dismiss">Got it</button>
   </aside>
 
   <footer class="container" role="contentinfo">

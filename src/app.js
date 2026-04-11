@@ -168,6 +168,14 @@ function setupNavToggle() {
   });
 }
 
+function setupDisclaimerBanner() {
+  const btn = document.getElementById('dismiss-banner');
+  const banner = document.getElementById('us-data-banner');
+  if (!btn || !banner) return;
+
+  btn.addEventListener('click', () => banner.classList.add('hidden'));
+}
+
 export async function initApp() {
   // Migrate legacy localStorage keys before anything reads storage
   migrateStorage();
@@ -200,6 +208,8 @@ export async function initApp() {
   // Wire up mobile navigation toggle
   setupNavToggle();
 
+  // Wire up US data disclaimer banner (session-only dismiss, no localStorage)
+  setupDisclaimerBanner();
 
   // Update page title on route change
   document.addEventListener('route-changed', (e) => {
