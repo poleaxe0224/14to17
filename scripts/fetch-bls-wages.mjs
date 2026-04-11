@@ -27,6 +27,26 @@ const profilesPath = join(OUT_DIR, 'occupation-profiles.json');
 const profiles = JSON.parse(readFileSync(profilesPath, 'utf-8'));
 const CAREERS = Object.keys(profiles.profiles);
 
+/**
+ * SOC proxy mapping: when BLS OES has no data for a SOC code (typically
+ * because the 2018 SOC revision split/merged it), use the proxy SOC's
+ * wage data instead. Key = original SOC in our profiles, value = best
+ * substitute in current OES data.
+ *
+ * How to maintain:
+ *   After a fetch, check for SOCs with zero data. Search the OES dataset
+ *   for the nearest match (same prefix, similar occupation title).
+ *   Common patterns:
+ *     - Detailed code merged into "All Other" (e.g. 29-1228 → 29-1229)
+ *     - Detailed code split (e.g. 19-3031 → 19-3033)
+ *     - Category removed; use parent major group as fallback
+ */
+const SOC_PROXIES = {
+  '19-3031': '19-3033', // Clinical Psychologists (old) → Clinical and Counseling Psychologists
+  '29-1228': '29-1229', // Physicians, specific (old) → Physicians, All Other
+  '45-3031': '45-0000', // Fishing and Hunting Workers → Farming/Fishing/Forestry (major group)
+};
+
 const DATA_TYPES = {
   annual10:     '11',
   annual25:     '12',
@@ -79,29 +99,63 @@ async function fetchBatch(seriesIds, year) {
 
 async function main() {
   const year = new Date().getFullYear() - 2; // OES data has ~2yr lag
-  console.log(`Fetching BLS OES data for ${CAREERS.length} careers, year ${year}...`);
 
-  const wages = {};
+  // Resume mode: load existing wages.json and skip already-fetched careers
+  let wages = {};
+  let resumedCount = 0;
+  if (existsSync(OUT_FILE)) {
+    try {
+      const existing = JSON.parse(readFileSync(OUT_FILE, 'utf-8'));
+      if (existing.careers) {
+        wages = existing.careers;
+        // Count careers with median salary as "complete"
+        resumedCount = Object.values(wages).filter((w) => w.annualMedian != null).length;
+        if (resumedCount > 0) {
+          console.log(`Resuming: loaded ${resumedCount} existing careers from wages.json`);
+        }
+      }
+    } catch {
+      // Corrupted file (e.g. WOF) — start fresh
+      console.log('Existing wages.json unreadable — starting fresh');
+    }
+  }
+
+  // Build set of already-complete SOC codes (has all 7 data fields)
   const fields = Object.keys(DATA_TYPES);
+  const completeSocs = new Set();
+  for (const [soc, data] of Object.entries(wages)) {
+    if (fields.every((f) => data[f] != null)) completeSocs.add(soc);
+  }
+
+  const remaining = CAREERS.filter((soc) => !completeSocs.has(soc));
+  console.log(`Fetching BLS OES data: ${remaining.length} careers remaining (${completeSocs.size} already complete), year ${year}...`);
+
+  if (remaining.length === 0) {
+    console.log('All careers already fetched. Nothing to do.');
+    return;
+  }
 
   // BLS allows max 50 series per request (free tier: 25)
-  // 25 careers × 7 fields = 175 series → need multiple batches
   const BATCH_SIZE = API_KEY ? 50 : 25;
 
-  // Build all series IDs with metadata
+  // Build all series IDs with metadata (only remaining careers)
   const allSeries = [];
-  for (const soc of CAREERS) {
+  for (const soc of remaining) {
     for (const [field, code] of Object.entries(DATA_TYPES)) {
       allSeries.push({ soc, field, seriesId: buildSeriesId(soc, code) });
     }
   }
 
+  let rateLimited = false;
+
   // Batch fetch
   for (let i = 0; i < allSeries.length; i += BATCH_SIZE) {
     const batch = allSeries.slice(i, i + BATCH_SIZE);
     const ids = batch.map((s) => s.seriesId);
+    const batchNum = Math.floor(i / BATCH_SIZE) + 1;
+    const totalBatches = Math.ceil(allSeries.length / BATCH_SIZE);
 
-    console.log(`  Batch ${Math.floor(i / BATCH_SIZE) + 1}: ${ids.length} series...`);
+    console.log(`  Batch ${batchNum}/${totalBatches}: ${ids.length} series...`);
 
     try {
       const results = await fetchBatch(ids, year);
@@ -123,11 +177,26 @@ async function main() {
       }
     } catch (err) {
       console.error(`  Batch error: ${err.message}`);
+      // Stop early on rate limit (don't burn through remaining batches)
+      if (err.message.includes('daily threshold')) {
+        console.warn('\n  Rate limit reached — saving progress and stopping.');
+        console.warn('  Re-run this script later (or with BLS_API_KEY) to fetch remaining careers.');
+        rateLimited = true;
+        break;
+      }
     }
 
-    // Rate limit: wait 1s between batches (free tier: 10 req/sec)
+    // Rate limit: wait 1.5s between batches
     if (i + BATCH_SIZE < allSeries.length) {
       await new Promise((r) => setTimeout(r, 1500));
+    }
+  }
+
+  // Fill missing SOCs from proxy mappings
+  for (const [missing, proxy] of Object.entries(SOC_PROXIES)) {
+    if (!wages[missing] && wages[proxy]) {
+      wages[missing] = { ...wages[proxy] };
+      console.log(`  Proxy: ${missing} ← ${proxy}`);
     }
   }
 
@@ -142,7 +211,14 @@ async function main() {
   const count = Object.keys(wages).length;
   const complete = Object.values(wages).filter((w) => w.annualMedian != null).length;
   const withEmp = Object.values(wages).filter((w) => w.tot_emp != null).length;
-  console.log(`\nFetched: ${count} careers, ${complete} with median salary, ${withEmp} with employment data`);
+  const missing = CAREERS.length - complete;
+  console.log(`\nTotal: ${count} careers, ${complete} with median salary, ${withEmp} with employment data`);
+  if (missing > 0) {
+    console.log(`Missing: ${missing} careers still need wage data`);
+  }
+  if (rateLimited) {
+    console.log(`(Rate limited — run again with BLS_API_KEY to complete)`);
+  }
 
   // Guard: abort if BLS returned no usable data (API outage)
   if (complete === 0) {

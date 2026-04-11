@@ -9,7 +9,7 @@
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",
-    "refresh-data": "node scripts/fetch-bls-wages.mjs && node scripts/fetch-cps-earnings.mjs && node scripts/fetch-scorecard-tuition.mjs --force && node scripts/fetch-ipeds-data.mjs && node scripts/fetch-onet-data.mjs"
+    "refresh-data": "node scripts/fetch-bls-wages.mjs && node scripts/fetch-cps-earnings.mjs && node scripts/fetch-scorecard-tuition.mjs --force && node scripts/fetch-ipeds-data.mjs && node scripts/fetch-onet-data.mjs && python scripts/fix-wof.py"
   },
   "dependencies": {
     "@picocss/pico": "^2.1.1"

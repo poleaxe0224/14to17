@@ -138,3 +138,12 @@ Home (interest cards) → Search (filter chips + keyword) → Profile (#/profile
 - `src/data/cip-soc-crosswalk.json` — CIP→SOC mappings (317 entries) [tracked, hand-curated]
 - `src/data/occupation-profiles.json` — BLS OOH career profiles, bilingual (330 SOC codes) [tracked, hand-curated]
 - `scripts/fallback/*.json` — Static fallbacks for all 5 API-fetched data files [tracked, committed]
+
+## Data Refresh Notes
+
+- **BLS API key**: Free at https://www.bls.gov/developers/. Set `BLS_API_KEY` in `.env`. Without key: ~11 req/day; with key: 500 req/day (50 series/req → 46 batches for 327 careers)
+- **SOC proxy mapping**: BLS revises SOC codes periodically (last major: 2018). When a SOC in our profiles has no OES data, `SOC_PROXIES` in `fetch-bls-wages.mjs` maps it to the nearest equivalent. After refresh, check for zero-data SOCs and update the map
+- **Node.js libuv file-write bug**: On this Windows system, ALL Node.js versions (v22/v24) writeFileSync produces 0x887d-compressed files unreadable by other programs (Python, esbuild, .NET). Root cause unknown (not version-specific, not drive-specific). Workarounds in place:
+  - `npm run refresh-data` auto-runs `python scripts/fix-wof.py` as the last step to rewrite data JSON
+  - `vite.config.js` sets `esbuild: false` so the Go-based esbuild binary never reads Node-written temp files
+  - CI builds on Linux are unaffected
