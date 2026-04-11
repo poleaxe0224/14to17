@@ -82,6 +82,15 @@ const CURATED_COMPLETIONS = {
   '4902': { total: 5_500,   title: 'Aviation / Airline Pilot Training', year: 2022 },
 };
 
+/**
+ * CIP proxy mapping: when Scorecard returns 0 schools for grad rate,
+ * use the proxy CIP's graduation/retention data instead.
+ * Completions stay original (curated separately per CIP).
+ */
+const CIP_PROXIES = {
+  '0902': { cip: '0904', title: 'Journalism (CIP 09.04)' },
+};
+
 const CIP_CODES = Object.keys(CURATED_COMPLETIONS);
 const SAMPLE_SIZE = 100;
 
@@ -178,6 +187,24 @@ async function main() {
     // DEMO_KEY: ~1 req/sec limit
     if (i < CIP_CODES.length - 1) {
       await new Promise((r) => setTimeout(r, API_KEY === 'DEMO_KEY' ? 4000 : 1500));
+    }
+  }
+
+  // Apply proxy grad rate/retention for CIP codes with no Scorecard results
+  for (const [origCip, proxy] of Object.entries(CIP_PROXIES)) {
+    const orig = byCip[origCip];
+    const source = byCip[proxy.cip];
+    if (orig && orig.grad_rate_sample_schools === 0 && source && source.graduation_rate_150pct != null) {
+      byCip[origCip] = {
+        ...orig,
+        graduation_rate_150pct: source.graduation_rate_150pct,
+        retention_rate_ft: source.retention_rate_ft,
+        retention_rate_sample: source.retention_rate_sample,
+        grad_rate_sample_schools: source.grad_rate_sample_schools,
+        proxyCip: proxy.cip,
+        proxyTitle: proxy.title,
+      };
+      console.log(`  Proxy: CIP ${origCip} grad rate ← CIP ${proxy.cip} (${proxy.title})`);
     }
   }
 

@@ -216,6 +216,7 @@
     "recommended": "推薦",
     "fallback_no_grad": "畢業率資料不足 \u2014 未含畢業率風險調整",
     "fallback_no_competition": "就業資料不足 \u2014 未含就業競爭度調整",
+    "proxy_data_note": "學費與畢業率數據取自 {proxyTitle} \u2014 同一科系，成本結構相近",
     "advanced_params": "進階參數調整",
     "competition_sensitivity": "競爭敏感度",
     "competition_sensitivity_tip": "數值越高，就業競爭對 ROI 的影響越大",

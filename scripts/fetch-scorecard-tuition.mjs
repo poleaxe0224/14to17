@@ -18,6 +18,15 @@ const FALLBACK_FILE = join(__dirname, 'fallback', 'tuition.json');
 const BASE_URL = 'https://api.data.gov/ed/collegescorecard/v1/schools.json';
 const API_KEY = process.env.SCORECARD_API_KEY || 'DEMO_KEY';
 
+/**
+ * CIP proxy mapping: when Scorecard returns 0 schools for a CIP,
+ * use the proxy CIP's tuition data instead (same department/school pool).
+ * Key = original CIP, value = { cip, title } of the proxy source.
+ */
+const CIP_PROXIES = {
+  '0902': { cip: '0904', title: 'Journalism (CIP 09.04)' },
+};
+
 /** CIP codes from CAREER_MAPPINGS (soc → cip) */
 const CIP_CAREERS = [
   // Original 25
@@ -168,6 +177,20 @@ async function main() {
     // DEMO_KEY: ~1 req/sec limit, use 4s to be safe
     if (i < toFetch.length - 1) {
       await new Promise((r) => setTimeout(r, 4000));
+    }
+  }
+
+  // Apply proxy data for CIP codes with no Scorecard results
+  for (const [origCip, proxy] of Object.entries(CIP_PROXIES)) {
+    const orig = tuition[origCip];
+    const source = tuition[proxy.cip];
+    if (orig && orig.sampleCount === 0 && source && source.netPrice != null) {
+      tuition[origCip] = {
+        ...source,
+        proxyCip: proxy.cip,
+        proxyTitle: proxy.title,
+      };
+      console.log(`  Proxy: CIP ${origCip} ← CIP ${proxy.cip} (${proxy.title})`);
     }
   }
 

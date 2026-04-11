@@ -144,12 +144,17 @@ export function renderIpedsPanel(ipedsData, totalEmployment) {
     rows.push([t('ipeds.saturation_ratio'), `${ratio}%`]);
   }
 
+  const proxyNote = ipedsData?.proxyCip
+    ? `<p class="muted proxy-note">${t('ipeds.proxy_data_note').replace('{proxyTitle}', ipedsData.proxyTitle)}</p>`
+    : '';
+
   const html = rows.length
     ? `<article class="detail-panel ipeds-panel">
         <h3>IPEDS</h3>
         <dl class="detail-dl">
           ${rows.map(([dt, dd]) => `<dt>${dt}</dt><dd>${dd}</dd>`).join('')}
         </dl>
+        ${proxyNote}
       </article>`
     : '';
 

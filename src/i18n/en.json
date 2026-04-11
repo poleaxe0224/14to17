@@ -216,6 +216,7 @@
     "recommended": "Recommended",
     "fallback_no_grad": "Graduation rate unavailable \u2014 risk adjustment not applied",
     "fallback_no_competition": "Employment data unavailable \u2014 competition adjustment not applied",
+    "proxy_data_note": "Tuition & graduation data proxied from {proxyTitle} \u2014 same department, similar cost structure",
     "advanced_params": "Advanced Parameters",
     "competition_sensitivity": "Competition Sensitivity",
     "competition_sensitivity_tip": "Higher values = greater impact of job competition on ROI",

@@ -46,6 +46,8 @@ export async function getIpedsData(cipCode) {
     graduationRate: entry?.graduation_rate_150pct ?? null,
     completionsTotal: entry?.completions_total ?? null,
     cipTitle: entry?.cip_title ?? null,
+    proxyCip: entry?.proxyCip ?? null,
+    proxyTitle: entry?.proxyTitle ?? null,
   };
 }
 
