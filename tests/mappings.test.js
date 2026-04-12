@@ -52,6 +52,19 @@ describe('CAREER_MAPPINGS', () => {
   it('is frozen', () => {
     expect(Object.isFrozen(CAREER_MAPPINGS)).toBe(true);
   });
+
+  it('has no duplicate SOC codes', () => {
+    const seen = new Map();
+    const dupes = [];
+    for (const m of CAREER_MAPPINGS) {
+      if (seen.has(m.soc)) {
+        dupes.push({ soc: m.soc, career: m.career, firstAt: seen.get(m.soc) });
+      } else {
+        seen.set(m.soc, m.career);
+      }
+    }
+    expect(dupes).toEqual([]);
+  });
 });
 
 describe('findBySoc', () => {
