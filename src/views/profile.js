@@ -4,7 +4,7 @@
  * Level 1 (Discover): What They Do, Work Environment, Similar Occupations — always open
  * Level 2 (Plan): How to Become One — collapsed
  * Level 3 (Evaluate): Pay, Job Outlook, State & Area Data — collapsed, lazy-loads wage data
- * Level 4 (Decide): More Info + ROI deep dive link — collapsed
+ * Level 4 (Decide): Action buttons (Compare / Report / Share) + external resources — collapsed
  *
  * Route: #/profile/:soc
  */
@@ -18,6 +18,7 @@ import { fetchCareerEconomics } from '../api/career-data.js';
 import { renderRoiLayers } from './detail-renderers.js';
 import { formatCurrency, formatNumber } from '../utils/format.js';
 import { trackEvent } from '../tracker/tracker.js';
+import { renderShareMenu, initShareHandlers } from '../utils/export-pdf.js';
 
 /**
  * Translate an O*NET name (skill, knowledge, or education level) to zh-TW if available.
@@ -203,6 +204,13 @@ export async function afterRender({ soc } = {}) {
       if (!document.getElementById('level-3')) return;
       body.innerHTML = renderLevel3Content(econ, profileData, soc);
     }, { once: true });
+  }
+
+  // Level 4: wire share handlers (native share button or dropdown)
+  const shareWrap = document.getElementById('profile-share-wrap');
+  if (shareWrap) {
+    const msgEl = document.getElementById('profile-share-msg');
+    initShareHandlers(shareWrap, () => `#/profile/${soc}`, msgEl);
   }
 }
 
@@ -430,7 +438,29 @@ function renderLevel4(profile, soc) {
         </div>
       </summary>
       <div class="level-body">
-        ${renderSection('prof-more', 'profile.more_info', `
+        ${renderSection('prof-next-steps', 'profile.next_steps', `
+          <div class="next-steps-grid">
+            <a href="#/compare?soc1=${soc}" class="next-step-card">
+              <span class="next-step-icon" aria-hidden="true">&#x2696;</span>
+              <strong>${t('profile.add_to_compare')}</strong>
+              <span class="muted">${t('profile.add_to_compare_desc')}</span>
+            </a>
+            <a href="#/report" class="next-step-card">
+              <span class="next-step-icon" aria-hidden="true">&#x1F4C4;</span>
+              <strong>${t('profile.download_report')}</strong>
+              <span class="muted">${t('profile.download_report_desc')}</span>
+            </a>
+            <div class="next-step-card next-step-card--share" id="profile-share-wrap">
+              <span class="next-step-icon" aria-hidden="true">&#x1F4E4;</span>
+              <strong>${t('profile.share_with_mentor')}</strong>
+              <span class="muted">${t('profile.share_with_mentor_desc')}</span>
+              <div class="next-step-share">
+                ${renderShareMenu('profile-share-msg')}
+              </div>
+            </div>
+          </div>
+        `)}
+        ${renderSection('prof-more', 'profile.external_resources', `
           <div class="more-info-links">
             <a href="${profile.onet_url}" target="_blank" rel="noopener" class="info-link-card">
               <strong>${t('profile.view_on_onet')}</strong>
@@ -442,12 +472,6 @@ function renderLevel4(profile, soc) {
             </a>
           </div>
         `)}
-        <div class="profile-cta">
-          <p class="cta-label">${t('profile.calculate_roi')}</p>
-          <a href="#/detail/${soc}" role="button" class="cta-btn">
-            ${t('profile.deep_dive_roi')} &rarr;
-          </a>
-        </div>
       </div>
     </details>
   `;

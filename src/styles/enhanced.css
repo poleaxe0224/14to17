@@ -721,28 +721,52 @@ button.chip--active:hover,
   box-shadow: var(--shadow-card-teen);
 }
 
-/* ── Profile CTA ───────────────────────────────────────────────────── */
+/* ── Level 4: Next Steps Grid ──────────────────────────────────────── */
 
-.profile-cta {
-  text-align: center;
-  margin-top: var(--space-2xl);
-  padding: var(--space-xl);
-  background: var(--pico-card-background-color);
-  border-radius: var(--radius-card);
-  box-shadow: var(--shadow-card-teen);
+.next-steps-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-md);
 }
 
-.profile-cta .cta-label {
-  font-size: 1.2rem;
-  margin-bottom: var(--space-md);
-  color: var(--pico-muted-color);
-}
-
-.profile-cta .cta-btn {
-  font-size: 1.1rem;
-  padding: var(--space-sm) var(--space-xl);
-  border-radius: var(--radius-btn);
+.next-step-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  padding: var(--space-md);
+  border-radius: 12px;
+  border: 2px solid var(--pico-muted-border-color);
+  text-decoration: none;
+  color: inherit;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast), transform var(--transition-fast);
   min-height: var(--touch-target-min);
+}
+
+.next-step-card:hover {
+  border-color: var(--brand-primary);
+  box-shadow: var(--shadow-card-teen);
+  transform: translateY(-2px);
+}
+
+.next-step-card--share {
+  cursor: default;
+}
+
+.next-step-card--share:hover {
+  transform: none;
+}
+
+.next-step-icon {
+  font-size: 1.6rem;
+  line-height: 1;
+}
+
+.next-step-card strong {
+  font-size: 1rem;
+}
+
+.next-step-share {
+  margin-top: var(--space-sm);
 }
 
 /* ── Enhanced Career Cards (Search) ────────────────────────────────── */

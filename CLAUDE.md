@@ -51,7 +51,7 @@ src/
 ├── styles/       # Design tokens + main.css + enhanced.css
 ├── app.js        # App init (router + i18n wiring)
 └── main.js       # Vite entry point
-tests/            # Vitest unit tests (214+)
+tests/            # Vitest unit tests (224+)
 ```
 
 ## User Flow
@@ -60,10 +60,11 @@ tests/            # Vitest unit tests (214+)
 Home (interest cards) → Search (filter chips + keyword) → Profile (#/profile/:soc)
   Level 1 (Discover): What They Do, Work Environment, Similar Occupations
   Level 2 (Plan): How to Become One [collapsed]
-  Level 3 (Evaluate): Pay, Job Outlook, State Data [collapsed, lazy-loads wage data]
-  Level 4 (Decide): More Info + ROI deep dive link [collapsed]
-    → Detail (#/detail/:soc) → Calculator
-                              → Compare (via nav Tools dropdown)
+  Level 3 (Evaluate): Pay, Job Outlook, ROI deep-dive, State Data [collapsed, lazy-loads wage data]
+  Level 4 (Decide): Next-step actions (Add to Compare / Download Report / Share) + external resources [collapsed]
+    → Detail (#/detail/:soc) → Calculator (via Level 3 deep-dive)
+    → Compare (#/compare?soc1=...) ← Level 4 action card
+    → Report (#/report) ← Level 4 action card
 ```
 
 ## Interest Groups (Home Page)
