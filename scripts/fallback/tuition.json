@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "fetchedAt": "2026-06-08T11:10:28.109Z",
+    "fetchedAt": "2026-06-15T12:28:41.787Z",
     "source": "College Scorecard API (api.data.gov)",
     "sampleSize": 100
   },
@@ -42,9 +42,9 @@
       "sampleCount": 83
     },
     "1204": {
-      "inState": 3300,
-      "outOfState": 9090,
-      "netPrice": 12872,
+      "inState": 2829,
+      "outOfState": 9150,
+      "netPrice": 12751,
       "sampleCount": 100
     },
     "1205": {
@@ -302,7 +302,7 @@
     "3905": {
       "inState": 29992,
       "outOfState": 30074,
-      "netPrice": 21945,
+      "netPrice": 21539,
       "sampleCount": 100
     },
     "4002": {
@@ -438,9 +438,9 @@
       "sampleCount": 100
     },
     "5005": {
-      "inState": 8244,
-      "outOfState": 20183,
-      "netPrice": 13339,
+      "inState": 8093,
+      "outOfState": 20070,
+      "netPrice": 13336,
       "sampleCount": 100
     },
     "5010": {
@@ -507,13 +507,13 @@
       "inState": 14778,
       "outOfState": 37090,
       "netPrice": 17339,
-      "sampleCount": 26
+      "sampleCount": 25
     },
     "5118": {
-      "inState": 4900,
-      "outOfState": 9569,
-      "netPrice": 9418,
-      "sampleCount": 95
+      "inState": 4844,
+      "outOfState": 9615,
+      "netPrice": 9653,
+      "sampleCount": 92
     },
     "5120": {
       "inState": 16758,
