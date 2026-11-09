@@ -4,7 +4,7 @@
     "graduation_rate_source": "College Scorecard latest.completion.consumer_rate (IPEDS-derived)",
     "completions_source": "NCES IPEDS Completions Survey 2021-22",
     "year": "2022",
-    "fetched_at": "2026-11-02T15:13:11.709Z"
+    "fetched_at": "2026-11-09T15:43:29.445Z"
   },
   "by_cip": {
     "1009": {
@@ -64,7 +64,7 @@
       "grad_rate_sample_schools": 79
     },
     "1204": {
-      "graduation_rate_150pct": 0.459,
+      "graduation_rate_150pct": 0.4539,
       "retention_rate_ft": 0.8251,
       "retention_rate_sample": 2,
       "completions_total": 55000,
@@ -88,7 +88,7 @@
       "grad_rate_sample_schools": 99
     },
     "1304": {
-      "graduation_rate_150pct": 0.6408,
+      "graduation_rate_150pct": 0.6402,
       "retention_rate_ft": 0.7878,
       "retention_rate_sample": 93,
       "completions_total": 12000,
@@ -122,7 +122,7 @@
     "1313": {
       "graduation_rate_150pct": 0.5835,
       "retention_rate_ft": 0.7647,
-      "retention_rate_sample": 85,
+      "retention_rate_sample": 86,
       "completions_total": 13000,
       "cip_title": "Teacher Education, Specific Subjects (Secondary)",
       "grad_rate_sample_schools": 100
@@ -528,12 +528,12 @@
       "grad_rate_sample_schools": 100
     },
     "4504": {
-      "graduation_rate_150pct": 0.6269,
+      "graduation_rate_150pct": 0.6233,
       "retention_rate_ft": 0.7602,
       "retention_rate_sample": 94,
       "completions_total": 18000,
       "cip_title": "Economics",
-      "grad_rate_sample_schools": 98
+      "grad_rate_sample_schools": 99
     },
     "4601": {
       "graduation_rate_150pct": 0.4373,

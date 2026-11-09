@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "fetchedAt": "2026-11-02T15:08:30.546Z",
+    "fetchedAt": "2026-11-09T15:38:22.803Z",
     "source": "College Scorecard API (api.data.gov)",
     "sampleSize": 100
   },
@@ -26,7 +26,7 @@
     "1106": {
       "inState": 3368,
       "outOfState": 10990,
-      "netPrice": 6949,
+      "netPrice": 6629,
       "sampleCount": 100
     },
     "1107": {
@@ -42,9 +42,9 @@
       "sampleCount": 79
     },
     "1204": {
-      "inState": 2355,
-      "outOfState": 9608,
-      "netPrice": 12897,
+      "inState": 2352,
+      "outOfState": 9600,
+      "netPrice": 12320,
       "sampleCount": 100
     },
     "1205": {
@@ -62,7 +62,7 @@
     "1305": {
       "inState": 12402,
       "outOfState": 23814,
-      "netPrice": 16882,
+      "netPrice": 16785,
       "sampleCount": 100
     },
     "1310": {
@@ -78,9 +78,9 @@
       "sampleCount": 100
     },
     "1313": {
-      "inState": 12975,
-      "outOfState": 22334,
-      "netPrice": 16882,
+      "inState": 12838,
+      "outOfState": 22276,
+      "netPrice": 16801,
       "sampleCount": 100
     },
     "1315": {
@@ -122,7 +122,7 @@
     "1409": {
       "inState": 13050,
       "outOfState": 28636,
-      "netPrice": 16807,
+      "netPrice": 16801,
       "sampleCount": 100
     },
     "1410": {
@@ -140,7 +140,7 @@
     "1418": {
       "inState": 15120,
       "outOfState": 36364,
-      "netPrice": 18290,
+      "netPrice": 17919,
       "sampleCount": 100
     },
     "1419": {
@@ -182,7 +182,7 @@
     "1435": {
       "inState": 13849,
       "outOfState": 32467,
-      "netPrice": 18321,
+      "netPrice": 18030,
       "sampleCount": 100
     },
     "1502": {
@@ -242,7 +242,7 @@
     "2201": {
       "inState": 17930,
       "outOfState": 42682,
-      "netPrice": 20206,
+      "netPrice": 20103,
       "sampleCount": 100
     },
     "2203": {
@@ -278,7 +278,7 @@
     "2607": {
       "inState": 13840,
       "outOfState": 33782,
-      "netPrice": 17363,
+      "netPrice": 17300,
       "sampleCount": 100
     },
     "2701": {
@@ -302,7 +302,7 @@
     "3905": {
       "inState": 30767,
       "outOfState": 31525,
-      "netPrice": 21440,
+      "netPrice": 21174,
       "sampleCount": 100
     },
     "4002": {
@@ -368,7 +368,7 @@
     "4504": {
       "inState": 30800,
       "outOfState": 35342,
-      "netPrice": 19978,
+      "netPrice": 19905,
       "sampleCount": 100
     },
     "4601": {
@@ -404,7 +404,7 @@
     "4702": {
       "inState": 3524,
       "outOfState": 9090,
-      "netPrice": 8823,
+      "netPrice": 8863,
       "sampleCount": 100
     },
     "4706": {
@@ -518,7 +518,7 @@
     "5120": {
       "inState": 17546,
       "outOfState": 34011,
-      "netPrice": 18868,
+      "netPrice": 18783,
       "sampleCount": 100
     },
     "5123": {
